@@ -1,0 +1,227 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    height: 100%;
+}
+
+body {
+    width: 100%;
+    height: 100%;
+    background-color: #f1f1f1;
+    font-family: 'El Messiri', sans-serif;
+}
+
+header {
+    position: fixed;
+    width: 225px;
+    height: 100%;
+    background-color: #b81e44;
+    font-family: 'Pattaya', sans-serif;
+}
+
+header figure {
+    padding: 10px;
+}
+
+#topHeader a {
+    display: block;
+    text-align: center;
+    text-decoration: none;
+    background-color: #7b303e;
+    font-size: 1.2em;
+    color: #fff;
+    padding: 10px;
+    box-shadow: -1px 0 5px #000;
+    transition: all 0.7s;
+}
+
+#topHeader a:hover {
+    background-color: #da2250;
+    box-shadow: -5px 0 10px #000;
+    text-shadow: 3px 3px 3px #000;
+}
+
+#topHeader figure {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#topHeader figure > p {
+    width: 120px;
+}
+
+header img {
+    width: 100%;
+    vertical-align: middle;
+}
+
+#topHeader figcaption {
+    font-size: 20px;
+    color: #fff;
+    text-align: center;
+    margin-left: 5px;
+}
+
+#topHeader span {
+    display: block;
+    text-align: center;
+    font-size: 0.8em;
+    padding-bottom: 10px;
+    border-bottom: 1px dotted #5f051c;
+}
+
+header figure:last-child {
+    width: 180px;
+    margin: 20px auto 0 auto;
+}
+
+header figure:last-child img {
+    border-radius: 50%;
+    width: 100%;
+}
+
+header figure:last-child figcaption {
+    text-align: center;
+}
+
+header figure:last-child figcaption span:first-child {
+    font-size: 25px;
+}
+
+header figure:last-child figcaption span:last-child {
+    font-size: 0.85em;
+    color: #fff;
+}
+
+section {
+    margin-left: 225px;
+    display: flex;
+}
+
+h1.titreSection {
+    text-transform: uppercase;
+    text-align: center;
+}
+
+#listeChapitres {
+    width: 70%;
+    height: 483px;
+    overflow-y: scroll;
+    margin: 4% auto 0 auto;
+}
+
+#listeChapitres table {
+    width: 100%;
+}
+
+#listeChapitres table, #listeChapitres td {
+    border: 1px solid #dbdbdb;
+    border-collapse: collapse;
+}
+
+#listeChapitres table tr:nth-child(even) {
+    background-color: #ffffff;
+}
+
+#listeChapitres table tr:nth-child(odd) {
+    background-color: #ececec;
+}
+
+#listeChapitres table td:first-child, #listeChapitres table td:nth-child(3) {
+    vertical-align: top;
+    padding: 5px 10px;
+}
+
+#listeChapitres table td:first-child input[type="checkbox"] {
+    font-size: 2em;
+}
+
+#listeChapitres table td a.titreChapitre {
+    font-size: 1.2em;
+    color: #000;
+    text-decoration: none;
+}
+
+#listeChapitres table td a.titreChapitre:hover {
+    text-decoration: underline;
+}
+
+#listeChapitres table td p {
+    margin: 0 0 5px 3%;
+    visibility: hidden;
+}
+
+#listeChapitres table tr:hover td:nth-child(2) p {
+    visibility: visible;
+}
+
+#listeChapitres table td p a {
+    color: #b81e44;
+    text-decoration: none;
+    font-size: 0.8em;
+    padding: 0 5px;
+}
+
+#listeChapitres table td p a:hover {
+    color: #7b303e;
+    text-decoration: underline;
+}
+
+#listeChapitres table td p a:last-child {
+    border-left: 1px outset #c4c4c4;
+}
+
+.sectionChapitre {
+    width: 80%;
+    margin: 0 auto;
+    padding: 15px;
+}
+
+.sectionChapitre:last-child p {
+    text-align: center;
+    margin-top: 4%;
+}
+
+.sectionChapitre form {
+    text-align: center;
+}
+
+.sectionChapitre form label {
+    text-decoration: underline;
+}
+
+.sectionChapitre form input[type="text"] {
+    width: 100%;
+    height: 35px;
+    font-size: 1.3em;
+    margin-bottom: 20px;
+}
+
+.sectionChapitre textarea {
+    width: 100%;
+    height: 380px;
+    font-size: 1.1em;
+}
+
+.sectionChapitre form input[type="submit"] {
+    background-color: #da2250;
+    padding: 10px;
+    color: #fff;
+    text-decoration: none;
+    text-transform: uppercase;
+    border-radius: 10px;
+    box-shadow: 0 0 5px #000;
+    margin-top: 20px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.5s;
+}
+
+.sectionChapitre form input[type="submit"]:hover {
+    background-color: #b62441;
+    box-shadow: 2px 2px 5px #000;
+}
