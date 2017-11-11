@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Client :  127.0.0.1
--- Généré le :  Mer 08 Novembre 2017 à 11:26
+-- Généré le :  Sam 11 Novembre 2017 à 12:38
 -- Version du serveur :  5.7.14
 -- Version de PHP :  7.0.10
 
@@ -19,35 +19,6 @@ SET time_zone = "+00:00";
 --
 -- Base de données :  `projet_4`
 --
-
--- --------------------------------------------------------
-
---
--- Structure de la table `chapitres`
---
-
-CREATE TABLE `chapitres` (
-  `id` int(11) NOT NULL,
-  `titre` varchar(255) CHARACTER SET utf8 NOT NULL,
-  `contenu` text CHARACTER SET utf8 NOT NULL,
-  `dateHeureAjout` datetime NOT NULL,
-  `dateHeureDerniereModification` datetime DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
-
---
--- Contenu de la table `chapitres`
---
-
-INSERT INTO `chapitres` (`id`, `titre`, `contenu`, `dateHeureAjout`, `dateHeureDerniereModification`) VALUES
-(1, 'Premier chapitre', '<p>Premier <span style="color: #ff6600; background-color: #00ff00;"><strong>chapitre</strong></span> de test !</p>', '2017-11-06 07:39:04', '2017-11-06 07:46:11'),
-(2, 'Second chapitre', '<p>Second chapitre de test !</p>', '2017-11-06 07:39:17', NULL),
-(3, 'Troisième chapitre', '<p>Troisi&egrave;me chapitre de test !</p>', '2017-11-06 07:39:31', NULL),
-(4, 'Quatrième chapitre', '<p>Quatri&egrave;me chapitre de test !</p>', '2017-11-06 07:39:45', NULL),
-(5, 'Cinquième chapitre', '<p>Cinqui&egrave;me chapitre de test !</p>', '2017-11-06 07:40:03', '2017-11-06 08:09:00'),
-(6, 'Sixième chapitre', '<p>Sixi&egrave;me chapitre de test !</p>', '2017-11-06 07:40:26', NULL),
-(7, 'Septième chapitre', '<p>Septi&egrave;me chapitre pour test !</p>', '2017-11-06 13:17:41', NULL),
-(8, 'huitième chapitre', '<p>huiti&egrave;me chapitre pour test !</p>', '2017-11-06 13:18:33', NULL),
-(9, 'Neuvième chapitre', '<p>Neuvi&egrave;me chapitre pour <span style="color: #ff0000;">test</span> !</p>', '2017-11-06 13:20:25', '2017-11-07 16:23:53');
 
 -- --------------------------------------------------------
 
@@ -100,15 +71,38 @@ INSERT INTO `membres` (`id`, `adresseMail`, `motDePasse`, `statut`) VALUES
 (1, 'jean@forteroche.com', '$2y$10$3RsQ3R0KJde3fwVBXl1ufeeJi4GRY96sJWKxSUdHKzQroVsBKIwT2', 'administrateur'),
 (2, 'marcus62300@gmail.com', '$2y$10$76ewzV.T84te0DGCMe2nXekvn/UofCR1ntF560v40rGLuc2p385lK', 'contributeur');
 
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `tickets`
+--
+
+CREATE TABLE `tickets` (
+  `id` int(11) NOT NULL,
+  `title` varchar(255) CHARACTER SET utf8 NOT NULL,
+  `content` text CHARACTER SET utf8 NOT NULL,
+  `dateTimeAdd` datetime NOT NULL,
+  `dateTimeLastModified` datetime DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+
+--
+-- Contenu de la table `tickets`
+--
+
+INSERT INTO `tickets` (`id`, `title`, `content`, `dateTimeAdd`, `dateTimeLastModified`) VALUES
+(1, 'Premier chapitre', '<p>Premier <span style="color: #ff6600; background-color: #00ff00;"><strong>chapitre</strong></span> de test !</p>', '2017-11-06 07:39:04', '2017-11-06 07:46:11'),
+(2, 'Second chapitre', '<p>Second chapitre de test !</p>', '2017-11-06 07:39:17', NULL),
+(3, 'Troisième chapitre', '<p>Troisi&egrave;me chapitre de test !</p>', '2017-11-06 07:39:31', NULL),
+(4, 'Quatrième chapitre', '<p>Quatri&egrave;me chapitre de test !</p>', '2017-11-06 07:39:45', NULL),
+(5, 'Cinquième chapitre', '<p>Cinqui&egrave;me chapitre de test !</p>', '2017-11-06 07:40:03', '2017-11-06 08:09:00'),
+(6, 'Sixième chapitre', '<p>Sixi&egrave;me chapitre de test !</p>', '2017-11-06 07:40:26', NULL),
+(7, 'Septième chapitre', '<p>Septi&egrave;me chapitre de test !</p>', '2017-11-06 13:17:41', '2017-11-11 13:21:26'),
+(8, 'huitième chapitre', '<p>huiti&egrave;me chapitre de test !</p>', '2017-11-06 13:18:33', '2017-11-11 13:21:35'),
+(9, 'Neuvième chapitre', '<p>Neuvi&egrave;me chapitre de&nbsp;<span style="color: #ff0000;">test</span> !</p>', '2017-11-06 13:20:25', '2017-11-11 13:21:46');
+
 --
 -- Index pour les tables exportées
 --
-
---
--- Index pour la table `chapitres`
---
-ALTER TABLE `chapitres`
-  ADD PRIMARY KEY (`id`);
 
 --
 -- Index pour la table `commentaires`
@@ -123,14 +117,15 @@ ALTER TABLE `membres`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Index pour la table `tickets`
+--
+ALTER TABLE `tickets`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- AUTO_INCREMENT pour les tables exportées
 --
 
---
--- AUTO_INCREMENT pour la table `chapitres`
---
-ALTER TABLE `chapitres`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=73;
 --
 -- AUTO_INCREMENT pour la table `commentaires`
 --
@@ -141,6 +136,11 @@ ALTER TABLE `commentaires`
 --
 ALTER TABLE `membres`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+--
+-- AUTO_INCREMENT pour la table `tickets`
+--
+ALTER TABLE `tickets`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
