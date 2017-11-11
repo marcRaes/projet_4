@@ -1,11 +1,13 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="fr">
     <head>
         <meta charset="UTF-8"> <!-- Balise meta -->
+        <meta name="viewport" content="initial-scale=1, user-scalable=no" />
         <link href="https://fonts.googleapis.com/css?family=Pattaya" rel="stylesheet"> <!-- Police d'écriture "Pattaya" -->
         <link href="https://fonts.googleapis.com/css?family=El+Messiri" rel="stylesheet"> <!-- Police d'écriture "El Messiri" -->
         <link rel="stylesheet" href="Contenu/css/style.css"> <!-- Feuille de style -->
-        <title><?php echo $titrePage; ?></title> <!-- Titre du site définit par la variable $titrePage -->
+        <!-- Titre du site définit par la variable $titrePage -->
+        <title><?= $titlePage; ?></title>
     </head>
 
     <body>
@@ -22,7 +24,7 @@
                     <p><img id="imgAdmin" src="Contenu/images/admin.jpg"></p> <!-- Photo du membre d'administration -->
 
                     <ul id="menuDeroulant"> <!-- Menu déroulant -->
-                        <li><a href="">Visualiser le Blog</a></li>
+                        <li><a href="../index.php">Visualiser le Blog</a></li>
                         <li><a href="">Deconnexion</a></li>
                     </ul>
                 </li>
@@ -30,10 +32,11 @@
 
         </header> <!-- /HEADER -->
 
-        <?php echo $contenu; ?> <!-- Affichage du flux récupérer à partir du fichier "vueAdmin.php" -->
+        <!-- Affichage du flux -->
+        <?= $contenu; ?>
 
         <script src="../js/tinymce/tinymce.min.js"></script> <!-- Fichier JS de tinymce -->
         <script src="Contenu/js/tinymceAdmin.js"></script> <!-- Fichier initialisation tinymce -->
 
-        </body>
+    </body>
 </html>

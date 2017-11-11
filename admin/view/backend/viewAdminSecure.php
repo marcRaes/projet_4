@@ -4,7 +4,7 @@
 
 <?php ob_start(); ?> <!-- Mise en tampon du flux HTML -->
 
-<?php $titrePage = 'Connexion administration - Billet simple pour l\'Alaska'; ?> <!-- Titre de la page -->
+<?php $titlePage = 'Connexion administration - Billet simple pour l\'Alaska'; ?> <!-- Titre de la page -->
 
 <!-- Cadre de connexion -->
 <div id="cadreConnexion">
@@ -33,6 +33,7 @@
 
 </div> <!-- /Cadre de connexion -->
 
-<?php $contenu = ob_get_clean(); ?> <!-- Récupére dans une variable le flux de sortie mis en tampon depuis l'appel à ob_start -->
+<?php
+$contenu = ob_get_clean(); // Récupére dans une variable le flux de sortie mis en tampon depuis l'appel à ob_start
 
-<?php require 'gabarit.php'; ?>
+require 'template.php';

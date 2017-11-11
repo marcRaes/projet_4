@@ -144,19 +144,14 @@ span.lienPage a:hover, form input[type="submit"].lienPage:hover {
 #accueilAdmin {
     display: flex; /* Place les éléments à l'horizontal */
     justify-content: space-around; /* Place les éléments de chaque coté de la page */
-    margin: 15px;
 }
 
-#accueilAdmin article {
-    margin: 15px;
+#listeChapitres {
+    width: 80%;
+    margin: 15px 5px 15px 30px;
 }
 
-/* Cadre de la liste des chapitres */
-article#listeChapitres {
-    flex: 4;
-}
-
-article#listeChapitres form input[type="submit"].lienPage {
+#listeChapitres form input[type="submit"].lienPage {
     display: block;
     width: 110px;
     margin: 20px auto 0 auto;
@@ -167,10 +162,13 @@ form input[type="submit"].lienPage {
     cursor: pointer;
 }
 
-article#listeChapitres table { /* La liste des chapitres est affiché dans un tableau */
-    display: block;
-    height: 580px;
+#blocTable {
     overflow-y: scroll;
+    height: 580px;
+}
+
+#blocTable table { /* La liste des chapitres est affiché dans un tableau */
+    width: 100%;
     border-collapse: collapse; /* fussionne les bordures du tableau */
 }
 
@@ -179,11 +177,11 @@ article#listeChapitres table tr { /* Ligne du tableau */
 }
 
 article#listeChapitres table tr:nth-child(odd) {
-    background-color: #ececec;
+    background-color: #ececec; /* Ligne pair du tableau en gris */
 }
 
 article#listeChapitres table tr:nth-child(even) {
-    background-color: #ffffff;
+    background-color: #ffffff; /* Ligne impair du tableau en blanc */
 }
 
 article#listeChapitres table tr:hover {
@@ -254,20 +252,24 @@ article#listeChapitres table td:nth-child(2) ul li a:hover, section#commentaires
 }
 
 /* Cadre des activités du blog */
-article#activitesBlog {
-    flex: 1;
+#activitesBlog {
     text-align: center;
+    margin: 15px 30px 15px 5px;
 }
 
-article#activitesBlog p {
+#activitesBlog p {
     margin-top: 20px;
 }
 
-article#activitesBlog .infoModificationChapitre {
+#activitesBlog .infoModificationChapitre {
     font-weight: bold;
 }
 
 /* Page chapitre */
+#chapitre h1 {
+    text-align: center;
+}
+
 #formulaireChapitre form {
     width: 90%;
     margin: 0 auto;

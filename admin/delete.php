@@ -1,9 +1,9 @@
 <?php
 session_start();
 
-require('Controleur/Controleur.php'); // Appel le controleur
+require('controler/backend.php'); // Appel le controleur
 
-if(isset($_SESSION['connexionMembre']) && (isset($_SESSION['statutMembre'])) && ($_SESSION['statutMembre'] == 'administrateur'))
+if(autorisationEntrer())
 {
     suppressionBdd();
 }

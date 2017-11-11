@@ -3,14 +3,16 @@ session_start(); // Active les sessions
 
 $titrePage = 'Le blog de Jean Forteroche - Billet simple pour l\'Alaska';
 ?>
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="fr">
     <head>
-        <meta charset="utf-8"> <!-- Balise meta -->
+        <meta charset="UTF-8"> <!-- Balise meta -->
+        <meta name="viewport" content="initial-scale=1, user-scalable=no" />
         <link href="https://fonts.googleapis.com/css?family=Pattaya" rel="stylesheet"> <!-- Police d'écriture "Pattaya" -->
         <link href="https://fonts.googleapis.com/css?family=El+Messiri" rel="stylesheet"> <!-- Police d'écriture "El Messiri" -->
         <link rel="stylesheet" href="css/style.css"> <!-- Feuille de style -->
-        <title><?php echo $titrePage; ?></title> <!-- Titre du site définit par la variable $titrePage -->
+        <!-- Titre du site définit par la variable $titrePage -->
+        <title><?php echo $titrePage; ?></title>
     </head>
 
     <body>

@@ -5,21 +5,23 @@
 
 <?php ob_start(); ?> <!-- Mise en tampon du flux HTML -->
 
-<span class="lienPage"><a href="admin.php">Voir la liste des chapitres</a></span> <!-- Lien d'ajout d'un chapitre -->
+<span class="lienPage"><a href="admin.php">Voir la liste des chapitres</a></span> <!-- Lien vers la liste des chapitres -->
 
 <section id="chapitre">
 
+    <h1><?= $textTitleSection; ?></h1>
+
     <div id="formulaireChapitre">
 
-        <form method="POST" action="chapitre.php">
+        <form method="POST" action="ticket.php">
 
             <!-- Champ titre du chapitre -->
             <p>
-                <label for="titreChapitre"><?php echo $labelTitreChapitre; ?></label><br>
+                <label for="titreChapitre"><?= $labelTitleTicket; ?></label><br>
                 <input type="text" name="titreChapitre" id="titreChapitre"
-                <?php if(isset($chapitre[0]['titre']))
+                <?php if(isset($dataTicket[0]['title']))
                 {
-                    echo 'value="' . $chapitre[0]['titre'] . '"'; // Remplissage automatique du champ pour la modification du titre d'un chapitre
+                    echo 'value="' . $dataTicket[0]['title'] . '"'; // Remplissage automatique du champ pour la modification du titre d'un chapitre
                 } 
                 ?>
                 required>
@@ -27,12 +29,12 @@
 
             <!-- Champ de contenu du chapitre -->
             <p>
-                <label for="contenuChapitre"><?php echo $labelContenuChapitre; ?></label><br>
+                <label for="contenuChapitre"><?= $labelContentTicket; ?></label><br>
                 <textarea name="contenuChapitre">
                 <?php
-                if(isset($chapitre[0]['contenu']))
+                if(isset($dataTicket[0]['content']))
                 {
-                    echo $chapitre[0]['contenu']; // Remplissage automatique du champ pour la modification du contenu d'un chapitre
+                    echo $dataTicket[0]['content']; // Remplissage automatique du champ pour la modification du contenu d'un chapitre
                 }
                 ?>
                 </textarea>
@@ -43,7 +45,7 @@
                 if(isset($_GET['id']))
                 {
                 ?>
-                    <input type="hidden" name="idChapitre" value="<?php echo $_GET['id']; ?>"> <!-- On conserve l'id du champ en cours d'édition dans un cham caché afin de valider la modification du chapitre -->
+                    <input type="hidden" name="idChapitre" value="<?= $_GET['id']; ?>"> <!-- On conserve l'id du champ en cours d'édition dans un cham caché afin de valider la modification du chapitre -->
                 <?php
                 }
                 else
@@ -54,7 +56,7 @@
                 }
                 ?>
 
-                <input type="submit" class="lienPage" value="<?php echo $valueBoutonEnvoi; ?>"> <!-- Bouton d'envoi du chapitre -->
+                <input type="submit" class="lienPage" value="<?= $valueButtonSend; ?>"> <!-- Bouton d'envoi du chapitre -->
             </p>
 
         </form>
@@ -63,6 +65,7 @@
 
 </section>
 
-<?php $contenu = ob_get_clean(); ?> <!-- Récupére dans une variable le flux de sortie mis en tampon depuis l'appel à ob_start -->
+<?php
+$contenu = ob_get_clean(); // Récupére dans une variable le flux de sortie mis en tampon depuis l'appel à ob_start
 
-<?php require 'gabarit.php'; ?>
+require 'template.php';
