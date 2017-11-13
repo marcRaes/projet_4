@@ -3,10 +3,10 @@ session_start(); // Active les sessions
 
 require('controler/frontend.php'); // Appel le controleur
 
-// Appel des fonctions et insertion du fichier "vueAdmin.php" avec une gestion des erreurs
+// Permet d'insérer la vue de l'enregistrement d'un membre
 try
 {
-    callGetTickets();
+    callRegistrationMember();
 }
 catch(Exception $e)
 {
