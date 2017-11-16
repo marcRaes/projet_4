@@ -28,6 +28,6 @@ $titlePage = 'Le blog de Jean Forteroche - Billet simple pour l\'Alaska';
     </table>
 </div>
 <?php
-$contenu = ob_get_clean(); // Récupére dans une variable le flux de sortie mis en tampon depuis l'appel à ob_start
+$content = ob_get_clean(); // Récupére dans une variable le flux de sortie mis en tampon depuis l'appel à ob_start
 
 require 'template.php';

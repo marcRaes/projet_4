@@ -6,6 +6,8 @@
 
 <?php $titlePage = 'Connexion administration - Billet simple pour l\'Alaska'; ?> <!-- Titre de la page -->
 
+<span class="lienPage"><a href="index.php">Retourner sur le blog</a></span> <!-- Lien de retour vers la page d'acceuil du blog -->
+
 <!-- Cadre de connexion -->
 <div id="cadreConnexion">
 
@@ -34,6 +36,6 @@
 </div> <!-- /Cadre de connexion -->
 
 <?php
-$contenu = ob_get_clean(); // Récupére dans une variable le flux de sortie mis en tampon depuis l'appel à ob_start
+$content = ob_get_clean(); // Récupére dans une variable le flux de sortie mis en tampon depuis l'appel à ob_start
 
 require 'template.php';

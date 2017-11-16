@@ -5,12 +5,22 @@ require_once('Manager.php');
 class MemberManager extends Manager
 {
     // Méthode d'ajout d'un nouveaux membre
-    public function add($comment)
+    public function addMember($emailAdress, $password)
     {
-        //
+        // Connexion à la BDD
+        $bdd = $this->bddConnect();
+
+        // Enregistre le nouveau membre
+        $request = $bdd->prepare('INSERT INTO members(emailAdress, password, status) VALUES(:emailAdress, :password, :status)');
+        $request->execute(array(
+            'emailAdress' => $emailAdress,
+            'password' => $password,
+            'status' => 'contributeur'
+        )) or die(print_r($request->errorInfo(), TRUE));
     }
 
-    public function connectionMemberAdmin($emailAdress)
+    // Méthode de connexion du membre
+    public function connectionMember($emailAdress)
     {
         // Connexion à la BDD
         $bdd = $this->bddConnect();

@@ -16,10 +16,11 @@
             
             <div id="titreSite">
                 <h1>Billet simple pour l'Alaska</h1> <!-- Titre du Blog -->
-                <span>Administration</span>
             </div>
 
         </header> <!-- /HEADER -->
+
+        <?php if(isset($_SESSION['emailAdress'])) { echo $_SESSION['emailAdress']; } ?>
 
         <a href="admin.php">Administration du site</a><br> <!-- Lien vers l'administration du site -->
         <a href="connection.php">Connexion</a><br> <!-- Lien de connexion d'un membre -->
@@ -27,7 +28,7 @@
         <a href="deconnect.php">Deconnexion</a> <!-- Lien de deconnexion -->
 
         <!-- Affichage du flux -->
-        <?= $contenu; ?>
+        <?= $content; ?>
 
         <script src="Contenu/js/tinymce/tinymce.min.js"></script> <!-- Fichier JS de tinymce -->
         <script src="Contenu/js/tinymceAdmin.js"></script> <!-- Fichier initialisation tinymce -->

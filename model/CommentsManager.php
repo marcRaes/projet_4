@@ -5,9 +5,20 @@ require_once('Manager.php');
 class CommentsManager extends Manager
 {
     // Méthode d'ajout d'un commentaire
-    public function add($comment)
+    public function add($content, $dateTimeAdd, $idTicket, $idMember)
     {
-        //
+        // Connexion à la BDD
+        $bdd = $this->bddConnect();
+
+        // Prépare la requète d'ajout d'un nouveau commentaire
+        $request = $bdd->prepare('INSERT INTO comments(content, dateTimeAdd, idTicket, idMember, alert) VALUES(:content, :dateTimeAdd, :idTicket, :idMember, :alert)');
+        $request->execute(array(
+            'content' => $content,
+            'dateTimeAdd' => $dateTimeAdd,
+            'idTicket' => $idTicket,
+            'idMember' => $idMember,
+            'alert' => 0
+        )) or die(print_r($request->errorInfo(), TRUE)); // or die permet d'afficher les erreurs de MySql
     }
 
     // Méthode de modification d'un commentaire
@@ -40,7 +51,7 @@ class CommentsManager extends Manager
         // Connexion à la BDD
         $bdd = $this->bddConnect();
 
-        $request = $bdd->query('SELECT com.id idComment, DATE_FORMAT(com.dateTimeAdd, \'%d-%m-%Y à %Hh%i\') AS dateTimeAddComment, com.content contentComment, com.alert alertComment, m.emailAdress mailMembre, t.title titleTicket, com.id idTicket FROM comments com INNER JOIN members m ON com.idMember = m.id INNER JOIN tickets t ON com.idTicket = t.id WHERE com.alert = TRUE');
+        $request = $bdd->query('SELECT com.id idComment, DATE_FORMAT(com.dateTimeAdd, \'%d-%m-%Y à %Hh%i\') AS dateTimeAddComment, com.content contentComment, com.alert alertComment, m.emailAdress mailMember, t.title titleTicket, com.id idTicket FROM comments com INNER JOIN members m ON com.idMember = m.id INNER JOIN tickets t ON com.idTicket = t.id WHERE com.alert = TRUE');
 
         // On assemble les données reçu
         $data = $request->fetchAll();
@@ -55,7 +66,7 @@ class CommentsManager extends Manager
         $bdd = $this->bddConnect();
 
         // Prépare la requéte de récupération des commentaires, avec une jointure vers la table tickets et members
-        $request = $bdd->prepare('SELECT com.id idComment, DATE_FORMAT(com.dateTimeAdd, \'%d-%m-%Y à %Hh%i\') AS dateTimeAddComment, com.content contentComment, com.alert alertComment, m.emailAdress mailMembre, t.title titleTicket FROM comments com INNER JOIN members m ON com.idMember = m.id INNER JOIN tickets t ON com.idTicket = t.id WHERE com.idTicket = ? ORDER BY com.alert DESC');
+        $request = $bdd->prepare('SELECT com.id idComment, DATE_FORMAT(com.dateTimeAdd, \'%d-%m-%Y à %Hh%i\') AS dateTimeAddComment, com.content contentComment, com.alert alertComment, m.emailAdress mailMember, t.title titleTicket FROM comments com INNER JOIN members m ON com.idMember = m.id INNER JOIN tickets t ON com.idTicket = t.id WHERE com.idTicket = ? ORDER BY com.alert DESC');
         // Execute la requéte
         $request->execute(array($id)) or die(print_r($request->errorInfo(), TRUE));
         // Assemble les données reçu
@@ -78,6 +89,17 @@ class CommentsManager extends Manager
         return $dataNb;
     }
 
+    // Méthode qui signale un commentaire
+    public function reportComment($id)
+    {
+        // Connexion à la BDD
+        $bdd = $this->bddConnect();
+
+        $request = $bdd->prepare('UPDATE comments SET alert = TRUE WHERE id = ?');
+        $request->execute(array($id)) or die(print_r($request->errorInfo(), TRUE)); // or die permet d'afficher les erreurs de MySql
+    }
+
+    // Méthode qui approuve un commentaire
     public function approve($id)
     {
         // Connexion à la BDD

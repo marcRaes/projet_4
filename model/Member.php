@@ -69,16 +69,18 @@ class Member
     }
 
     // Méthode d'ajout d'un nouveau membre
-    public function addMember()
-    {
-        //
-    }
-
-    // Méthode de connexion d'un membre sur l'espace administration
-    public function callConnectionMemberAdmin()
+    public function callAddMember()
     {
         // Crée l'objet $manager
         $memberManager = new MemberManager();
-        return $memberManager->connectionMemberAdmin($this->_emailAdress);
+        $memberManager->addMember($this->_emailAdress, $this->_password);
+    }
+
+    // Méthode de connexion d'un membre
+    public function callConnectionMember()
+    {
+        // Crée l'objet $manager
+        $memberManager = new MemberManager();
+        return $memberManager->connectionMember($this->_emailAdress);
     }
 }

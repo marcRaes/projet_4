@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Client :  127.0.0.1
--- Généré le :  Lun 13 Novembre 2017 à 11:46
+-- Généré le :  Jeu 16 Novembre 2017 à 07:59
 -- Version du serveur :  5.7.14
 -- Version de PHP :  7.0.10
 
@@ -49,7 +49,8 @@ INSERT INTO `comments` (`id`, `content`, `dateTimeAdd`, `idTicket`, `idMember`, 
 (7, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. In maximus, arcu in congue finibus, orci tortor aliquam ex, a suscipit elit erat vitae nisi. Donec lacinia varius enim ut euismod. Cras ut lorem iaculis, molestie sapien id, ultrices sem. Donec eget orci convallis, eleifend nibh in, vulputate nisi. Proin lectus turpis, ultrices eu nunc non, lobortis porttitor arcu. Donec dolor ante, eleifend non risus eu, malesuada vehicula nulla. In eu nisl accumsan, consequat ex porta, efficitur nunc. Praesent a elementum mi, vulputate pellentesque purus. Nulla euismod tempor aliquam. Suspendisse nec finibus neque. Vestibulum augue quam, efficitur et aliquet sit amet, accumsan et justo. Quisque in nunc eget dui blandit lobortis. Sed molestie purus at tortor varius consectetur. Vestibulum ut arcu et urna eleifend blandit. Vestibulum sed lacus posuere lacus condimentum bibendum. Vivamus hendrerit felis a arcu pretium varius.', '2017-11-08 06:36:32', 7, 2, 0),
 (8, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. In maximus, arcu in congue finibus, orci tortor aliquam ex, a suscipit elit erat vitae nisi. Donec lacinia varius enim ut euismod. Cras ut lorem iaculis, molestie sapien id, ultrices sem. Donec eget orci convallis, eleifend nibh in, vulputate nisi. Proin lectus turpis, ultrices eu nunc non, lobortis porttitor arcu. Donec dolor ante, eleifend non risus eu, malesuada vehicula nulla. In eu nisl accumsan, consequat ex porta, efficitur nunc. Praesent a elementum mi, vulputate pellentesque purus. Nulla euismod tempor aliquam. Suspendisse nec finibus neque. Vestibulum augue quam, efficitur et aliquet sit amet, accumsan et justo. Quisque in nunc eget dui blandit lobortis. Sed molestie purus at tortor varius consectetur. Vestibulum ut arcu et urna eleifend blandit. Vestibulum sed lacus posuere lacus condimentum bibendum. Vivamus hendrerit felis a arcu pretium varius.', '2017-11-08 10:23:35', 8, 2, 0),
 (9, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. In maximus, arcu in congue finibus, orci tortor aliquam ex, a suscipit elit erat vitae nisi. Donec lacinia varius enim ut euismod. Cras ut lorem iaculis, molestie sapien id, ultrices sem. Donec eget orci convallis, eleifend nibh in, vulputate nisi. Proin lectus turpis, ultrices eu nunc non, lobortis porttitor arcu. Donec dolor ante, eleifend non risus eu, malesuada vehicula nulla. In eu nisl accumsan, consequat ex porta, efficitur nunc. Praesent a elementum mi, vulputate pellentesque purus. Nulla euismod tempor aliquam. Suspendisse nec finibus neque. Vestibulum augue quam, efficitur et aliquet sit amet, accumsan et justo. Quisque in nunc eget dui blandit lobortis. Sed molestie purus at tortor varius consectetur. Vestibulum ut arcu et urna eleifend blandit. Vestibulum sed lacus posuere lacus condimentum bibendum. Vivamus hendrerit felis a arcu pretium varius.', '2017-11-07 12:47:45', 9, 2, 0),
-(12, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. In maximus, arcu in congue finibus, orci tortor aliquam ex, a suscipit elit erat vitae nisi. Donec lacinia varius enim ut euismod. Cras ut lorem iaculis, molestie sapien id, ultrices sem. Donec eget orci convallis, eleifend nibh in, vulputate nisi. Proin lectus turpis, ultrices eu nunc non, lobortis porttitor arcu. Donec dolor ante, eleifend non risus eu, malesuada vehicula nulla. In eu nisl accumsan, consequat ex porta, efficitur nunc. Praesent a elementum mi, vulputate pellentesque purus. Nulla euismod tempor aliquam. Suspendisse nec finibus neque. Vestibulum augue quam, efficitur et aliquet sit amet, accumsan et justo. Quisque in nunc eget dui blandit lobortis. Sed molestie purus at tortor varius consectetur. Vestibulum ut arcu et urna eleifend blandit. Vestibulum sed lacus posuere lacus condimentum bibendum. Vivamus hendrerit felis a arcu pretium varius.', '2017-11-07 11:27:27', 9, 2, 0);
+(12, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. In maximus, arcu in congue finibus, orci tortor aliquam ex, a suscipit elit erat vitae nisi. Donec lacinia varius enim ut euismod. Cras ut lorem iaculis, molestie sapien id, ultrices sem. Donec eget orci convallis, eleifend nibh in, vulputate nisi. Proin lectus turpis, ultrices eu nunc non, lobortis porttitor arcu. Donec dolor ante, eleifend non risus eu, malesuada vehicula nulla. In eu nisl accumsan, consequat ex porta, efficitur nunc. Praesent a elementum mi, vulputate pellentesque purus. Nulla euismod tempor aliquam. Suspendisse nec finibus neque. Vestibulum augue quam, efficitur et aliquet sit amet, accumsan et justo. Quisque in nunc eget dui blandit lobortis. Sed molestie purus at tortor varius consectetur. Vestibulum ut arcu et urna eleifend blandit. Vestibulum sed lacus posuere lacus condimentum bibendum. Vivamus hendrerit felis a arcu pretium varius.', '2017-11-07 11:27:27', 9, 2, 0),
+(18, '<p>test</p>', '2017-11-16 07:51:05', 9, 2, 0);
 
 -- --------------------------------------------------------
 
@@ -70,7 +71,8 @@ CREATE TABLE `members` (
 
 INSERT INTO `members` (`id`, `emailAdress`, `password`, `status`) VALUES
 (1, 'jean@forteroche.com', '$2y$10$3RsQ3R0KJde3fwVBXl1ufeeJi4GRY96sJWKxSUdHKzQroVsBKIwT2', 'administrateur'),
-(2, 'marcus62300@gmail.com', '$2y$10$76ewzV.T84te0DGCMe2nXekvn/UofCR1ntF560v40rGLuc2p385lK', 'contributeur');
+(2, 'marcus62300@gmail.com', '$2y$10$76ewzV.T84te0DGCMe2nXekvn/UofCR1ntF560v40rGLuc2p385lK', 'contributeur'),
+(18, 'azerty@mail.com', '$2y$10$eniaedkUGXnqH2Z83rnKcOtw4AbcOkBX/BnUKTEj3ecDPsMrf/nO6', 'contributeur');
 
 -- --------------------------------------------------------
 
@@ -98,8 +100,8 @@ INSERT INTO `tickets` (`id`, `title`, `content`, `dateTimeAdd`, `dateTimeLastMod
 (5, 'Cinquième chapitre', '<p>Cinqui&egrave;me chapitre de test !</p>', '2017-11-06 07:40:03', '2017-11-06 08:09:00'),
 (6, 'Sixième chapitre', '<p>Sixi&egrave;me chapitre de test !</p>', '2017-11-06 07:40:26', NULL),
 (7, 'Septième chapitre', '<p>Septi&egrave;me chapitre de test !</p>', '2017-11-06 13:17:41', '2017-11-11 13:21:26'),
-(8, 'huitième chapitre', '<p>huiti&egrave;me chapitre de test !</p>', '2017-11-06 13:18:33', '2017-11-11 13:21:35'),
-(9, 'Neuvième chapitre', '<p>Neuvi&egrave;me chapitre de&nbsp;<span style="color: #ff0000;">test</span> !</p>', '2017-11-06 13:20:25', '2017-11-11 13:21:46');
+(8, 'huitième chapitre', '<p>Huiti&egrave;me chapitre de test !Huiti&egrave;me chapitre de test !Huiti&egrave;me chapitre de test !Huiti&egrave;me chapitre de test !Huiti&egrave;me chapitre de test !Huiti&egrave;me chapitre de test ! encore un test pour l\'affichage du chapitre, Huiti&egrave;me chapitre de test !Huiti&egrave;me chapitre de test !Huiti&egrave;me chapitre de test !Huiti&egrave;me chapitre de test !Huiti&egrave;me chapitre de test !Huiti&egrave;me chapitre de test ! encore un test pour l\'affichage du chapitre !</p>', '2017-11-06 13:18:33', '2017-11-13 19:56:11'),
+(9, 'Neuvième chapitre', '<p>Neuvi&egrave;me chapitre de&nbsp;<span style="color: #ff0000;">test</span> ! Neuvi&egrave;me chapitre de&nbsp;<span style="color: #ff0000;">test</span>&nbsp;! Neuvi&egrave;me chapitre de&nbsp;<span style="color: #ff0000;">test</span>&nbsp;! Neuvi&egrave;me chapitre de&nbsp;<span style="color: #ff0000;">test</span>&nbsp;! Neuvi&egrave;me chapitre de&nbsp;<span style="color: #ff0000;">test</span>&nbsp;! Neuvi&egrave;me chapitre de&nbsp;<span style="color: #ff0000;">test</span>&nbsp;! Neuvi&egrave;me chapitre de&nbsp;<span style="color: #ff0000;">test</span>&nbsp;! Neuvi&egrave;me chapitre de&nbsp;<span style="color: #ff0000;">test</span>&nbsp;! Neuvi&egrave;me chapitre de&nbsp;<span style="color: #ff0000;">test</span>&nbsp;! Neuvi&egrave;me chapitre de&nbsp;<span style="color: #ff0000;">test</span>&nbsp;! Neuvi&egrave;me chapitre de&nbsp;<span style="color: #ff0000;">test</span>&nbsp;! Neuvi&egrave;me chapitre de&nbsp;<span style="color: #ff0000;">test</span>&nbsp;!</p>', '2017-11-06 13:20:25', '2017-11-13 19:54:57');
 
 --
 -- Index pour les tables exportées
@@ -131,17 +133,17 @@ ALTER TABLE `tickets`
 -- AUTO_INCREMENT pour la table `comments`
 --
 ALTER TABLE `comments`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 --
 -- AUTO_INCREMENT pour la table `members`
 --
 ALTER TABLE `members`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 --
 -- AUTO_INCREMENT pour la table `tickets`
 --
 ALTER TABLE `tickets`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

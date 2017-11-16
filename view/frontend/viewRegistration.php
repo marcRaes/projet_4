@@ -6,28 +6,28 @@ $titlePage = 'Page d\'inscription - Billet simple pour l\'Alaska';
 
 <div id="formulaireInscription">
 
-<?php if(isset($etatInscription)) { echo $etatInscription; } ?>
+<?php if(isset($msgRegistration)) { echo $msgRegistration; } ?>
 
-    <form method="post" action="inscription.php">
+    <form method="post" action="registration.php">
 
         <p> <!-- Champ E-Mail -->
-            <label for="adresseMail">Saisissez une adresse E-Mail :</label><br>
-            <input type="email" name="adresseMail" id="adresseMail" required>
+            <label for="emailAdress">Saisissez une adresse E-Mail :</label><br>
+            <input type="email" name="emailAdress" id="emailAdress" <?php if(isset($msgRegistration)) { echo 'value='.$_POST['emailAdress']; } ?>>
         </p>
 
         <p> <!-- Champ E-Mail confirmation -->
-            <label for="adresseMailConfirmation">Confirmer votre adresse E-Mail :</label><br>
-            <input type="email" name="adresseMailConfirmation" id="adresseMailConfirmation" required>
+            <label for="emailAdressConfirmation">Confirmer votre adresse E-Mail :</label><br>
+            <input type="email" name="emailAdressConfirmation" id="emailAdressConfirmation" <?php if(isset($msgRegistration)) { echo 'value='.$_POST['emailAdressConfirmation']; } ?>>
         </p>
 
         <p> <!-- Champ mot de passe -->
-            <label for="motDePasse">Saisissez un mot de passe :</label><br>
-            <input type="password" name="motDePasse" id="motDePasse" required>
+            <label for="password">Saisissez un mot de passe :</label><br>
+            <input type="password" name="password" id="password">
         </p>
 
         <p> <!-- Champ mot de passe confirmation -->
-            <label for="motDePasseConfirmation">Confirmer votre mot de passe :</label><br>
-            <input type="password" name="motDePasseConfirmation" id="motDePasseConfirmation" required>
+            <label for="passwordConfirmation">Confirmer votre mot de passe :</label><br>
+            <input type="password" name="passwordConfirmation" id="passwordConfirmation">
         </p>
 
         <p> <!-- Bouton d'envoi -->
@@ -39,6 +39,6 @@ $titlePage = 'Page d\'inscription - Billet simple pour l\'Alaska';
 </div>
 
 <?php
-$contenu = ob_get_clean(); // Récupére dans une variable le flux de sortie mis en tampon depuis l'appel à ob_start
+$content = ob_get_clean(); // Récupére dans une variable le flux de sortie mis en tampon depuis l'appel à ob_start
 
 require 'template.php';

@@ -3,41 +3,44 @@ session_start(); // Active les sessions
 
 require('controler/backend.php'); // Appel le fichier de fonctions
 
-if(autorisationEntrer())
+// Vérifie si un membre est connecter et si il a le bon statut pour administrer le blog
+if(isset($_SESSION['status']) && ($_SESSION['status'] == 'administrateur'))
 {
-    if(isset($_GET['approve']) && ($_GET['approve'] == 'on'))
+    // Lance une méthode de reconnection du membre avec vérification de la session enregistrer
+    if(autorisationEntrer($_SESSION))
     {
-        callApproveComment($_GET['id']);
-    }
-    else
-    {
-        // Sauvegarde l'URL courante de la page pour la redirection aprés une suppression
-        $_SESSION['urlCurrent'] = $_SERVER["REQUEST_URI"];
-    }
-
-    // Le controleur se charge de récupérer et d'envoyer la liste des commentaires à la vue
-    try
-    {
-        if(isset($_GET['comment']))
+        if(isset($_GET['approve']) && ($_GET['approve'] == 'on'))
         {
-            callGetComments();
+            callApproveComment($_GET['id']);
         }
-        else if(isset($_GET['nbComments']))
+    
+        // Le controleur se charge de récupérer et d'envoyer la liste des commentaires à la vue
+        try
         {
-            AlertComments();
+            if($_SERVER["REQUEST_METHOD"] == "GET")
+            {
+                if(isset($_GET['comment']))
+                {
+                    callGetComments();
+                }
+                else if(isset($_GET['nbComments']))
+                {
+                    AlertComments();
+                }
+            }
+            else
+            {
+                header('Location:admin.php');
+            }
         }
-        else
+        catch(Exception $e)
         {
-            header('Location:admin.php');
+            $msgErreur = $e->getMessage();
+            require 'view/backend/viewError.php';
         }
-    }
-    catch(Exception $e)
-    {
-        $msgErreur = $e->getMessage();
-        require 'view/backend/viewError.php';
     }
 }
-else // L'autorisation n'a pas était approuver on affiche le formulaire de connexion de l'administration
+else // L'autorisation n'a pas était approuver on redirige vers l'administration
 {
-    adminSecure();
+    header('Location:admin.php');
 }

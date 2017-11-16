@@ -1,28 +1,37 @@
 <?php
-/*On cache en attendant de pouvoir résoudre l'erreur fatale...
+// Permet d'instancier une classe automatiquement
 function loadClass($classe)
 {
-  require_once($classe . '.php'); // On inclut la classe correspondante au paramètre passé.
+  require_once('model/' . $classe . '.php'); // On inclut la classe correspondante au paramètre passé.
 }
 
 spl_autoload_register('loadClass'); // On enregistre la fonction en autoload pour qu'elle soit appelée dès qu'on instanciera une classe non déclarée.
-*/
 
+/*
 require_once('model/TicketsManager.php');
 require_once('model/Ticket.php');
 require_once('model/CommentsManager.php');
 require_once('model/Comment.php');
 require_once('model/Member.php');
 require_once('model/MemberManager.php');
+*/
 
-function autorisationEntrer()
+// Fonction qui s'assure que le menbre connecter à le droit d'administrer le blog
+function autorisationEntrer($sessionMember)
 {
-    if(isset($_SESSION['connectionMember']) && (isset($_SESSION['statusMember'])) && ($_SESSION['statusMember'] == 'administrateur'))
+    if(isset($sessionMember['id']) && (isset($sessionMember['emailAdress'])) && (isset($sessionMember['status'])))
     {
-        return TRUE;
-    }
-    else
-    {
+        // Crée l'objet membre
+        $objectMember = new Member($sessionMember);
+        // Appelle la méthode de connexion du membre
+        $stateConnection = $objectMember->callConnectionMember();
+
+        // S'assure que les données de la session sont les même que celle contenu dans la BDD
+        if(($stateConnection['id'] == $sessionMember['id']) && ($stateConnection['emailAdress'] == $sessionMember['emailAdress']) && ($stateConnection['status'] == $sessionMember['status']))
+        {
+            return TRUE;
+        }
+
         return FALSE;
     }
 }
@@ -43,16 +52,17 @@ function adminSecure()
             // Crée l'objet membre
             $objectMember = new Member($dataMember);
             // Appelle la méthode de connexion du membre
-            $etatConnexion = $objectMember->callConnectionMemberAdmin();
+            $stateConnection = $objectMember->callConnectionMember();
 
-            if($etatConnexion['emailAdress'] == $_POST['emailAdress'])
+            if($stateConnection['emailAdress'] == $_POST['emailAdress'])
             {
-                if(password_verify($_POST['password'], $etatConnexion['password'])) // Vérifie si le mot de passe est correcte
+                if(password_verify($_POST['password'], $stateConnection['password'])) // Vérifie si le mot de passe est correcte
                 {
-                    if($etatConnexion['status'] == 'administrateur')
+                    if($stateConnection['status'] == 'administrateur')
                     {
-                        $_SESSION['connectionMember'] = $etatConnexion['id'];
-                        $_SESSION['statusMember'] = 'administrateur';
+                        $_SESSION['id'] = $stateConnection['id'];
+                        $_SESSION['emailAdress'] = $stateConnection['emailAdress'];
+                        $_SESSION['status'] = 'administrateur';
                         header('Location:admin.php');
                     }
                     else
@@ -91,7 +101,29 @@ function callGetTickets() {
     require 'view/backend/viewAdmin.php';
 }
 
-// Appel des méthodes pour modifier ou envoyer un chapitre
+// Fonction qui permet de couper le contenu d'un chapitre pour l'affichage
+function cutText($text, $nbChar)
+{
+    $text = trim(strip_tags($text)); // suppression des balises HTML
+
+	if(is_numeric($nbChar))
+	{
+        $PointSuspension = ' [...]'; // points de suspension
+
+		$LengthText = strlen($text); // Taille du texte
+		if ($LengthText > $nbChar) {
+			// pour ne pas couper un mot, on va à l'espace suivant
+            $text = substr($text, 0, strpos($text, ' ', $nbChar));
+
+			// On ajoute des points de suspension à la fin si le texte brut est plus long que $nbChar
+			$text .= $PointSuspension;
+		}
+	}
+	// On renvoie le résumé du texte correctement formaté.
+	return $text;
+};
+
+// Appel des méthodes pour modifier ou ajouter un chapitre
 function callModifyAddTicket()
 {
     if((trim($_POST['titreChapitre']) != false) || (trim($_POST['contenuChapitre']) != false))
@@ -99,7 +131,7 @@ function callModifyAddTicket()
         date_default_timezone_set('Europe/Monaco'); // Définit la zone pour la récupération de l'heure et de la date
         $dateTime = date("Y-m-d H:i:s"); // Récupere la date et l'heure actuelle
 
-        // Ces conditions permettent de vérifier si on souhaite modifier ou envoyer un nouveaux chapitre
+        // Ces conditions permettent de vérifier si on souhaite modifier ou ajouter un nouveaux chapitre
         if(isset($_POST['ajoutChapitre']) && ($_POST['ajoutChapitre'] == 'ajouter')) // Si c'est un nouveau chapitre
         {
             // Crée le tableau de données du chapitre
@@ -113,7 +145,7 @@ function callModifyAddTicket()
             $ticket = new Ticket($dataTicket);
             // Appel la méthode d'ajout d'un chapitre dans le BDD
             $ticket->addTicket();
-            
+
             // Redirection vers la premiére page de l'administration aprés l'ajout du chapitre
             header('Location:admin.php');
         }
@@ -189,7 +221,7 @@ function callGetComments()
         // intval renvoie la valeur numérique du paramètre ou 0 en cas d'échec
         $_GET['id'] = intval($_GET['id']);
         $_GET['nbComments'] = intval($_GET['nbComments']);
-        
+
         if($_GET['id'] != 0)
         {
             // Appel la méthode de récupération des commentaires d'un chapitre
@@ -231,6 +263,17 @@ function callApproveComment($id)
     {
         throw new Exception("Identifiant de commentaire incorrect");
     }
+
+    $nbCommentSignal = nbAlertComments();
+    if($nbCommentSignal != null)
+    {
+        $urlRedirection = 'Location:comment.php?alertComments=on&nbComments=' . $nbCommentSignal;
+        header($urlRedirection);
+    }
+    else
+    {
+        header('Location:admin.php');
+    }
 }
 
 // Fonction de suppression d'un chapitre ou d'un commentaire
@@ -267,7 +310,7 @@ function deleteBdd()
             }
         }
     }
-    
+
     if($_SERVER["REQUEST_METHOD"] == "POST")
     {
         if(isset($_POST['suppressionChapitre']) && (isset($_POST['id'])) && (is_array($_POST['id'])) && ($_POST['suppressionChapitre'] == 'on'))
@@ -275,7 +318,7 @@ function deleteBdd()
             for($i = 0; $i < count($_POST['id']); $i++)
             {
                 $_POST['id'][$i] = intval($_POST['id'][$i]); // intval renvoie la valeur numérique du paramètre ou 0 en cas d'échec
-        
+
                 if($_POST['id'][$i] != 0)
                 {
                     // On appel la méthode autant de fois qu'il y'a de chapitres

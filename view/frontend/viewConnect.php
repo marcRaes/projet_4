@@ -6,18 +6,18 @@ $titlePage = 'Page de connexion - Billet simple pour l\'Alaska';
 
 <div id="formulaireConnexion">
 
-<?php if(isset($etatConnexion)) { echo $etatConnexion; } ?>
+<?php if(isset($msgConnection)) { echo $msgConnection; } ?>
 
     <form method="post" action="connection.php">
 
         <p>
-            <label for="adresseMail">Votre adresse E-Mail :</label><br>
-            <input type="email" name="adresseMail" id="adresseMail">
+            <label for="emailAdress">Votre adresse E-Mail :</label><br>
+            <input type="email" name="emailAdress" id="emailAdress">
         </p>
 
         <p>
-            <label for="motDePasse">Votre mot de passe :</label><br>
-            <input type="password" name="motDePasse" id="motDePasse">
+            <label for="password">Votre mot de passe :</label><br>
+            <input type="password" name="password" id="password">
         </p>
 
         <p>
@@ -29,6 +29,6 @@ $titlePage = 'Page de connexion - Billet simple pour l\'Alaska';
 </div>
 
 <?php
-$contenu = ob_get_clean(); // Récupére dans une variable le flux de sortie mis en tampon depuis l'appel à ob_start
+$content = ob_get_clean(); // Récupére dans une variable le flux de sortie mis en tampon depuis l'appel à ob_start
 
 require 'template.php';

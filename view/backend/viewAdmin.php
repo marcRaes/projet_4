@@ -44,8 +44,8 @@ $titlePage = 'Administration - Billet simple pour l\'Alaska';
                             <!-- Titre du chapitre -->
                             <a href="ticket.php?modification=on&id=<?= $areaTicket['id']; ?>" class="titreChapitre"><?= ucfirst($areaTicket['title']); ?></a>
 
-                            <!-- Contenu du chapitre -->
-                            <p><?= $areaTicket['content']; ?></p>
+                            <!-- Contenu du chapitre couper -->
+                            <p><?= cutText($areaTicket['content'], 180); ?></p>
                                         
                             <!-- Lien d'administration des chapitres -->
                             <ul>
@@ -117,7 +117,7 @@ $titlePage = 'Administration - Billet simple pour l\'Alaska';
             <span class="infoModificationChapitre"><?= $lastTicketmodify[0]['title']; ?></span>
         </p>
 
-            </aside> <!-- /Derniers activités du blog -->
+    </aside> <!-- /Derniers activités du blog -->
 
     <?php
     }
@@ -130,6 +130,6 @@ $titlePage = 'Administration - Billet simple pour l\'Alaska';
 </section>
 
 <?php
-$contenu = ob_get_clean(); // Récupére dans une variable le flux de sortie mis en tampon depuis l'appel à ob_start
+$content = ob_get_clean(); // Récupére dans une variable le flux de sortie mis en tampon depuis l'appel à ob_start
 
 require 'template.php';

@@ -3,4 +3,5 @@ session_start();
 
 session_destroy();
 
-header('Location:index.php');
+// Renvoie l'utilisateur sur la derniere page enregistrer
+header("Location: $_SERVER[HTTP_REFERER]");

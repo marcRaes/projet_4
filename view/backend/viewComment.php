@@ -5,37 +5,46 @@
 <?php
 ob_start(); // Mise en tampon du flux HTML
 
-// Titre de la page
-$titlePage = 'Commentaires : ' . $dataComments[0]['titleTicket'] . ' - Billet simple pour l\'Alaska';
-
 // Détermine le titre à afficher dans la section en fonction du nombre(s) de commentaire(s)
 if(isset($_GET['comment']) && ($_GET['comment']) == 'on')
 {
+    // Titre de la page
+    $titlePage = 'Commentaires : ' . $dataComments[0]['titleTicket'] . ' - Billet simple pour l\'Alaska';
+
     if($_GET['nbComments'] == 1)
     {
         $titleSection = 'Voici le commentaire pour le chapitre : <br><span>' . $dataComments[0]['titleTicket'] . '</span>';
     }
     else if($_GET['nbComments'] > 1)
-    {
+    {   
         $titleSection = 'Voici les commentaires pour le chapitre :<br><span>' . $dataComments[0]['titleTicket'] . '</span>';
     }
     else // Si le nombre de commentaire et égale à 0
     {
+        // Titre de la page
+        $titlePage = 'Aucun commentaire sur ce chapitre - Billet simple pour l\'Alaska';
+
         $titleSection = '';
     }
 }
 else if(isset($_GET['alertComments']) && ($_GET['alertComments']) == 'on')
 {
+    // Titre de la page
+    $titlePage = 'Commentaires : ' . $dataComments[0]['titleTicket'] . ' - Billet simple pour l\'Alaska';
+
     if($_GET['nbComments'] == 1)
     {
-        $titleSection = 'Voici le commentaire signaler :';
+        $titleSection = 'Vous avez ' . $_GET['nbComments'] . ' commentaire signaler :';
     }
     else if($_GET['nbComments'] > 1)
     {
-        $titleSection = 'Voici les commentaires signaler :';
+        $titleSection = 'Vous avez ' . $_GET['nbComments'] . ' commentaires signaler :';
     }
     else // Si le nombre de commentaire et égale à 0
     {
+        // Titre de la page
+        $titlePage = 'Aucun commentaire sur ce chapitre - Billet simple pour l\'Alaska';
+
         $titleSection = '';
     }
 }
@@ -56,7 +65,7 @@ else if(isset($_GET['alertComments']) && ($_GET['alertComments']) == 'on')
     ?>
         <article <?php if($comment['alertComment']) { ?>class="commentAlert"<?php } else { ?>class="comment"<?php } ?>>
             <div class="headerCommentaire">
-                <p>Poster par : <span><?= $comment['mailMembre']; ?></span></p>
+                <p>Poster par : <span><?= $comment['mailMember']; ?></span></p>
                 <p>Poster le : <span><?= $comment['dateTimeAddComment']; ?></span></p>
             </div>
 
@@ -66,7 +75,7 @@ else if(isset($_GET['alertComments']) && ($_GET['alertComments']) == 'on')
 
             <ul>
                 <li><a href="delete.php?suppressionCommentaire=on&id=<?= $comment['idComment']; ?>">Supprimer</a></li>
-                <li><a href="../affichageChapitre.php?id=<?= $idTicket; ?>" target=_blank>Visualiser le chapitre</a></li>
+                <li><a href="displayTicket.php?id=<?= $idTicket; ?>" target=_blank>Visualiser le chapitre</a></li>
             <?php
             if($comment['alertComment'])
             {
@@ -88,6 +97,6 @@ else if(isset($_GET['alertComments']) && ($_GET['alertComments']) == 'on')
 </section> <!-- /Affichage des commentaires -->
 
 <?php
-$contenu = ob_get_clean(); // Récupére dans une variable le flux de sortie mis en tampon depuis l'appel à ob_start
+$content = ob_get_clean(); // Récupére dans une variable le flux de sortie mis en tampon depuis l'appel à ob_start
 
 require 'template.php';

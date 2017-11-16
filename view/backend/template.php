@@ -13,34 +13,40 @@
     <body>
 
         <header> <!-- HEADER -->
-            
+
             <div id="titreSite">
                 <h1>Billet simple pour l'Alaska</h1> <!-- Titre du Blog -->
                 <span>Administration</span>
             </div>
 
-        <?php if(autorisationEntrer())
+        <?php
+        // Vérifie si un membre est connecter et si il a le bon statut pour administrer le blog
+        if(isset($_SESSION['status']) && ($_SESSION['status'] == 'administrateur'))
         {
+            // Lance la méthode de reconnection du membre avec vérification de la session enregistrer
+            if(autorisationEntrer($_SESSION))
+            {
         ?>
         <ul id="imgMenu"> <!-- Image et menu déroulant -->
             <li>
                 <p><img id="imgAdmin" src="Contenu/images/admin.jpg"></p> <!-- Photo du membre d'administration -->
-        
+
                 <ul id="menuDeroulant"> <!-- Menu déroulant -->
-                    <li><a href="../index.php">Visualiser le Blog</a></li>
-                    <li><a href="">Deconnexion</a></li>
+                    <li><a href="index.php">Visualiser le Blog</a></li>
+                    <li><a href="deconnect.php">Deconnexion</a></li>
                 </ul>
             </li>
         </ul>
 
         <?php
+            }
         }
         ?>
 
         </header> <!-- /HEADER -->
 
         <!-- Affichage du flux -->
-        <?= $contenu; ?>
+        <?= $content; ?>
 
         <script src="Contenu/js/tinymce/tinymce.min.js"></script> <!-- Fichier JS de tinymce -->
         <script src="Contenu/js/tinymceAdmin.js"></script> <!-- Fichier initialisation tinymce -->
