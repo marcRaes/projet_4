@@ -7,24 +7,13 @@ function loadClass($classe)
 
 spl_autoload_register('loadClass'); // On enregistre la fonction en autoload pour qu'elle soit appelée dès qu'on instanciera une classe non déclarée.
 
-/*
-require_once('model/frontend.php');
-require_once('model/TicketsManager.php');
-require_once('model/Ticket.php');
-require_once('model/CommentsManager.php');
-require_once('model/Comment.php');
-require_once('model/Member.php');
-require_once('model/MemberManager.php');
-*/
-
 // Fonction qui lance la récupération des chapitres
 function callGetTickets()
 {
-    // Récupération de tous les chapitres
-    $dataTickets = Ticket::displayListTickets();
-
-    // Récupération du dernier chapitre modifier
-    $lastTicketmodify = Ticket::displayLastTicketsModify();
+    // Crée l'objet Manager
+    $ticketManager = new TicketsManager();
+    // Récupération de la liste des chapitres
+    $dataTickets = $ticketManager->getListTickets();
 
     // Affichage
     require 'view/frontend/viewIndex.php';
@@ -37,28 +26,26 @@ function callConnectMember()
     {
         if((trim($_POST['emailAdress'])) && (trim($_POST['password'])))
         {
-            // Convertit les caractères spéciaux des champs
-            $_POST['emailAdress'] = htmlspecialchars($_POST['emailAdress']);
-            $_POST['password'] = htmlspecialchars($_POST['password']);
+            // Crée le tableau de données du membre
+            $dataMember = [
+                'emailAdress' => htmlspecialchars($_POST['emailAdress']),
+                'password' => htmlspecialchars($_POST['password'])
+            ];
 
-            if(filter_var($_POST['emailAdress'], FILTER_VALIDATE_EMAIL)) // Vérifie que l'adresse mail est valide
+            if(filter_var($dataMember['emailAdress'], FILTER_VALIDATE_EMAIL)) // Vérifie que l'adresse mail est valide
             {
-                if(strlen($_POST['password']) >= 6) // Vérifie que le mot de passe posséde au moins 6 caractères
+                if(strlen($dataMember['password']) >= 6) // Vérifie que le mot de passe posséde au moins 6 caractères
                 {
-                    // Crée le tableau de données du membre
-                    $dataMember = [
-                        'emailAdress' => $_POST['emailAdress'],
-                        'password' => $_POST['password']
-                    ];
-
                     // Crée l'objet membre
-                    $objectMember = new Member($dataMember);
+                    $member = new Member($dataMember);
+                    // Crée l'objet Manager
+                    $memberManager = new MemberManager();
                     // Appelle la méthode de connexion du membre
-                    $stateConnection = $objectMember->callConnectionMember();
+                    $stateConnection = $memberManager->connectionMember($member);
 
-                    if($stateConnection['emailAdress'] == $_POST['emailAdress']) // L'adresse mail est reconnu
+                    if($stateConnection['emailAdress'] == $dataMember['emailAdress']) // L'adresse mail est reconnu
                     {
-                        if(password_verify($_POST['password'], $stateConnection['password'])) // Vérifie si le mot de passe est correcte
+                        if(password_verify($dataMember['password'], $stateConnection['password'])) // Vérifie si le mot de passe est correcte
                         {
                             // Enregistre l'id du membre dans une session afin de le connecter automatiquement
                             $_SESSION['idMember'] = $stateConnection['id'];
@@ -127,20 +114,24 @@ function callRegistrationMember()
                             ];
 
                             // Crée l'objet membre
-                            $objectMember = new Member($dataMember);
+                            $member = new Member($dataMember);
+                            // Crée l'objet manager
+                            $memberManager = new MemberManager();
                             // Appelle la méthode de connexion du membre
-                            $stateRegistration = $objectMember->callConnectionMember();
+                            $stateRegistration = $memberManager->connectionMember($member);
 
-                            if($stateRegistration['emailAdress'] != $_POST['emailAdress']) // Si aucun membre n'est inscrit avec cette adresse email
+                            if($stateRegistration['emailAdress'] != $dataMember['emailAdress']) // Si aucun membre n'est inscrit avec cette adresse email
                             {
                                 $dataMember['password'] = password_hash($dataMember['password'], PASSWORD_DEFAULT); // Hash le mot de passe
 
                                 // Crée l'objet membre
-                                $objectMember = new Member($dataMember);
+                                $member = new Member($dataMember);
+                                // Crée l'objet manager
+                                $memberManager = new MemberManager();
                                 // Appelle la méthode d'ajout du membre
-                                $objectMember->callAddMember();
+                                $memberManager->addMember($member);
                                 // Appelle la méthode de connexion du membre
-                                $connectionMember = $objectMember->callConnectionMember();
+                                $connectionMember = $memberManager->connectionMember($member);
 
                                 // Enregistre l'id du membre dans une session afin de le connecter automatiquement
                                 $_SESSION['idMember'] = $connectionMember['id'];
@@ -196,11 +187,15 @@ function callGetDisplayTicket()
 
         if($_GET['id'] != 0)
         {
+            // Crée l'objet du chapitre
+            $ticketManager = new TicketsManager();
             // Appelle la méthode de récupération d'un chapitre
-            $ticketAsk = Ticket::displayTicket($_GET['id']);
+            $ticketAsk = $ticketManager->getTicket($_GET['id']);
 
+            // Crée l'objet commentaires
+            $commentManager = new CommentsManager();
             // Appelle la méthode de récupération des commentaire du chapitre
-            $commentsTicketAsk = Comment::callGetListCommentsTicket($_GET['id']);
+            $commentsTicketAsk = $commentManager->getListCommentsTicket($_GET['id']);
         }
         else
         {
@@ -233,8 +228,10 @@ function alertComment($idComment)
 
         if($idComment != 0)
         {
+            // Crée l'objet commentaires
+            $commentManager = new CommentsManager();
             // Lance la méthode de signalement d'un commentaire
-            Comment::callReportComment($idComment);
+            $commentManager->reportComment($idComment);
 
             // Renvoie l'utilisateur sur la derniere page enregistrer
             header("Location: $_SERVER[HTTP_REFERER]");
@@ -251,35 +248,33 @@ function postComment($idTicket, $emailAdress, $password, $comment)
 {
     if(isset($idTicket) && (trim($emailAdress)) && (trim($password)) && (trim($comment))) // Les champs ont bien était reçu et ne sont pas vide
     {
-        // Sécurise l'identifiant et le mot de passe
-        $emailAdress = htmlspecialchars($emailAdress);
-        $password = htmlspecialchars($password);
+        // Crée le tableau de données du membre
+        $dataMember = [
+            'emailAdress' => htmlspecialchars($emailAdress),
+            'password' => htmlspecialchars($password)
+        ];
 
         if(filter_var($emailAdress, FILTER_VALIDATE_EMAIL)) // Vérifie que l'adresse mail est valide
         {
             if(strlen($password) >= 6) // Vérifie que le mot de passe posséde au moins 6 caractères
             {
-                // Crée le tableau de données du membre
-                $dataMember = [
-                    'emailAdress' => $emailAdress,
-                    'password' => $password
-                ];
-
                 // Crée l'objet membre
-                $objectMember = new Member($dataMember);
+                $member = new Member($dataMember);
+                // Crée l'objet Manager
+                $memberManager = new MemberManager();
                 // Appelle la méthode de connexion du membre => Les données reçu permettront de vérifier si le membre existe dans la BDD
-                $stateConnection = $objectMember->callConnectionMember();
+                $stateConnection = $memberManager->connectionMember($member);
 
                 if($stateConnection['emailAdress'] != $emailAdress) // Le membre n'est pas inscrit
                 {
                     $dataMember['password'] = password_hash($dataMember['password'], PASSWORD_DEFAULT); // Hash le mot de passe
 
-                    // Crée l'objet membre
-                    $objectMember = new Member($dataMember);
+                    // Crée l'objet membre avec le mot de passe Hasher
+                    $member = new Member($dataMember);
                     // Appelle la méthode d'ajout du membre
-                    $objectMember->callAddMember();
+                    $memberManager->addMember($member);
                     // Appelle la méthode de connexion du membre
-                    $connectionMember = $objectMember->callConnectionMember();
+                    $connectionMember = $memberManager->connectionMember($member);
 
                     // Enregistre l'id du membre dans une session afin de le connecter automatiquement
                     $_SESSION['idMember'] = $connectionMember['id'];
@@ -337,8 +332,11 @@ function callAddComment($content, $idTicket, $idMember)
     ];
 
     // Crée l'objet Commentaire
-    $objectComment = new Comment($dataComment);
-    $objectComment->addComment();
+    $comment = new Comment($dataComment);
+    // Crée l'objet manager
+    $commentManager = new CommentsManager();
+    // Appelle la méthode d'ajout du commentaire
+    $commentManager->add($comment);
 
     // Renvoie l'utilisateur sur la derniere page enregistrer
     header("Location: $_SERVER[HTTP_REFERER]");

@@ -37,7 +37,7 @@ class Comment
     public function setId($id)
     {
         $id = (int) $id; // Force la conversion en nombre
-        
+
         // Vérifie que ce nombre est positif
         if($id > 0)
         {
@@ -68,7 +68,7 @@ class Comment
     public function setIdTicket($idTicket)
     {
         $idTicket = (int) $idTicket; // Force la conversion en nombre
-        
+
         // Vérifie que ce nombre est positif
         if($idTicket > 0)
         {
@@ -81,7 +81,7 @@ class Comment
     public function setIdMember($idMember)
     {
         $idMember = (int) $idMember; // Force la conversion en nombre
-        
+
         // Vérifie que ce nombre est positif
         if($idMember > 0)
         {
@@ -108,51 +108,21 @@ class Comment
         return $this->_dateTimeAdd;
     }
 
-    // Méthode d'ajout d'un commentaire
-    public function addComment()
+    // Getter idTicket => Renvoie l'attribut correspondant à l'id du chapitre
+    public function idTicket()
     {
-        (new CommentsManager)->add($this->_content, $this->_dateTimeAdd, $this->_idTicket, $this->_idMember);
+        return $this->_idTicket;
     }
 
-    // méthode de modification d'un commentaire
-    public function modifyComment()
+    // Getter idMember => Renvoie l'attribut correspondant à l'id du membre ayant poster le commentaires
+    public function idMember()
     {
-        //
+        return $this->_idMember;
     }
 
-    // Méthode de suppression d'un commentaire
-    public static function deleteComment($idComment)
+    // Getter alert => Renvoie l'attribut permettant de savoir si un commentaire à était signaler ou socket_set_nonblock
+    public function alert()
     {
-        (new CommentsManager)->delete($idComment);
-    }
-
-    // Méthode d'affichage des commentaires
-    public function displayListComment()
-    {
-        //
-    }
-
-    // Méthode de récupération de tous les commentaires d'un chapitre
-    public static function callGetListCommentsTicket($idTicket)
-    {
-        return (new CommentsManager)->getListCommentsTicket($idTicket);
-    }
-
-    // Méthode de récupération des commentaires signaler
-    public static function callGetListCommentsAlert()
-    {
-        return (new CommentsManager)->getListCommentsAlert();
-    }
-
-    // Méthode qui permet de signaler un commentaire
-    public static function callReportComment($id)
-    {
-        (new CommentsManager)->reportComment($id);
-    }
-
-    // Méthode qui permet d'approuver un commentaire
-    public static function approveComment($id)
-    {
-        (new CommentsManager)->approve($id);
+        return $this->_alert;
     }
 }

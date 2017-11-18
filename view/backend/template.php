@@ -7,7 +7,7 @@
         <link href="https://fonts.googleapis.com/css?family=El+Messiri" rel="stylesheet"> <!-- Police d'écriture "El Messiri" -->
         <link rel="stylesheet" href="Contenu/css/style.css"> <!-- Feuille de style -->
         <!-- Titre du site définit par la variable $titrePage -->
-        <title><?= $titlePage; ?></title>
+        <title><?= $this->title(); ?></title>
     </head>
 
     <body>
@@ -23,9 +23,6 @@
         // Vérifie si un membre est connecter et si il a le bon statut pour administrer le blog
         if(isset($_SESSION['status']) && ($_SESSION['status'] == 'administrateur'))
         {
-            // Lance la méthode de reconnection du membre avec vérification de la session enregistrer
-            if(autorisationEntrer($_SESSION))
-            {
         ?>
         <ul id="imgMenu"> <!-- Image et menu déroulant -->
             <li>
@@ -39,7 +36,6 @@
         </ul>
 
         <?php
-            }
         }
         ?>
 

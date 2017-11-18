@@ -1,53 +1,9 @@
 <!--***************************************************
 * Cette page affichera les commentaires d'un chapitre *
 ****************************************************-->
-
 <?php
-ob_start(); // Mise en tampon du flux HTML
-
-// Détermine le titre à afficher dans la section en fonction du nombre(s) de commentaire(s)
-if(isset($_GET['comment']) && ($_GET['comment']) == 'on')
-{
-    // Titre de la page
-    $titlePage = 'Commentaires : ' . $dataComments[0]['titleTicket'] . ' - Billet simple pour l\'Alaska';
-
-    if($_GET['nbComments'] == 1)
-    {
-        $titleSection = 'Voici le commentaire pour le chapitre : <br><span>' . $dataComments[0]['titleTicket'] . '</span>';
-    }
-    else if($_GET['nbComments'] > 1)
-    {   
-        $titleSection = 'Voici les commentaires pour le chapitre :<br><span>' . $dataComments[0]['titleTicket'] . '</span>';
-    }
-    else // Si le nombre de commentaire et égale à 0
-    {
-        // Titre de la page
-        $titlePage = 'Aucun commentaire sur ce chapitre - Billet simple pour l\'Alaska';
-
-        $titleSection = '';
-    }
-}
-else if(isset($_GET['alertComments']) && ($_GET['alertComments']) == 'on')
-{
-    // Titre de la page
-    $titlePage = 'Commentaires : ' . $dataComments[0]['titleTicket'] . ' - Billet simple pour l\'Alaska';
-
-    if($_GET['nbComments'] == 1)
-    {
-        $titleSection = 'Vous avez ' . $_GET['nbComments'] . ' commentaire signaler :';
-    }
-    else if($_GET['nbComments'] > 1)
-    {
-        $titleSection = 'Vous avez ' . $_GET['nbComments'] . ' commentaires signaler :';
-    }
-    else // Si le nombre de commentaire et égale à 0
-    {
-        // Titre de la page
-        $titlePage = 'Aucun commentaire sur ce chapitre - Billet simple pour l\'Alaska';
-
-        $titleSection = '';
-    }
-}
+// Titre de la page
+$this->setTitle('Commentaires : ' . $dataComments[0]['titleTicket'] . ' - Billet simple pour l\'Alaska');
 ?>
 
 <span class="lienPage"><a href="admin.php">Voir la liste des chapitres</a></span> <!-- Lien vers la liste des chapitres -->
@@ -60,8 +16,8 @@ else if(isset($_GET['alertComments']) && ($_GET['alertComments']) == 'on')
     if($_GET['nbComments'] != 0)
     {
         foreach($dataComments as $comment) :
-        
-        if(isset($_GET['id'])) { $idTicket = $_GET['id']; } else { $idTicket = $comment['idTicket']; }
+
+        if(isset($_GET['idTicket'])) { $idTicket = $_GET['idTicket']; } else { $idTicket = $comment['idTicket']; }
     ?>
         <article <?php if($comment['alertComment']) { ?>class="commentAlert"<?php } else { ?>class="comment"<?php } ?>>
             <div class="headerCommentaire">
@@ -74,20 +30,20 @@ else if(isset($_GET['alertComments']) && ($_GET['alertComments']) == 'on')
             </div>
 
             <ul>
-                <li><a href="delete.php?suppressionCommentaire=on&id=<?= $comment['idComment']; ?>">Supprimer</a></li>
+                <li><a href="admin.php?action=delete&deleteComment=on&idComment=<?= $comment['idComment']; ?>">Supprimer</a></li>
                 <li><a href="displayTicket.php?id=<?= $idTicket; ?>" target=_blank>Visualiser le chapitre</a></li>
             <?php
             if($comment['alertComment'])
             {
             ?>
-                <li><a href="comment.php?approve=on&id=<?= $comment['idComment']; ?>">Approuver le commentaire</a></li>
+                <li><a href="admin.php?action=comment&approve=on&id=<?= $comment['idComment']; ?>">Approuver le commentaire</a></li>
             <?php
             }
             ?>
             </ul>
         </article>
     <?php
-    endforeach;
+        endforeach;
     }
     else
     {
@@ -95,8 +51,3 @@ else if(isset($_GET['alertComments']) && ($_GET['alertComments']) == 'on')
     }
     ?>
 </section> <!-- /Affichage des commentaires -->
-
-<?php
-$content = ob_get_clean(); // Récupére dans une variable le flux de sortie mis en tampon depuis l'appel à ob_start
-
-require 'template.php';

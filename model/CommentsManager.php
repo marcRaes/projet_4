@@ -5,7 +5,7 @@ require_once('Manager.php');
 class CommentsManager extends Manager
 {
     // Méthode d'ajout d'un commentaire
-    public function add($content, $dateTimeAdd, $idTicket, $idMember)
+    public function add($comment)
     {
         // Connexion à la BDD
         $bdd = $this->bddConnect();
@@ -13,18 +13,12 @@ class CommentsManager extends Manager
         // Prépare la requète d'ajout d'un nouveau commentaire
         $request = $bdd->prepare('INSERT INTO comments(content, dateTimeAdd, idTicket, idMember, alert) VALUES(:content, :dateTimeAdd, :idTicket, :idMember, :alert)');
         $request->execute(array(
-            'content' => $content,
-            'dateTimeAdd' => $dateTimeAdd,
-            'idTicket' => $idTicket,
-            'idMember' => $idMember,
+            'content' => $comment->content(),
+            'dateTimeAdd' => $comment->dateTimeAdd(),
+            'idTicket' => $comment->idTicket(),
+            'idMember' => $comment->idMember(),
             'alert' => 0
         )) or die(print_r($request->errorInfo(), TRUE)); // or die permet d'afficher les erreurs de MySql
-    }
-
-    // Méthode de modification d'un commentaire
-    public function update($comment)
-    {
-        //
     }
 
     // Méthode de suppression d'un commentaire
@@ -37,12 +31,6 @@ class CommentsManager extends Manager
         $request = $bdd->prepare('DELETE FROM comments WHERE id = ?');
         // Execute la requète
         $request->execute(array($id)) or die(print_r($request->errorInfo(), TRUE));
-    }
-
-    // Méthode de récupération d'un commentaire
-    public function getComment($id)
-    {
-        //
     }
 
     // Méthode de récupération de tous les commentaires qui ont était signaler => champ alert à TRUE
@@ -84,7 +72,7 @@ class CommentsManager extends Manager
         $request = $bdd->prepare('SELECT COUNT(*) AS nbComments FROM comments WHERE idTicket=?');
         $request->execute(array($id)) or die(print_r($request->errorInfo(), TRUE));
         // Assemble les données reçu
-        $dataNb = $request->fetchAll();
+        $dataNb = $request->fetch();
         // Retourne le nombre de commentaire
         return $dataNb;
     }

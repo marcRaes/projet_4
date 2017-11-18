@@ -2,9 +2,7 @@
 * Cette page affichera le formulaire de connexion de l'administration *
 ********************************************************************-->
 
-<?php ob_start(); ?> <!-- Mise en tampon du flux HTML -->
-
-<?php $titlePage = 'Connexion administration - Billet simple pour l\'Alaska'; ?> <!-- Titre de la page -->
+<?php $this->setTitle('Connexion administration - Billet simple pour l\'Alaska'); ?> <!-- Titre de la page -->
 
 <span class="lienPage"><a href="index.php">Retourner sur le blog</a></span> <!-- Lien de retour vers la page d'acceuil du blog -->
 
@@ -13,7 +11,7 @@
 
     <p>Vous devez vous connecter pour administrer le Blog :</p>
 
-    <?php if(isset($msgConnexion)) { echo '<p class="messageErreur">' . $msgConnexion . '</p>'; } ?> <!-- Affichera un message en cas d'erreur de connexion -->
+    <?php if(isset($_SESSION['erreurAdmin'])) { echo '<p class="messageErreur">' . $_SESSION['erreurAdmin'] . '</p>'; } ?> <!-- Affichera un message en cas d'erreur de connexion -->
 
     <form action="admin.php" method="post">
 
@@ -34,8 +32,3 @@
     </form>
 
 </div> <!-- /Cadre de connexion -->
-
-<?php
-$content = ob_get_clean(); // Récupére dans une variable le flux de sortie mis en tampon depuis l'appel à ob_start
-
-require 'template.php';

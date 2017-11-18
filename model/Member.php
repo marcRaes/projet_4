@@ -35,7 +35,7 @@ class Member
     public function setId($id)
     {
         $id = (int) $id; // Force la conversion en nombre
-        
+
         // Vérifie que ce nombre est positif
         if($id > 0)
         {
@@ -68,19 +68,27 @@ class Member
         $this->_status = $status;
     }
 
-    // Méthode d'ajout d'un nouveau membre
-    public function callAddMember()
+    // Getter id => Renvoie l'attribut id du membre
+    public function id()
     {
-        // Crée l'objet $manager
-        $memberManager = new MemberManager();
-        $memberManager->addMember($this->_emailAdress, $this->_password);
+        return $this->_id;
     }
 
-    // Méthode de connexion d'un membre
-    public function callConnectionMember()
+    // Getter emailAdress => Renvoie l'adresse email du Membre
+    public function emailAdress()
     {
-        // Crée l'objet $manager
-        $memberManager = new MemberManager();
-        return $memberManager->connectionMember($this->_emailAdress);
+        return $this->_emailAdress;
+    }
+
+    // Getter password => Renvoie le mot de passe du Membre
+    public function password()
+    {
+        return $this->_password;
+    }
+
+    // Getter status => Renvoie le statut du Membre
+    public function status()
+    {
+        return $this->_status;
     }
 }

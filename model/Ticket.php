@@ -36,7 +36,7 @@ class Ticket
     public function setId($id)
     {
         $id = (int) $id; // Force la conversion en nombre
-        
+
         // Vérifie que ce nombre est positif
         if($id > 0)
         {
@@ -94,7 +94,7 @@ class Ticket
     }
 
     // Getter contenu => Renvoie l'attribut correspondant au contenu du chapitre
-    public function contenu()
+    public function content()
     {
         return $this->_content;
     }
@@ -109,46 +109,5 @@ class Ticket
     public function dateTimeLastModified()
     {
         return $this->_dateTimeLastModified;
-    }
-
-    // Méthode d'ajout d'un chapitre
-    public function addTicket()
-    {
-        // Crée l'objet $manager
-        $ticketsManager = new TicketsManager();
-        $ticketsManager->add($this->_title, $this->_content, $this->_dateTimeAdd);
-    }
-
-    // Méthode de modification d'un chapitre
-    public function modifyTicket()
-    {
-        // Crée l'objet $manager
-        $ticketsManager = new TicketsManager();
-        $ticketsManager->update($this->_id, $this->_title, $this->_content, $this->_dateTimeLastModified);
-    }
-
-    // Méthode de suppression d'un chapitre
-    public static function deleteTicket($id)
-    {
-        (new TicketsManager)->delete($id);
-    }
-
-    // Méthode d'affichage d'un chapitre
-    public static function displayTicket($id)
-    {
-        return (new TicketsManager)->getTicket($id);
-    }
-
-    // Méthode d'affichage de la liste des chapitres
-    public static function displayListTickets()
-    {
-        // Appel la méthode de récupération des chapitres
-        return (new TicketsManager)->getListTickets();
-    }
-
-    // Méthode d'affichage du dernier chapitre modifié
-    public static function displayLastTicketsModify()
-    {
-        return (new TicketsManager)->getLastTicketModify();
     }
 }

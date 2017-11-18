@@ -5,7 +5,7 @@ require_once('Manager.php');
 class TicketsManager extends Manager
 {
     // Méthode d'ajout d'un chapitre
-    public function add($title, $content, $dateTimeAdd)
+    public function add($ticket)
     {
         // Connexion à la BDD
         $bdd = $this->bddConnect();
@@ -14,14 +14,14 @@ class TicketsManager extends Manager
         $request = $bdd->prepare('INSERT INTO tickets(title, content, dateTimeAdd) VALUES(:title, :content, :dateTimeAdd)');
             // Execute la requete d'ajout du chapitre
         $request->execute(array(
-            'title' => $title,
-            'content' => $content,
-            'dateTimeAdd' => $dateTimeAdd
+            'title' => $ticket->title(),
+            'content' => $ticket->content(),
+            'dateTimeAdd' => $ticket->dateTimeAdd()
         )) or die(print_r($request->errorInfo(), TRUE)); // or die permet d'afficher les erreurs de MySql
     }
 
     // Méthode de modification d'un chapitre
-    public function update($id, $title, $content, $dateTimeLastModified)
+    public function update($ticket)
     {
         // Connexion à la BDD
         $bdd = $this->bddConnect();
@@ -30,10 +30,10 @@ class TicketsManager extends Manager
         $request = $bdd->prepare('UPDATE tickets SET title = :newTitle, content = :newContent, dateTimeLastModified = :dateTimeModified WHERE id = :idTicket');
         // Lance la requéte avec les données reçu
         $request->execute(array(
-            'idTicket' => $id,
-            'newTitle' => $title,
-            'newContent' => $content,
-            'dateTimeModified' => $dateTimeLastModified
+            'idTicket' => $ticket->id(),
+            'newTitle' => $ticket->title(),
+            'newContent' => $ticket->content(),
+            'dateTimeModified' => $ticket->dateTimeLastModified()
         )) or die(print_r($request->errorInfo(), TRUE)); // or die permet d'afficher les erreurs de MySql
     }
 
@@ -58,9 +58,9 @@ class TicketsManager extends Manager
         $request = $bdd->prepare('SELECT title, content, DATE_FORMAT(dateTimeAdd, \'%d-%m-%Y à %Hh%i\') AS dateTimeAdd, DATE_FORMAT(dateTimeLastModified, \'%d-%m-%Y à %Hh%i\') AS dateTimeModified FROM tickets WHERE id = ?');
         // Execute la requéte de récupération avec la variable contenu dans l'URL
         $request->execute(array($id)) or die(print_r($request->errorInfo(), TRUE)); // or die permet d'afficher les erreurs de MySql
-        
-        $data = $request->fetchAll(); // On assemble les données reçu
-        
+
+        $data = $request->fetch(); // On assemble les données reçu
+
         return $data; // Retourne le chapitre demander
     }
 
@@ -72,11 +72,27 @@ class TicketsManager extends Manager
 
         // Retourne la liste de tous les chapitres
         $request = $bdd->query('SELECT id, title, content, DATE_FORMAT(dateTimeAdd, \'%d-%m-%Y à %Hh%i\') AS dateTimeAddTicket FROM tickets ORDER BY dateTimeAdd DESC') or die(print_r($request->errorInfo(), TRUE)); // or die permet d'afficher les erreurs de MySql
-        
-        // On assemble les données reçu
-        $data = $request->fetchAll();
-        
-        return $data; // Retourne les chapitres contenu dans la BDD
+
+        // Crée le manager des commentaires
+        $commentManager = new CommentsManager();
+
+        // On assemble les données reçu en récupérant le nombre de commentaires de chaque chapitres
+        while($data = $request->fetchAll())
+        {
+            for($i = 0; $i < count($data); $i++)
+            {
+                $ticket[$i]['id'] = $data[$i]['id'];
+                $ticket[$i]['title'] = $data[$i]['title'];
+                $ticket[$i]['content'] = $data[$i]['content'];
+                $ticket[$i]['dateTimeAddTicket'] = $data[$i]['dateTimeAddTicket'];
+
+                // Récupére et stocke le nombre de commentaires de chaque chapitres
+                $nbComments = $commentManager->getNbComments($data[$i]['id']);
+                $ticket[$i]['nbComments'] = $nbComments['nbComments'];
+            }
+        }
+
+        return $ticket; // Retourne les chapitres ainsi que leur nombres de commentaires contenu dans la BDD
     }
 
     // Méthode de récupération du dernier chapitre modifier
@@ -88,7 +104,7 @@ class TicketsManager extends Manager
         // retourne le dernier chapitre modifier
         $request = $bdd->query('SELECT title, DATE_FORMAT(dateTimeLastModified, \'%d-%m-%Y à %Hh%i\') AS dateTimeLastModified FROM tickets ORDER BY dateTimeLastModified DESC LIMIT 0, 1') or die(print_r($request->errorInfo(), TRUE)); // or die permet d'afficher les erreurs de MySql
 
-        $data = $request->fetchAll(); // On assemble les données reçu
+        $data = $request->fetch(); // On assemble les données reçu
 
         return $data; // Retourne le dernier chapitre modifier
     }
