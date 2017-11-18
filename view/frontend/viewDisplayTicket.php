@@ -1,8 +1,4 @@
-<?php
-ob_start(); // Mise en tampon du flux HTML
-
-$titlePage = $ticketAsk[0]['title'] . ' - Billet simple pour l\'Alaska';
-?>
+<?php $this->setTitle($ticketAsk['title'] . ' - Billet simple pour l\'Alaska'); ?>
 
 <section>
 
@@ -10,9 +6,9 @@ $titlePage = $ticketAsk[0]['title'] . ' - Billet simple pour l\'Alaska';
     <article>
 
     <?php
-        echo $ticketAsk[0]['dateTimeAdd'] . '<br>';
-        echo $ticketAsk[0]['title'] . '<br>';
-        echo $ticketAsk[0]['content'] . '<br>';
+        echo $ticketAsk['dateTimeAdd'] . '<br>';
+        echo $ticketAsk['title'] . '<br>';
+        echo $ticketAsk['content'] . '<br>';
     ?>
 
     </article>
@@ -20,14 +16,14 @@ $titlePage = $ticketAsk[0]['title'] . ' - Billet simple pour l\'Alaska';
 <!-- Affichage des commentaires -->
     <?php foreach($commentsTicketAsk as $comment) : ?>
     <article>
-    
+
     <?php
         echo $comment['dateTimeAddComment'] . '<br>';
         echo $comment['mailMember'] . '<br>';
         echo $comment['contentComment'] . '<br>';
     ?>
 
-        <form action="displayTicket.php" method="post">
+        <form action="index.php?action=ticket" method="post">
             <p>
                 <input type="hidden" name="idComment" value="<?= $comment['idComment']; ?>">
                 <input type="hidden" name="reportComment" value="reportComment">
@@ -40,8 +36,8 @@ $titlePage = $ticketAsk[0]['title'] . ' - Billet simple pour l\'Alaska';
 
     <!-- Formulaire d'inscription avec ajout commentaire -->
     <div id="inscription">
-        <?php if(isset($msgPublicationComment)) { echo $msgPublicationComment; } ?>
-        <form method="post" action="displayTicket.php">
+        <?php if(isset($_SESSION['erreurBlog'])) { echo $_SESSION['erreurBlog']; } ?>
+        <form action="index.php?action=ticket" method="post">
 
             <?php
             if(isset($_SESSION['emailAdress']))
@@ -85,8 +81,3 @@ $titlePage = $ticketAsk[0]['title'] . ' - Billet simple pour l\'Alaska';
     </div> <!-- /Formulaire d'inscription avec ajout commentaire -->
 
 </section> <!-- /Affichage du chapitre demander -->
-
-<?php
-$content = ob_get_clean(); // Récupére dans une variable le flux de sortie mis en tampon depuis l'appel à ob_start
-
-require 'template.php';

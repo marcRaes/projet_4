@@ -1,14 +1,11 @@
 <?php
-ob_start(); // Mise en tampon du flux HTML
-
-$titlePage = 'Page de connexion - Billet simple pour l\'Alaska';
-?>
+$this->setTitle('Page de connexion - Billet simple pour l\'Alaska'); ?>
 
 <div id="formulaireConnexion">
 
-<?php if(isset($msgConnection)) { echo $msgConnection; } ?>
+<?php if(isset($_SESSION['erreurBlog'])) { echo $_SESSION['erreurBlog']; } ?>
 
-    <form method="post" action="connection.php">
+    <form method="post" action="index.php?action=connection">
 
         <p>
             <label for="emailAdress">Votre adresse E-Mail :</label><br>
@@ -27,8 +24,3 @@ $titlePage = 'Page de connexion - Billet simple pour l\'Alaska';
     </form>
 
 </div>
-
-<?php
-$content = ob_get_clean(); // Récupére dans une variable le flux de sortie mis en tampon depuis l'appel à ob_start
-
-require 'template.php';

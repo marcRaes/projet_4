@@ -1,6 +1,6 @@
 <?php
-require_once('model/CommentsManager.php');
-require_once('view/backend/View.php');
+require_once('Model/CommentsManager.php');
+require_once('View/Backend/View.php');
 
 class ControlerComment
 {

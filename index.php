@@ -1,15 +1,7 @@
 <?php
 session_start(); // Active les sessions
 
-require('controler/frontend.php'); // Appel le controleur
+require('Controler/Frontend/Router.php');
 
-// Appel des fonctions et insertion du fichier "vueAdmin.php" avec une gestion des erreurs
-try
-{
-    callGetTickets();
-}
-catch(Exception $e)
-{
-    $msgErreur = $e->getMessage();
-    require 'view/backend/viewError.php';
-}
+$router = new Router();
+$router->routeRequest();

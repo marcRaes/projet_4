@@ -9,7 +9,7 @@ class View
     // Le constructeur déterminera le nom du fichier vue à partir de l'action
     public function __construct($action)
     {
-        $this->setFile("View/Backend/View" . $action . ".php");
+        $this->setFile("View/Frontend/View" . $action . ".php");
     }
 
     // Méthode qui génére et affiche la vue
@@ -19,7 +19,7 @@ class View
         $content = $this->generateFile($this->file(), $data);
 
         // Génere le gabarit commun
-        $view = $this->generateFile('View/Backend/Template.php', array(
+        $view = $this->generateFile('View/Frontend/Template.php', array(
             'title' => $this->title(),
             'content' => $content
         ));

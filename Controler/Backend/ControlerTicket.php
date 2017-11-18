@@ -1,7 +1,7 @@
 <?php
-require_once('model/Ticket.php');
-require_once('model/TicketsManager.php');
-require_once('view/backend/View.php');
+require_once('Model/Ticket.php');
+require_once('Model/TicketsManager.php');
+require_once('View/Backend/View.php');
 
 class ControlerTicket
 {
@@ -55,7 +55,6 @@ class ControlerTicket
             'dataTicket' => $dataTicket,
             'titlePage' => $titlePage
         ));
-        //var_dump($dataTicket);
     }
 
     public function decisionTicket($post)

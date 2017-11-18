@@ -2,7 +2,7 @@
 <html lang="fr">
     <head>
         <meta charset="UTF-8"> <!-- Balise meta -->
-        <meta name="viewport" content="initial-scale=1, user-scalable=no" />
+        <meta name="viewport" content="initial-scale=1, user-scalable=no">
         <link href="https://fonts.googleapis.com/css?family=Pattaya" rel="stylesheet"> <!-- Police d'écriture "Pattaya" -->
         <link href="https://fonts.googleapis.com/css?family=El+Messiri" rel="stylesheet"> <!-- Police d'écriture "El Messiri" -->
         <link rel="stylesheet" href="Contenu/css/style.css"> <!-- Feuille de style -->

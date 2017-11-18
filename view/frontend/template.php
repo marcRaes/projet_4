@@ -2,13 +2,12 @@
 <html lang="fr">
     <head>
         <meta charset="UTF-8"> <!-- Balise meta -->
-        <meta name="viewport" content="initial-scale=1, user-scalable=no" />
+        <meta name="viewport" content="initial-scale=1, user-scalable=no">
         <link href="https://fonts.googleapis.com/css?family=Pattaya" rel="stylesheet"> <!-- Police d'écriture "Pattaya" -->
         <link href="https://fonts.googleapis.com/css?family=El+Messiri" rel="stylesheet"> <!-- Police d'écriture "El Messiri" -->
         <link rel="stylesheet" href="Contenu/css/style.css"> <!-- Feuille de style -->
-        <link rel="stylesheet" href="Contenu/font-awesome/css/font-awesome.min.css"> <!-- Feuille de style FontsAwesome -->
         <!-- Titre du site définit par la variable $titrePage -->
-        <title><?= $titlePage; ?></title>
+        <title><?= $this->title(); ?></title>
     </head>
 
     <body>
@@ -24,9 +23,9 @@
         <?php if(isset($_SESSION['emailAdress'])) { echo $_SESSION['emailAdress']; } ?>
 
         <a href="admin.php">Administration du site</a><br> <!-- Lien vers l'administration du site -->
-        <a href="connection.php">Se connecter</a><br> <!-- Lien de connexion -->
-        <a href="registration.php">Créer un compte</a><br> <!-- Lien vers la création d'un compte -->
-        <a href="deconnect.php">Deconnexion</a><br> <!-- Lien de deconnexion -->
+        <a href="index.php?action=connection">Se connecter</a><br> <!-- Lien de connexion -->
+        <a href="index.php?action=registration">Créer un compte</a><br> <!-- Lien vers la création d'un compte -->
+        <a href="index.php?action=deconnect">Deconnexion</a><br> <!-- Lien de deconnexion -->
 
         <!-- Affichage du flux -->
         <?= $content; ?>

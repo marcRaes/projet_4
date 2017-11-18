@@ -1,9 +1,9 @@
 <?php
-require_once('controler/ControlerAdminSecure.php'); // Instancie le controleur qui controle l'accés à l'administration du blog
-require_once('controler/ControlerAdmin.php'); // Instancie le controleur de la page d'accueil de l'administration du blog
-require_once('controler/ControlerTicket.php'); // Instancie le controleur des chapitres
-require_once('controler/ControlerComment.php'); // Instancie le controleur des commentaires
-require_once('view/backend/View.php'); // Instancie le controleur de la vue
+require_once('Controler/Backend/ControlerAdminSecure.php'); // Instancie le controleur qui controle l'accés à l'administration du blog
+require_once('Controler/Backend/ControlerAdmin.php'); // Instancie le controleur de la page d'accueil de l'administration du blog
+require_once('Controler/Backend/ControlerTicket.php'); // Instancie le controleur des chapitres
+require_once('Controler/Backend/ControlerComment.php'); // Instancie le controleur des commentaires
+require_once('View/Backend/View.php'); // Instancie le controleur de la vue
 
 class Router
 {

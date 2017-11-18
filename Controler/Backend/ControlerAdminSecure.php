@@ -1,7 +1,7 @@
 <?php
-require_once('model/Member.php');
-require_once('model/MemberManager.php');
-require_once('view/backend/View.php');
+require_once('Model/Member.php');
+require_once('Model/MemberManager.php');
+require_once('View/Backend/View.php');
 
 class ControlerAdminSecure
 {

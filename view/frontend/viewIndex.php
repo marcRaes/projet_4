@@ -1,8 +1,4 @@
-<?php
-ob_start(); // Mise en tampon du flux HTML
-
-$titlePage = 'Le blog de Jean Forteroche - Billet simple pour l\'Alaska';
-?>
+<?php $this->setTitle('Le blog de Jean Forteroche - Billet simple pour l\'Alaska'); ?>
 
 <div id="Chapitres">
 
@@ -16,7 +12,7 @@ $titlePage = 'Le blog de Jean Forteroche - Billet simple pour l\'Alaska';
         <tr>
             <td>
                 <!-- Titre du chapitre -->
-                <a href="displayTicket.php?id=<?php echo $areaTicket['id']; ?>" class="titreChapitre"><?php echo ucfirst($areaTicket['title']); ?></a>
+                <a href="index.php?action=ticket&id=<?php echo $areaTicket['id']; ?>" class="titreChapitre"><?php echo ucfirst($areaTicket['title']); ?></a>
             </td>
 
             <td>
@@ -27,7 +23,3 @@ $titlePage = 'Le blog de Jean Forteroche - Billet simple pour l\'Alaska';
 
     </table>
 </div>
-<?php
-$content = ob_get_clean(); // Récupére dans une variable le flux de sortie mis en tampon depuis l'appel à ob_start
-
-require 'template.php';
