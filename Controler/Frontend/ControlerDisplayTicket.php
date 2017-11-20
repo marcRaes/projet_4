@@ -18,6 +18,7 @@ class ControlerDisplayTicket
         $this->setMemberManager(new MemberManager()); // Manager membre
     }
 
+    // Méthode de récupération du chapitre et de ses commentaires
     public function displayTicket($idTicket)
     {
         // Appelle la méthode de récupération d'un chapitre
@@ -34,6 +35,7 @@ class ControlerDisplayTicket
         ));
     }
 
+    // Méthode de signalement d'un commentaire
     public function alertComment($idComment)
     {
         // Lance la méthode de signalement d'un commentaire
@@ -43,7 +45,32 @@ class ControlerDisplayTicket
         header("Location: $_SERVER[HTTP_REFERER]");
     }
 
-    public function postComment($idTicket, $emailAdress, $password, $comment)
+    // Méthode qui teste la connexion d'un membre connecter avec une SESSION
+    public function testMember($idTicket, $emailAdress, $idMember, $comment)
+    {
+        if(filter_var($emailAdress, FILTER_VALIDATE_EMAIL)) // Vérifie que l'adresse email est valide
+        {
+            // Crée le tableau de données du membre
+            $dataMember = [
+                'emailAdress' => htmlspecialchars($emailAdress),
+            ];
+
+            // Crée l'objet Membre
+            $member = new Member($dataMember);
+            // Appelle la méthode de connexion du membre => Les données reçu permettront de vérifier si le membre existe dans la BDD
+            $stateConnection = $this->memberManager()->connectionMember($member);
+
+            // Le membre existe dans la BDD
+            if($stateConnection['emailAdress'] == $emailAdress)
+            {
+                // Appelle la méthode d'ajout d'un commentaire
+                $this->addComment($comment, $idTicket, $idMember);
+            }
+        }
+    }
+
+
+    public function addMemberComment($idTicket, $emailAdress, $password, $comment)
     {
         if(isset($idTicket) && (trim($emailAdress)) && (trim($password)) && (trim($comment))) // Les champs ont bien était reçu et ne sont pas vide
         {
@@ -53,7 +80,7 @@ class ControlerDisplayTicket
                 'password' => htmlspecialchars($password)
             ];
 
-            if(filter_var($emailAdress, FILTER_VALIDATE_EMAIL)) // Vérifie que l'adresse mail est valide
+            if(filter_var($emailAdress, FILTER_VALIDATE_EMAIL)) // Vérifie que l'adresse email est valide
             {
                 if(strlen($password) >= 6) // Vérifie que le mot de passe posséde au moins 6 caractères
                 {
@@ -114,7 +141,8 @@ class ControlerDisplayTicket
         }
     }
 
-    public function addComment($content, $idTicket, $idMember)
+    // Méthode d'ajout d'un commentaire
+    private function addComment($content, $idTicket, $idMember)
     {
         date_default_timezone_set('Europe/Monaco'); // Définit la zone pour la récupération de l'heure et de la date
         $dateTime = date("Y-m-d H:i:s"); // Récupere la date et l'heure actuelle

@@ -47,8 +47,15 @@ class Router
                             }
                             else if(isset($_POST['publicationComment']) && ($_POST['publicationComment'] == 'publicationComment')) // Un lecteur souhaite publier un commentaire
                             {
-                                // Appel la méthode de publication d'un commentaire
-                                $this->ctrlDisplayTicket()->postComment($_POST['idTicket'], $_POST['emailAdress'], $_POST['password'], $_POST['comment']);
+                                if(isset($_SESSION['emailAdress']) && (isset($_SESSION['idMember'])))
+                                {
+                                    // Verifie que le membre existe et appel la méthode de publication d'un commentaire
+                                    $this->ctrlDisplayTicket()->testMember($_POST['idTicket'], $_SESSION['emailAdress'], $_SESSION['idMember'], $_POST['comment']);
+                                }
+                                else {
+                                    // On connecte ou on enregistre le membre et on appel la méthode de publication d'un commentaire
+                                    $this->ctrlDisplayTicket()->addMemberComment($_POST['idTicket'], $_POST['emailAdress'], $_POST['password'], $_POST['comment']);
+                                }
                             }
                         }
 

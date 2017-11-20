@@ -10,7 +10,7 @@ class ControlerAdminSecure
     // Le controleur instanciera le manager dédié au membre
     public function __construct()
     {
-        $this->_memberManager = new MemberManager(); // Crée l'objet Manager
+        $this->setMemberManager(new MemberManager()); // Crée l'objet Manager
     }
 
     public function adminSecure()
@@ -32,10 +32,8 @@ class ControlerAdminSecure
 
             // Crée l'objet membre
             $member = new Member($dataMember);
-            // Crée l'objet Manager
-            $memberManager = new MemberManager();
             // Appelle la méthode de connexion du membre
-            $stateConnection = $memberManager->connectionMember($member);
+            $stateConnection = $this->memberManager()->connectionMember($member);
 
             // S'assure que les données de la session sont les même que celle contenu dans la BDD
             if(($stateConnection['id'] == $dataMember['id']) && ($stateConnection['emailAdress'] == $dataMember['emailAdress']) && ($stateConnection['status'] == $dataMember['status']))
@@ -58,10 +56,8 @@ class ControlerAdminSecure
 
         // Crée l'objet membre
         $member = new Member($dataMember);
-        // Crée l'objet Manager
-        $memberManager = new MemberManager();
         // Appelle la méthode de connexion du membre
-        $stateConnection = $memberManager->connectionMember($member);
+        $stateConnection = $this->memberManager()->connectionMember($member);
 
         if($stateConnection['emailAdress'] == $dataMember['emailAdress'])
         {
@@ -89,4 +85,9 @@ class ControlerAdminSecure
             $_SESSION['erreurAdmin'] = 'L\'adresse email saisi est incorrecte';
         }
     }
+
+    // Setter memberManager => Permet d'assigner une valeur à l'attribut $_memberManager
+    public function setMemberManager($memberManager) { $this->_memberManager = $memberManager; }
+    // Getter memberManager => Permet de renvoyer la valeur de l'attribut $_memberManager
+    public function memberManager() { return $this->_memberManager; }
 }
