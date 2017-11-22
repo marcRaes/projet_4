@@ -1,10 +1,10 @@
 <?php $this->setTitle('Page d\'inscription - Billet simple pour l\'Alaska'); ?>
 
-<div id="formulaireInscription">
-
-<?php if(isset($_SESSION['erreurBlog'])) { echo $_SESSION['erreurBlog']; } ?>
+<section id="formConnectionRegistration">
 
     <form method="post" action="index.php?action=registration">
+
+        <?php if(isset($_SESSION['errorRegistration'])) { echo '<p class="errorBlog">' . $_SESSION['errorRegistration'] . '</p>'; } ?>
 
         <p> <!-- Champ E-Mail -->
             <label for="emailAdress">Saisissez une adresse E-Mail :</label><br>
@@ -27,9 +27,9 @@
         </p>
 
         <p> <!-- Bouton d'envoi -->
-            <input type="submit" value="Inscription">
+            <input type="submit" class="buttonBlog" value="Inscription">
         </p>
 
     </form>
 
-</div>
+</section>

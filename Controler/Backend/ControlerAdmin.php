@@ -22,14 +22,21 @@ class ControlerAdmin
         // Récupération de la liste des chapitres
         $tickets = $this->ticketManager()->getListTickets();
 
-        // Passe le contenu des chapitres dans la méthode "cutText"
         for($i = 0; $i < count($tickets); $i++)
         {
-            $tickets[$i]['content'] = $this->cutText($tickets[$i]['content'], 180);
+            // Récupére le monbre de commentaires de chaque chapitres
+            $nbComments[$i] = $this->commentManager()->getNbComments($tickets[$i]->id());
+
+            // Passe le contenu des chapitres dans la méthode "cutText"
+            $tickets[$i]->setContent($this->cutText($tickets[$i]->content(), 180));
+
+            // transforme la premiére lettre du titre du chapitre en majuscule
+            $tickets[$i]->setTitle(ucfirst($tickets[$i]->title()));
         }
 
         // Récupération du dernier chapitre modifier
         $lastTicketModify = $this->ticketManager()->getLastTicketModify();
+
         // Retourne le nombre de commentaire signaler
         $nbCommentAlert = count($this->commentManager()->getListCommentsAlert());
 
@@ -39,6 +46,7 @@ class ControlerAdmin
         // Appel la méthode qui génère la vue
         $view->generate(array(
             'tickets' => $tickets,
+            'nbComments' => $nbComments,
             'lastTicketModify' => $lastTicketModify,
             'nbCommentAlert' => $nbCommentAlert
         ));

@@ -22,16 +22,16 @@ class ControlerDisplayTicket
     public function displayTicket($idTicket)
     {
         // Appelle la méthode de récupération d'un chapitre
-        $ticketAsk = $this->ticketManager()->getTicket($idTicket);
+        $ticket = $this->ticketManager()->getTicket($idTicket);
 
-        // Appelle la méthode de récupération des commentaire du chapitre
-        $commentsTicketAsk = $this->commentManager()->getListCommentsTicket($idTicket);
+        // Appelle la méthode de récupération des commentaires du chapitre
+        $commentsTicket = $this->commentManager()->getListCommentsTicket($idTicket);
 
         $viewDisplayTicket = new View('DisplayTicket');
 
         $viewDisplayTicket->generate(array(
-            'ticketAsk' => $ticketAsk,
-            'commentsTicketAsk' => $commentsTicketAsk
+            'ticket' => $ticket,
+            'commentsTicket' => $commentsTicket
         ));
     }
 
@@ -69,7 +69,7 @@ class ControlerDisplayTicket
         }
     }
 
-
+    // Méthode d'ajout ou de connexion d'un membre avec ajout commentaire
     public function addMemberComment($idTicket, $emailAdress, $password, $comment)
     {
         if(isset($idTicket) && (trim($emailAdress)) && (trim($password)) && (trim($comment))) // Les champs ont bien était reçu et ne sont pas vide
@@ -84,6 +84,7 @@ class ControlerDisplayTicket
             {
                 if(strlen($password) >= 6) // Vérifie que le mot de passe posséde au moins 6 caractères
                 {
+                    if(isset($_SESSION['errorBlog'])) { unset($_SESSION['errorBlog']); }
                     // Crée l'objet membre
                     $member = new Member($dataMember);
                     // Appelle la méthode de connexion du membre => Les données reçu permettront de vérifier si le membre existe dans la BDD
@@ -105,7 +106,7 @@ class ControlerDisplayTicket
                         // Garde l'adresse email du membre dans une session
                         $_SESSION['emailAdress'] = $connectionMember['emailAdress'];
                         // On sauvegarde son statut dans une session afin de s'assurer qu'il n'accede pas à l'administration du blog
-                        $_SESSION['statusMember'] = $connectionMember['status'];
+                        $_SESSION['status'] = $connectionMember['status'];
                     }
                     else // Un membre existe sous la même adresse email
                     {
@@ -116,7 +117,7 @@ class ControlerDisplayTicket
                             // Garde l'adresse email du membre dans une session
                             $_SESSION['emailAdress'] = $stateConnection['emailAdress'];
                             // On sauvegarde son statut dans une session afin de s'assurer qu'il n'accede pas à l'administration du blog
-                            $_SESSION['statusMember'] = $stateConnection['status'];
+                            $_SESSION['status'] = $stateConnection['status'];
                         }
                     }
                     if(isset($_SESSION['idMember']))
@@ -127,18 +128,20 @@ class ControlerDisplayTicket
                 }
                 else
                 {
-                    $_SESSION['erreurBlog'] = 'Le mot de passe doit faire au moins 6 caractères'; // Retourne le message d'erreur
+                    $_SESSION['errorPostComment'] = 'Le mot de passe doit faire au moins 6 caractères'; // Retourne le message d'erreur
                 }
             }
             else
             {
-                $_SESSION['erreurBlog'] = 'L\'adresse email saisi n\'est pas valide'; // Retourne le message d'erreur
+                $_SESSION['errorPostComment'] = 'L\'adresse email saisi n\'est pas valide'; // Retourne le message d'erreur
             }
         }
         else
         {
-            $_SESSION['erreurBlog'] = 'Tous les champs doivent étre rempli !';
+            $_SESSION['errorPostComment'] = 'Tous les champs doivent étre rempli !';
         }
+        // Renvoie l'utilisateur sur la derniere page enregistrer
+        header("Location: $_SERVER[HTTP_REFERER]");
     }
 
     // Méthode d'ajout d'un commentaire

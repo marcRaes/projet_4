@@ -1,5 +1,7 @@
 <?php
 require_once('Manager.php');
+require_once('Comment.php');
+require_once('CommentsJoin.php');
 
 // Manager de la classe Comment
 class CommentsManager extends Manager
@@ -12,13 +14,13 @@ class CommentsManager extends Manager
 
         // Prépare la requète d'ajout d'un nouveau commentaire
         $request = $bdd->prepare('INSERT INTO comments(content, dateTimeAdd, idTicket, idMember, alert) VALUES(:content, :dateTimeAdd, :idTicket, :idMember, :alert)');
-        $request->execute(array(
-            'content' => $comment->content(),
-            'dateTimeAdd' => $comment->dateTimeAdd(),
-            'idTicket' => $comment->idTicket(),
-            'idMember' => $comment->idMember(),
-            'alert' => 0
-        )) or die(print_r($request->errorInfo(), TRUE)); // or die permet d'afficher les erreurs de MySql
+        $request->bindValue(':content', $comment->content());
+        $request->bindValue(':dateTimeAdd', $comment->dateTimeAdd());
+        $request->bindValue(':idTicket', $comment->idTicket(), PDO::PARAM_INT);
+        $request->bindValue(':idMember', $comment->idMember(), PDO::PARAM_INT);
+        $request->bindValue(':alert', 0);
+        // Execute la requète
+        $request->execute() or die(print_r($request->errorInfo(), TRUE)); // or die permet d'afficher les erreurs de MySql
     }
 
     // Méthode de suppression d'un commentaire
@@ -28,9 +30,10 @@ class CommentsManager extends Manager
         $bdd = $this->bddConnect();
 
         // Prépare la requète de suppression d'un commentaire
-        $request = $bdd->prepare('DELETE FROM comments WHERE id = ?');
+        $request = $bdd->prepare('DELETE FROM comments WHERE id = :id');
+        $request->bindValue(':id', $id, PDO::PARAM_INT);
         // Execute la requète
-        $request->execute(array($id)) or die(print_r($request->errorInfo(), TRUE));
+        $request->execute() or die(print_r($request->errorInfo(), TRUE)); // or die permet d'afficher les erreurs de MySql
     }
 
     // Méthode de récupération de tous les commentaires qui ont était signaler => champ alert à TRUE
@@ -42,9 +45,14 @@ class CommentsManager extends Manager
         $request = $bdd->query('SELECT com.id idComment, DATE_FORMAT(com.dateTimeAdd, \'%d-%m-%Y à %Hh%i\') AS dateTimeAddComment, com.content contentComment, com.alert alertComment, m.emailAdress mailMember, t.title titleTicket, com.id idTicket FROM comments com INNER JOIN members m ON com.idMember = m.id INNER JOIN tickets t ON com.idTicket = t.id WHERE com.alert = TRUE');
 
         // On assemble les données reçu
-        $data = $request->fetchAll();
+        $comment = $request->fetchAll();
 
-        return $data;
+        for($i = 0; $i < count($comment); $i++)
+        {
+            $comment[$i] = new CommentsJoin($comment[$i]);
+        }
+
+        return $comment;
     }
 
     // Méthode de récupération de tous les commentaires d'un chapitre
@@ -54,13 +62,21 @@ class CommentsManager extends Manager
         $bdd = $this->bddConnect();
 
         // Prépare la requéte de récupération des commentaires, avec une jointure vers la table tickets et members
-        $request = $bdd->prepare('SELECT com.id idComment, DATE_FORMAT(com.dateTimeAdd, \'%d-%m-%Y à %Hh%i\') AS dateTimeAddComment, com.content contentComment, com.alert alertComment, m.emailAdress mailMember, t.title titleTicket FROM comments com INNER JOIN members m ON com.idMember = m.id INNER JOIN tickets t ON com.idTicket = t.id WHERE com.idTicket = ? ORDER BY com.alert DESC');
-        // Execute la requéte
-        $request->execute(array($id)) or die(print_r($request->errorInfo(), TRUE));
+        $request = $bdd->prepare('SELECT com.id idComment, DATE_FORMAT(com.dateTimeAdd, \'%d-%m-%Y à %Hh%i\') AS dateTimeAddComment, com.content contentComment, com.alert alertComment, m.emailAdress mailMember, t.title titleTicket FROM comments com INNER JOIN members m ON com.idMember = m.id INNER JOIN tickets t ON com.idTicket = t.id WHERE com.idTicket = :idTicket ORDER BY com.alert DESC, com.dateTimeAdd DESC');
+        $request->bindValue(':idTicket', $id, PDO::PARAM_INT);
+        // Execute la requète
+        $request->execute() or die(print_r($request->errorInfo(), TRUE)); // or die permet d'afficher les erreurs de MySql
+
         // Assemble les données reçu
-        $data = $request->fetchAll();
+        $comment = $request->fetchAll();
+
+        for($i = 0; $i < count($comment); $i++)
+        {
+            $comment[$i] = new CommentsJoin($comment[$i]);
+        }
+
         // Retourne les commentaires demander
-        return $data;
+        return $comment;
     }
 
     // Méthode de récupération du nombre de commentaires de chaque chapitres
@@ -69,12 +85,16 @@ class CommentsManager extends Manager
         // Connexion à la BDD
         $bdd = $this->bddConnect();
 
-        $request = $bdd->prepare('SELECT COUNT(*) AS nbComments FROM comments WHERE idTicket=?');
-        $request->execute(array($id)) or die(print_r($request->errorInfo(), TRUE));
+        $request = $bdd->prepare('SELECT COUNT(*) AS nbComments FROM comments WHERE idTicket = :idTicket');
+        $request->bindValue(':idTicket', $id, PDO::PARAM_INT);
+        // Execute la requète
+        $request->execute() or die(print_r($request->errorInfo(), TRUE)); // or die permet d'afficher les erreurs de MySql
+
         // Assemble les données reçu
         $dataNb = $request->fetch();
+
         // Retourne le nombre de commentaire
-        return $dataNb;
+        return $dataNb['nbComments'];
     }
 
     // Méthode qui signale un commentaire
@@ -83,8 +103,10 @@ class CommentsManager extends Manager
         // Connexion à la BDD
         $bdd = $this->bddConnect();
 
-        $request = $bdd->prepare('UPDATE comments SET alert = TRUE WHERE id = ?');
-        $request->execute(array($id)) or die(print_r($request->errorInfo(), TRUE)); // or die permet d'afficher les erreurs de MySql
+        $request = $bdd->prepare('UPDATE comments SET alert = TRUE WHERE id = :id');
+        $request->bindValue(':id', $id, PDO::PARAM_INT);
+        // Execute la requète
+        $request->execute() or die(print_r($request->errorInfo(), TRUE)); // or die permet d'afficher les erreurs de MySql
     }
 
     // Méthode qui approuve un commentaire
@@ -93,7 +115,9 @@ class CommentsManager extends Manager
         // Connexion à la BDD
         $bdd = $this->bddConnect();
 
-        $request = $bdd->prepare('UPDATE comments SET alert = FALSE WHERE id = ?');
-        $request->execute(array($id)) or die(print_r($request->errorInfo(), TRUE)); // or die permet d'afficher les erreurs de MySql
+        $request = $bdd->prepare('UPDATE comments SET alert = FALSE WHERE id = :id');
+        $request->bindValue(':id', $id, PDO::PARAM_INT);
+        // Execute la requète
+        $request->execute() or die(print_r($request->errorInfo(), TRUE)); // or die permet d'afficher les erreurs de MySql
     }
 }

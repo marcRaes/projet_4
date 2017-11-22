@@ -72,17 +72,17 @@ class ControlerAdminSecure
                 }
                 else
                 {
-                    $_SESSION['erreurAdmin'] = 'Vous n\'étes pas autoriser à administrer le Blog';
+                    $_SESSION['errorAdmin'] = 'Vous n\'étes pas autoriser à administrer le Blog';
                 }
             }
             else
             {
-                $_SESSION['erreurAdmin'] = 'Mot de passe incorrecte';
+                $_SESSION['errorAdmin'] = 'Mot de passe incorrecte';
             }
         }
         else
         {
-            $_SESSION['erreurAdmin'] = 'L\'adresse email saisi est incorrecte';
+            $_SESSION['errorAdmin'] = 'L\'adresse email saisi est incorrecte';
         }
     }
 

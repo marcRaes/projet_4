@@ -17,11 +17,18 @@ class ControlerIndex
     function callGetTickets()
     {
         // Récupération de la liste des chapitres
-        $dataTickets = $this->ticketManager()->getListTickets();
+        $tickets = $this->ticketManager()->getListTickets();
+
+        // Passe le contenu des chapitres dans la méthode "cutText"
+        for($i = 0; $i < count($tickets); $i++)
+        {
+            // transforme la premiére lettre du titre du chapitre en majuscule
+            $tickets[$i]->setTitle(ucfirst($tickets[$i]->title()));
+        }
 
         // Affichage
         $viewIndex = new View('Index');
-        $viewIndex->generate(array('dataTickets' => $dataTickets));
+        $viewIndex->generate(array('tickets' => $tickets));
     }
 
     // Setter ticketManager

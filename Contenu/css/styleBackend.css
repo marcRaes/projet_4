@@ -1,0 +1,306 @@
+/* Ajoute "administration" dans le titre du header */
+header h1::after {
+    content: "administration";
+    display: block;
+    left: 40%;
+    padding-top: 5px;
+    font-size: 0.4em;
+    font-weight: 400;
+    color: #e5e5e5;
+    position: absolute;
+}
+
+/* Pour toute les sections des pages de l'admistration */
+section {
+    margin: 15px;
+}
+
+/* Cadre de connexion à l'espace d'administration */
+#frameConnection {
+    width: 350px;
+    margin: 5% auto 0 auto;
+    text-align: center;
+}
+
+#frameConnection p {
+    font-size: 1.3em;
+}
+
+#frameConnection form {
+    width: 300px;
+    box-shadow: 0 0 20px #000;
+    border-radius: 5px;
+    background-color: #fff;
+    padding: 15px;
+    margin: 20px auto;
+}
+
+#frameConnection p:nth-child(2) {
+    margin-top: 10px;
+}
+
+#frameConnection input[type="text"], #frameConnection input[type="password"] {
+    width: 85%;
+    height: 25px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f1f1f1;
+}
+
+p.errorAdmin {
+    color: #d41515;
+}
+
+/* Lien de la page */
+span.linkPage a, form input[type="submit"].linkPage {
+    display: inline-block;
+    margin-top: 20px;
+    background-color: #0c648a;
+    padding: 10px;
+    color: #fff;
+    border-radius: 5px;
+    text-decoration: none;
+    box-shadow: inset 0 0 10px #000;
+    text-transform: uppercase;
+    transition: all 0.5s;
+}
+
+span.linkPage a {
+    margin: 20px 0 0 50px;
+}
+
+span.linkPage a:hover, form input[type="submit"].linkPage:hover {
+    background-color: #002637;
+    box-shadow: inset -3px -3px 5px #000;
+    text-shadow: 2px 2px 1px #222222;
+}
+
+/* Section de la page admin */
+#indexAdmin {
+    display: flex; /* Place les éléments à l'horizontal */
+    justify-content: space-around; /* Place les éléments de chaque coté de la page */
+}
+
+#listTickets {
+    width: 80%;
+    margin: 15px 5px 15px 15px;
+}
+
+#listTickets form input[type="submit"].linkPage {
+    display: block;
+    width: 110px;
+    margin: 20px auto 0 auto;
+}
+
+form input[type="submit"].linkPage {
+    border: none;
+    cursor: pointer;
+}
+
+#frameTable {
+    overflow-y: scroll;
+    height: 580px;
+}
+
+#frameTable table { /* La liste des chapitres est affiché dans un tableau */
+    width: 100%;
+    border-collapse: collapse; /* fussionne les bordures du tableau */
+}
+
+article#listTickets table tr { /* Ligne du tableau */
+    height: 100px;
+}
+
+article#listTickets table tr:nth-child(odd) {
+    background-color: #f0f0f0; /* Couleur ligne pair du tableau */
+}
+
+article#listTickets table tr:nth-child(even) {
+    background-color: #fff; /* Couleur ligne impair du tableau */
+}
+
+article#listTickets table tr:hover {
+    background-color: #e9e7e7;
+}
+
+article#listTickets table td {
+    border: 1px solid #dbdbdb;
+    padding: 0 15px;
+}
+
+article#listTickets table td:first-child { /* Premiéres colonne du tableau (checkbox) */
+    width: 5%;
+    text-align: center;
+}
+
+article#listTickets table td:nth-child(2) { /* Deuxième colonne du tableau (titre du chapitre) */
+    width: 70%;
+}
+
+article#listTickets table td:nth-child(3) { /* Troisième colonne du tableau (date et heure d'ajout) */
+    width: 12%;
+}
+
+article#listTickets table td:nth-child(4) { /* Troisième colonne du tableau (nombre de commentaires sur le chapitre) */
+    width: 12%;
+}
+
+article#listTickets table td a.titleTicket {
+    color: #000;
+    text-decoration: none;
+    font-size: 1.5em;
+}
+
+article#listTickets table td a.titleTicket:hover {
+    text-decoration: underline;
+}
+
+article#listTickets table td:nth-child(2) p {
+    font-size: 0.8em;
+    color: #1a1a1a;
+    margin-left: 10px;
+}
+
+article#listTickets table td:nth-child(2) ul, section#comments article ul {
+    display: flex;
+    margin-top: 10px;
+}
+
+article#listTickets table td:nth-child(2) ul li, section#comments article ul li {
+    list-style-type: none;
+}
+
+article#listTickets table td:nth-child(2) ul li + li, section#comments article ul li + li {
+    border-left: 1px outset #c4c4c4;
+}
+
+article#listTickets table td:nth-child(2) ul li a, section#comments article.comment ul li a {
+    color: #b81e44;
+    text-decoration: none;
+    font-size: 0.8em;
+    padding: 0 5px;
+}
+
+article#listTickets table td:nth-child(2) ul li a:hover, section#comments article.comment ul li a:hover {
+    color: #7b303e;
+    text-decoration: underline;
+}
+
+/* Cadre des activités du blog */
+#activitiesBlog {
+    min-width: 13%;
+    text-align: center;
+    margin: 15px 15px 15px 5px;
+    box-shadow: 0 0 5px #000;
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 5px;
+}
+
+#activitiesBlog p#TicketModifiy {
+    margin-top: 20px;
+}
+
+#activitiesBlog .infoModificationChapitre {
+    font-weight: bold;
+}
+
+/* Commentaires signaler */
+#activitiesBlog form {
+    margin: 15px 0 50px 0;
+    border-radius: 10px;
+    background-color: rgba(255, 0, 0, 0.8);
+    padding: 5px;
+    font-weight: bold;
+}
+
+#activitiesBlog form input[type="submit"] {
+    margin-top: 10px;
+}
+
+/* Page chapitre */
+#ticket h1 {
+    text-align: center;
+}
+
+#formTicket form {
+    width: 90%;
+    margin: 0 auto;
+    text-align: center;
+}
+
+#formTicket p {
+    width: 80%;
+    margin: 20px auto 0 auto;
+}
+
+#formTicket input[type="text"] {
+    width: 100%;
+    height: 30px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 0 5px 2px #ccc;
+    padding: 3px;
+    font-size: 1.1em;
+}
+
+/* Commentaires */
+#comments {
+    background-color: #fff;
+    width: 80%;
+    margin: 1% auto;
+    padding: 1% 0;
+    box-shadow: 0 0 5px #000;
+    border-radius: 5px;
+}
+
+#comments h1 {
+    font-size: 0.9em;
+    text-align: center;
+    padding: 1% 0;
+}
+
+#comments h1 span {
+    font-size: 1.8em;
+}
+
+#comments article {
+    width: 70%;
+    margin: 0 auto;
+    padding: 10px 15px;
+}
+
+#comments article + article {
+    border-top: 1px inset #ccc;
+}
+
+#comments article.comment:nth-child(even) {
+    background-color: #f1f1f1;
+}
+
+.headerCommentaire {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 10px 10px 10px;
+    border-bottom: 1px dotted #999;
+}
+
+.contentComment {
+    padding-top: 10px;
+}
+
+/* Commentaires signaler */
+section#comments article.commentAlert {
+    background-color: #aa0000;
+}
+
+section#comments article.commentAlert ul li a {
+    color: #c4c4c4;
+    text-decoration: none;
+    font-size: 0.8em;
+    padding: 0 5px;
+}
+
+section#comments article.commentAlert ul li a:hover {
+    text-decoration: underline;
+}

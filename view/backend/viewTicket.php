@@ -3,13 +3,13 @@
 * automatiquement à la selection d'un chapitre pour sa modification     *
 **********************************************************************-->
 
-<span class="lienPage"><a href="admin.php">Voir la liste des chapitres</a></span> <!-- Lien vers la liste des chapitres -->
+<span class="linkPage"><a href="admin.php">Voir la liste des chapitres</a></span> <!-- Lien vers la liste des chapitres -->
 
-<section id="chapitre">
+<section id="ticket">
 
     <h1><?= $titlePage['titleSection']; ?></h1>
 
-    <div id="formulaireChapitre">
+    <div id="formTicket">
 
         <form method="POST" action="admin.php?action=ticket">
 
@@ -17,7 +17,7 @@
             <p>
                 <label for="titleTicket"><?= $titlePage['titleTicket']; ?></label><br>
                 <input type="text" name="titleTicket" id="titleTicket"
-                <?= 'value="' . $dataTicket['title'] . '"'; ?>
+                <?php if(isset($_GET['idTicket'])) { echo 'value="' . $ticket->title() . '"'; } ?>
                 required>
             </p>
 
@@ -25,7 +25,7 @@
             <p>
                 <label for="contentTicket"><?= $titlePage['labelContentTicket']; ?></label><br>
                 <textarea name="contentTicket">
-                <?= $dataTicket['content']; ?>
+                    <?php if(isset($_GET['idTicket'])) { echo $ticket->content(); } ?>
                 </textarea>
             </p>
 
@@ -46,7 +46,7 @@
                 }
                 ?>
 
-                <input type="submit" class="lienPage" value="<?= $titlePage['buttonSend']; ?>"> <!-- Bouton d'envoi du chapitre -->
+                <input type="submit" class="linkPage" value="<?= $titlePage['buttonSend']; ?>"> <!-- Bouton d'envoi du chapitre -->
             </p>
 
         </form>

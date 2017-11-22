@@ -7,68 +7,67 @@
 $this->setTitle('Administration - Billet simple pour l\'Alaska');
 ?>
 
-<span class="lienPage"><a href="admin.php?action=ticket">Ajouter un chapitre</a></span> <!-- Lien d'ajout d'un chapitre -->
+<span class="linkPage"><a href="admin.php?action=ticket">Ajouter un chapitre</a></span> <!-- Lien d'ajout d'un chapitre -->
 
-<section id="accueilAdmin"> <!-- Section qui affichera la liste des chapitres, ainsi que les derniers activités du blog -->
+<section id="indexAdmin"> <!-- Section qui affichera la liste des chapitres, ainsi que les derniers activités du blog -->
 
     <?php
     if($tickets != null)
     {
     ?>
-    <article id="listeChapitres"> <!-- Liste des chapitres -->
+    <article id="listTickets"> <!-- Liste des chapitres -->
 
         <form method="post" action="admin.php?action=delete">
 
-            <div id="blocTable">
+            <div id="frameTable">
                 <table>
 
                 <?php
-                $idIncrement = 0; // Variable qui sera incrémenter à chaque passage dans la boucle et permettra de créer un array d'id
+                //$idIncrement = 0; // Variable qui sera incrémenter à chaque passage dans la boucle et permettra de créer un array d'id
                 // Boucle d'affichage des chapitres
-                foreach($tickets as $areaTicket) :
+                for($i = 0; $i < count($tickets); $i++) :
                 ?>
                     <tr>
                         <td>
-                            <input type="checkbox" name="idTicket[<?= $idIncrement; ?>]" id="idTicket" value="<?= $areaTicket['id']; ?>"> <!-- Case à cocher -->
-                            <?php $idIncrement++; ?>
+                            <input type="checkbox" name="idTicket[<?= $i; ?>]" id="idTicket" value="<?= $tickets[$i]->id(); ?>"> <!-- Case à cocher -->
                         </td>
 
                         <td>
                             <!-- Titre du chapitre -->
-                            <a href="admin.php?action=ticket&change=on&idTicket=<?= $areaTicket['id']; ?>" class="titreChapitre"><?= ucfirst($areaTicket['title']); ?></a>
+                            <a href="admin.php?action=ticket&change=on&idTicket=<?= $tickets[$i]->id(); ?>" class="titleTicket"><?= $tickets[$i]->title(); ?></a>
 
                             <!-- Contenu du chapitre couper -->
-                            <p><?= $areaTicket['content']; ?></p>
+                            <p><?= $tickets[$i]->content(); ?></p>
 
                             <!-- Lien d'administration des chapitres -->
                             <ul>
-                                <li><a href="admin.php?action=ticket&change=on&idTicket=<?= $areaTicket['id']; ?>">Modifier</a></li>
-                                <li><a href="admin.php?action=delete&deleteTicket=on&idTicket=<?= $areaTicket['id']; ?>">Supprimer</a></li>
-                                <li><a href="admin.php?action=comment&comment=on&idTicket=<?= $areaTicket['id']; ?>&nbComments=<?= $areaTicket['nbComments']; ?>">Afficher commentaire(s)</a></li>
+                                <li><a href="admin.php?action=ticket&change=on&idTicket=<?= $tickets[$i]->id(); ?>">Modifier</a></li>
+                                <li><a href="admin.php?action=delete&deleteTicket=on&idTicket=<?= $tickets[$i]->id(); ?>">Supprimer</a></li>
+                                <li><a href="admin.php?action=comment&comment=on&idTicket=<?= $tickets[$i]->id(); ?>&nbComments=<?= $nbComments[$i]; ?>">Afficher commentaire(s)</a></li>
                             </ul>
 
                         </td>
 
                         <td>
-                            <p><?= $areaTicket['dateTimeAddTicket']; ?></p> <!-- Date et heure d'ajout du chapitres -->
+                            <p><?= $tickets[$i]->dateTimeAdd(); ?></p> <!-- Date et heure d'ajout du chapitres -->
                         </td>
 
                         <td>
-                            <?= $areaTicket['nbComments']; ?> Commentaire(s) <!-- Nombre de commentaires du chapitres -->
+                             <?= $nbComments[$i]; ?> Commentaire(s) <!-- Nombre de commentaires du chapitres -->
                         </td>
                     </tr>
-                <?php endforeach; ?> <!-- Fin de la boucle -->
+                <?php endfor; ?> <!-- Fin de la boucle -->
 
                 </table>
             </div>
 
             <input type="hidden" name="deleteTicket" value="on"> <!-- Champ cacher qui permettra de valider la suppression de chapitre(s) -->
-            <input type="submit" class="lienPage" value="Supprimer"> <!-- Bouton de suppression de chapitre(s) -->
+            <input type="submit" class="linkPage" value="Supprimer"> <!-- Bouton de suppression de chapitre(s) -->
         </form>
 
     </article> <!-- /Liste des chapitres -->
 
-    <aside id="activitesBlog"> <!-- Derniers activités du blog -->
+    <aside id="activitiesBlog"> <!-- Derniers activités du blog -->
 
         <?php
         if($nbCommentAlert != 0)
@@ -83,7 +82,7 @@ $this->setTitle('Administration - Billet simple pour l\'Alaska');
                 <input type="hidden" name="action" value="comment"> <!-- Permettra de faire apparaitre les commentaires -->
                 <input type="hidden" name="alertComments" value="on">
                 <input type="hidden" name="nbComments" value="<?= $nbCommentAlert; ?>">
-                <input type="submit" class="lienPage" value="Visualiser le commentaire">
+                <input type="submit" class="linkPage" value="Visualiser le commentaire">
             <?php
             }
             else
@@ -93,7 +92,7 @@ $this->setTitle('Administration - Billet simple pour l\'Alaska');
                 <input type="hidden" name="action" value="comment"> <!-- Permettra de faire apparaitre les commentaires -->
                 <input type="hidden" name="alertComments" value="on">
                 <input type="hidden" name="nbComments" value="<?= $nbCommentAlert; ?>">
-                <input type="submit" class="lienPage" value="Visualiser les commentaires">
+                <input type="submit" class="linkPage" value="Visualiser les commentaires">
             <?php
             }
             ?>
@@ -102,12 +101,13 @@ $this->setTitle('Administration - Billet simple pour l\'Alaska');
         }
         ?>
 
-        <h1>Dernières Activités :</h1>
+        <h1>Dernières modifications :</h1>
         <!-- Affichage du dernier chapitre modifier -->
         <p id="TicketModify">
-            Le <span class="infoModificationChapitre"><?= $lastTicketModify['dateTimeLastModified']; ?></span><br>
-            Vous avez modifier le chapitre<br>
-            <span class="infoModificationChapitre"><?= $lastTicketModify['title']; ?></span>
+            Le chapitre :<br>
+            <span class="infoModificationChapitre"><?= $lastTicketModify->title(); ?></span><br>
+            à était modifier le :<br>
+            <span class="infoModificationChapitre"><?= $lastTicketModify->dateTimeLastModified(); ?></span>
         </p>
 
     </aside> <!-- /Derniers activités du blog -->

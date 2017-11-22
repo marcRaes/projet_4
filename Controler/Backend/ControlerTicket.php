@@ -26,14 +26,14 @@ class ControlerTicket
             $titlePage['buttonSend'] = 'Modifier le chapitre'; // Texte du bouton d'envoi
 
             // intval renvoie la valeur numérique du paramètre ou 0 en cas d'échec
-            $get['idTicket'] = intval($get['idTicket']);
+            $idTicket = intval($get['idTicket']);
 
-            if($get['idTicket'] != 0)
+            if($idTicket != 0)
             {
                 // Appel la fonction de récupération d'un chapitre
-                $dataTicket = $this->ticketManager()->getTicket($get['idTicket']);
+                $ticket = $this->ticketManager()->getTicket($idTicket);
 
-                $view->setTitle('Modification du chapitre : ' . $dataTicket['title'] . ' - Billet simple pour l\'Alaska'); // Titre de la page
+                $view->setTitle('Modification du chapitre : ' . $ticket->title() . ' - Billet simple pour l\'Alaska'); // Titre de la page
             }
             else
             {
@@ -41,7 +41,7 @@ class ControlerTicket
             }
         }
         else {
-            $dataTicket = null;
+            $ticket = null;
 
             $view->setTitle('Ajout d\'un nouveaux chapitre - Billet simple pour l\'Alaska'); // Titre de la page
             // Définition du texte de la page pour l'ajout d'un chapitre
@@ -52,7 +52,7 @@ class ControlerTicket
         }
 
         $view->generate(array(
-            'dataTicket' => $dataTicket,
+            'ticket' => $ticket,
             'titlePage' => $titlePage
         ));
     }

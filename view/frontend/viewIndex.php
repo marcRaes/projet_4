@@ -1,25 +1,36 @@
 <?php $this->setTitle('Le blog de Jean Forteroche - Billet simple pour l\'Alaska'); ?>
 
-<div id="Chapitres">
+<section id="indexBlog">
+    <article>
+        <p><img src="contenu/images/admin.jpg"></p>
+        <p>
+            Bonjour à tout mes fans, vous êtes ici sur mon nouveau Blog que j'ai décider d'ouvrir afin de vous faire découvrir mon nouveau roman <span>"Billet simple pour l'Alaska"</span>.<br>
+            Je publierais ce roman par chapitre directement sur ce blog vous faisant ainsi découvrir celui-ci en avant première.<br>
+            <span>Merci à tous et bonne lecture.</span>
+        </p>
+    </article>
 
-    <p>Liste des chapitres :</p>
+    <div id="listTicket">
 
-    <table>
-    <?php
-    // Boucle d'affichage des chapitres
-    foreach($dataTickets as $areaTicket) :
-    ?>
-        <tr>
-            <td>
-                <!-- Titre du chapitre -->
-                <a href="index.php?action=ticket&id=<?php echo $areaTicket['id']; ?>" class="titreChapitre"><?php echo ucfirst($areaTicket['title']); ?></a>
-            </td>
+        <h1>Chapitres du roman :</h1>
 
-            <td>
-                <p><?php echo $areaTicket['dateTimeAddTicket']; ?></p> <!-- Date et heure d'ajout du chapitres -->
-            </td>
-        </tr>
-    <?php endforeach; ?> <!-- Fin de la boucle -->
+        <article>
 
-    </table>
-</div>
+            <?php
+            // Boucle d'affichage des chapitres
+            for($i = 0; $i < count($tickets); $i++) :
+            ?>
+                <div class="ticket">
+
+                    <a href="index.php?action=ticket&id=<?= $tickets[$i]->id(); ?>">
+                        <span class="titleTicket"><?= $tickets[$i]->title(); ?></span> <!-- Titre du chapitre -->
+                        <span class="dateTime">Ajouté le : <span class="strong"><?= $tickets[$i]->dateTimeAdd(); ?></span></span> <!-- Date et heure d'ajout du chapitres -->
+                    </a>
+
+                </div>
+            <?php endfor; ?> <!-- Fin de la boucle -->
+
+        </article>
+
+    </div>
+</section>

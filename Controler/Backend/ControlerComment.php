@@ -40,16 +40,16 @@ class ControlerComment
         if(($get['idTicket'] != 0) && ($get['nbComments'] != 0))
         {
             // Appel la méthode de récupération des commentaires d'un chapitre
-            $dataComments = $this->commentManager()->getListCommentsTicket($get['idTicket']);
+            $comments = $this->commentManager()->getListCommentsTicket($get['idTicket']);
 
             // Définition du texte de la page
-            if(count($dataComments) == 1)
+            if(count($comments) == 1)
             {
-                $titleSection = 'Voici le commentaire pour le chapitre : <br><span>' . $dataComments[0]['titleTicket'] . '</span>';
+                $titleSection = 'Voici le commentaire pour le chapitre : <br><span>' . $comments[0]->titleTicket() . '</span>';
             }
-            else if(count($dataComments) > 1)
+            else if(count($comments) > 1)
             {
-                $titleSection = 'Voici les commentaires pour le chapitre :<br><span>' . $dataComments[0]['titleTicket'] . '</span>';
+                $titleSection = 'Voici les commentaires pour le chapitre :<br><span>' . $comments[0]->titleTicket() . '</span>';
             }
             else // Si le nombre de commentaire et égale à 0
             {
@@ -61,7 +61,7 @@ class ControlerComment
 
             // Appel la méthode qui génère la vue
             $view->generate(array(
-                'dataComments' => $dataComments,
+                'comments' => $comments,
                 'titleSection' => $titleSection
             ));
         }
@@ -75,15 +75,15 @@ class ControlerComment
     private function displayCommentsSignal()
     {
         // Appel la méthode de récupération des commentaires signaler
-        $dataComments = $this->commentManager()->getListCommentsAlert();
+        $comments = $this->commentManager()->getListCommentsAlert();
 
-        if(count($dataComments) == 1)
+        if(count($comments) == 1)
         {
-            $titleSection = 'Vous avez ' . count($dataComments) . ' commentaire signaler :';
+            $titleSection = 'Vous avez ' . count($comments) . ' commentaire signaler :';
         }
-        else if(count($dataComments) > 1)
+        else if(count($comments) > 1)
         {
-            $titleSection = 'Vous avez ' . count($dataComments) . ' commentaires signaler :';
+            $titleSection = 'Vous avez ' . count($comments) . ' commentaires signaler :';
         }
         else // Si le nombre de commentaire et égale à 0
         {
@@ -95,7 +95,7 @@ class ControlerComment
 
         // Appel la méthode qui génère la vue
         $view->generate(array(
-            'dataComments' => $dataComments,
+            'comments' => $comments,
             'titleSection' => $titleSection
         ));
     }

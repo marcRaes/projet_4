@@ -1,11 +1,11 @@
 <?php
 $this->setTitle('Page de connexion - Billet simple pour l\'Alaska'); ?>
 
-<div id="formulaireConnexion">
-
-<?php if(isset($_SESSION['erreurBlog'])) { echo $_SESSION['erreurBlog']; } ?>
+<section id="formConnectionRegistration">
 
     <form method="post" action="index.php?action=connection">
+
+        <?php if(isset($_SESSION['errorConnect'])) { echo '<p class="errorBlog">' . $_SESSION['errorConnect'] . '</p>'; } ?>
 
         <p>
             <label for="emailAdress">Votre adresse E-Mail :</label><br>
@@ -18,9 +18,9 @@ $this->setTitle('Page de connexion - Billet simple pour l\'Alaska'); ?>
         </p>
 
         <p>
-            <input type="submit" value="connexion">
+            <input type="submit" class="buttonBlog" value="connexion">
         </p>
 
     </form>
 
-</div>
+</section>

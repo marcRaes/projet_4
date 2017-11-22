@@ -1,0 +1,332 @@
+section { /* Personnalise les sections des pages */
+    margin: 30px;
+    padding: 10px;
+    background-color: #fff;
+    border-radius: 10px;
+}
+
+.strong {
+    font-weight: bold;
+}
+
+/* Personnalise les formulaires du frontend */
+form {
+    text-align: center;
+}
+
+form label {
+    font-size: 1.2em;
+}
+
+.buttonBlog {
+    background-color: #0c648a;
+    padding: 10px;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    text-decoration: none;
+    box-shadow: inset 0 0 10px #000;
+    text-transform: uppercase;
+    transition: all 0.5s;
+}
+
+.buttonBlog:hover {
+    background-color: #002637;
+    box-shadow: inset -3px -3px 5px #000;
+    text-shadow: 2px 2px 1px #222222;
+}
+
+/* Page d'accueil du Blog */
+#indexBlog {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#indexBlog article:first-child {
+    width: 50%; /* Dimension du cadre d'intro */
+}
+
+#indexBlog article:first-child p:first-child {
+    width: 150px;
+    margin: 10px auto;
+}
+
+#indexBlog article:first-child img {
+    width: 100%;
+    vertical-align: middle;
+    box-shadow: 0 0 10px #000;
+    border-radius: 5px;
+}
+
+#indexBlog article:first-child p:last-child {
+    width: 63%;
+    margin: 0 auto;
+    text-align: center;
+    font-size: 1.2em;
+    letter-spacing: 0.1em;
+}
+
+#indexBlog article:first-child p:last-child span {
+    font-weight: bold;
+}
+
+#indexBlog article:first-child p:last-child span:last-child {
+    display: inline-block;
+    margin-top: 20px;
+    font-size: 1.5em;
+}
+
+/* Listes des chapitres */
+#listTicket {
+    width: 60%;
+}
+
+#listTicket h1 {
+    text-align: center;
+    padding: 20px 0;
+}
+
+#listTicket article {
+    overflow-y: scroll;
+    width: 100%;
+    height: 550px;
+    border: 1px solid #999;
+}
+
+.ticket {
+    display: flex;
+    justify-content: space-between;
+}
+
+.ticket:nth-child(odd) { /* Couleur de fond des éléments impaire */
+    background-color: rgba(204, 204, 204, 0.4);
+}
+
+.ticket:nth-child(even) { /* Couleur de fond des éléments paire */
+    background-color: #fff;
+}
+
+.ticket a {
+    position: relative;
+    display: block;
+    width: 100%;
+    padding: 20px;
+    color: #000;
+    letter-spacing: 0.1em;
+    text-decoration: none;
+    transition: all 0.5s;
+}
+
+.ticket a:hover {
+    background-color: rgba(61, 103, 153, 0.3); /* Couleur de fond lors du passage de la souris */
+    padding: 20px 50px;
+}
+
+.ticket a:hover span.titleTicket {
+    text-decoration: underline;
+}
+
+.titleTicket {
+    font-family: Pattaya, sans-serif;
+    font-size: 1.2em;
+}
+
+.ticket span.dateTime {
+    position: absolute;
+    right: 20px;
+}
+
+.ticket + .ticket { /* Selectionne tout les élements ticket sauf le premier */
+    border-top: 1px dotted #999; /* Place une bordure pointillé sur le haut des tickets */
+}
+
+/* Pages affichages d'un article et de ses commentaires */
+#sectionTicket { /* Section affichage d'un chapitre */
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+#displayTicket {
+    width: 70%;
+}
+
+#displayTicket p {
+    font-size: 0.9em;
+}
+
+#displayTicket h1 {
+    margin: 20px 0;
+    font-size: 2.5em;
+    text-align: center;
+}
+
+#contentTicket {
+    width: 90%;
+    margin: 0 auto;
+    text-align: justify;
+}
+
+ /* Les commentaires du chapitre */
+#displayComments {
+    width: 27%;
+    padding: 15px;
+    border-radius: 10px;
+}
+
+#displayComments h1 {
+    text-align: center;
+    font-size: 1.5em;
+    margin: 20px 0;
+}
+
+#listComments {
+    overflow-y: scroll;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    height: 700px;
+}
+
+.comment, .commentSignal { /* Pour les commentaires ainsi que les commentaires signaler */
+    padding: 10px;
+}
+
+.comment:nth-child(odd) { /* Couleur de fond sur les éléments impaire des commentaires */
+    background-color: rgba(204, 204, 204, 0.4);
+}
+
+.comment:nth-child(even) { /* Couleur de fond sur les éléments paire des commentaires */
+    background-color: #fff;
+}
+
+/* Commentaires signaler */
+.commentSignal:nth-child(odd), .commentSignal:nth-child(even) {
+    border: 5px solid red; /* Place une bordure sur les commentaires signaler */
+    border-radius: 5px;
+}
+
+.headerComment span {
+    font-size: 0.9em;
+}
+
+.headerComment span:first-child {
+    float: left;
+}
+
+.headerComment span span {
+    margin-left: 5px;
+}
+
+.headerComment span:last-child {
+    float: right;
+}
+
+.contentComment {
+    margin-top: 50px;
+    clear: both;
+}
+
+/* Bouton de signalisation d'un commentaire */
+.comment form input[type="submit"], .commentSignal input[type="submit"] {
+    background-color: #E80D00;
+    padding: 8px 10px;
+    margin: 20px 0;
+}
+
+/* Transforme le bouton de signalisation d'un commentaire */
+.commentSignal form input[type="submit"] {
+    background-color: red;
+    cursor: default;
+    box-shadow: inset -3px -3px 5px #000;
+    text-shadow: 2px 2px 1px #222222;
+}
+
+/* Hover du bouton de signalisation d'un commentaire */
+.comment form input[type="submit"]:hover {
+    background-color: #A80D00;
+}
+
+/* Cadre pour poster un commentaire */
+#registrationPostComment {
+    width: 90%;
+    margin: 50px auto;
+}
+
+#registrationPostComment h1 {
+    margin: 20px 0;
+    font-size: 2.5em;
+    text-align: center;
+}
+
+#textPost {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.errorBlog {
+    color: red;
+    margin-bottom: 20px;
+}
+
+#fieldsSeized p {
+    display: inline-block;
+}
+
+#fieldsSeized p:last-child {
+    margin-left: 8%;
+}
+
+#fieldsSeized input {
+    width: 200px;
+    height: 20px;
+    padding: 3px;
+    margin-left: 5px;
+    border: 1px solid #ccc;
+    box-shadow: 0 0 5px #ccc;
+    border-radius: 5px;
+}
+
+#seizedComment {
+    width: 90%;
+    margin: 40px auto;
+}
+
+#seizedComment label {
+    display: block;
+    text-align: center;
+}
+
+#registrationPostComment input[type="email"]:hover, #registrationPostComment input[type="password"]:hover {
+    box-shadow: 0 0 5px #004DFF;
+}
+
+/* Page de connexion */
+#formConnectionRegistration {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 62vh;
+}
+
+#formConnectionRegistration form {
+    box-shadow: 0 0 5px #ccc;
+    background-color: #F3F3F3;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+#formConnectionRegistration form p {
+    margin-top: 10px;
+}
+
+#formConnectionRegistration form input[type="email"], #formConnectionRegistration form input[type="password"] {
+    height: 20px;
+    width: 250px;
+    margin-top: 5px;
+    box-shadow: 0 0 5px #ccc;
+    border: none;
+    padding: 3px;
+    border-radius: 5px;
+}

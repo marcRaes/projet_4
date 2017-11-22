@@ -1,5 +1,6 @@
 <?php
 require_once('Manager.php');
+require_once('Ticket.php');
 
 // Manager de la class Ticket
 class TicketsManager extends Manager
@@ -12,12 +13,12 @@ class TicketsManager extends Manager
 
         // Prépare la requete d'ajout d'un nouveau chapitre
         $request = $bdd->prepare('INSERT INTO tickets(title, content, dateTimeAdd) VALUES(:title, :content, :dateTimeAdd)');
-            // Execute la requete d'ajout du chapitre
-        $request->execute(array(
-            'title' => $ticket->title(),
-            'content' => $ticket->content(),
-            'dateTimeAdd' => $ticket->dateTimeAdd()
-        )) or die(print_r($request->errorInfo(), TRUE)); // or die permet d'afficher les erreurs de MySql
+        $request->bindValue(':title', $ticket->title());
+        $request->bindValue(':content', $ticket->content());
+        $request->bindValue(':dateTimeAdd', $ticket->dateTimeAdd());
+
+        // Execute la requete d'ajout du chapitre
+        $request->execute() or die(print_r($request->errorInfo(), TRUE)); // or die permet d'afficher les erreurs de MySql
     }
 
     // Méthode de modification d'un chapitre
@@ -28,13 +29,13 @@ class TicketsManager extends Manager
 
         // Prépare la requete de modification d'un chapitre
         $request = $bdd->prepare('UPDATE tickets SET title = :newTitle, content = :newContent, dateTimeLastModified = :dateTimeModified WHERE id = :idTicket');
+        $request->bindValue(':idTicket', $ticket->id(), PDO::PARAM_INT);
+        $request->bindValue(':title', $ticket->title());
+        $request->bindValue(':content', $ticket->content());
+        $request->bindValue(':dateTimeAdd', $ticket->dateTimeAdd());
+
         // Lance la requéte avec les données reçu
-        $request->execute(array(
-            'idTicket' => $ticket->id(),
-            'newTitle' => $ticket->title(),
-            'newContent' => $ticket->content(),
-            'dateTimeModified' => $ticket->dateTimeLastModified()
-        )) or die(print_r($request->errorInfo(), TRUE)); // or die permet d'afficher les erreurs de MySql
+        $request->execute() or die(print_r($request->errorInfo(), TRUE)); // or die permet d'afficher les erreurs de MySql
     }
 
     // Méthode de suppression d'un chapitre
@@ -44,8 +45,11 @@ class TicketsManager extends Manager
         $bdd = $this->bddConnect();
 
         // Prépare la requéte pour la suppresion d'un chapitre
-        $request = $bdd->prepare('DELETE FROM tickets WHERE id = ?');
-        $request->execute(array($id)) or die(print_r($request->errorInfo(), TRUE));
+        $request = $bdd->prepare('DELETE FROM tickets WHERE id = :idTicket');
+        $request->bindValue(':idTicket', $id, PDO::PARAM_INT);
+
+        // Execute la requéte
+        $request->execute() or die(print_r($request->errorInfo(), TRUE));
     }
 
     // Méthode de récupération d'un chapitre
@@ -55,13 +59,17 @@ class TicketsManager extends Manager
         $bdd = $this->bddConnect();
 
         // Prépare la requéte de récupération du chapitre demander
-        $request = $bdd->prepare('SELECT title, content, DATE_FORMAT(dateTimeAdd, \'%d-%m-%Y à %Hh%i\') AS dateTimeAdd, DATE_FORMAT(dateTimeLastModified, \'%d-%m-%Y à %Hh%i\') AS dateTimeModified FROM tickets WHERE id = ?');
+        $request = $bdd->prepare('SELECT title, content, DATE_FORMAT(dateTimeAdd, \'%d-%m-%Y à %Hh%i\') AS dateTimeAdd, DATE_FORMAT(dateTimeLastModified, \'%d-%m-%Y à %Hh%i\') AS dateTimeModified FROM tickets WHERE id = :id');
+        $request->bindValue(':id', $id, PDO::PARAM_INT);
+
         // Execute la requéte de récupération avec la variable contenu dans l'URL
-        $request->execute(array($id)) or die(print_r($request->errorInfo(), TRUE)); // or die permet d'afficher les erreurs de MySql
+        $request->execute() or die(print_r($request->errorInfo(), TRUE)); // or die permet d'afficher les erreurs de MySql
 
         $data = $request->fetch(); // On assemble les données reçu
 
-        return $data; // Retourne le chapitre demander
+        $ticket = new Ticket($data);
+
+        return $ticket; // Retourne le chapitre demander
     }
 
     // Méthode de récupération de tous les chapitres
@@ -71,28 +79,17 @@ class TicketsManager extends Manager
         $bdd = $this->bddConnect();
 
         // Retourne la liste de tous les chapitres
-        $request = $bdd->query('SELECT id, title, content, DATE_FORMAT(dateTimeAdd, \'%d-%m-%Y à %Hh%i\') AS dateTimeAddTicket FROM tickets ORDER BY dateTimeAdd DESC') or die(print_r($request->errorInfo(), TRUE)); // or die permet d'afficher les erreurs de MySql
-
-        // Crée le manager des commentaires
-        $commentManager = new CommentsManager();
+        $request = $bdd->query('SELECT id, title, content, DATE_FORMAT(dateTimeAdd, \'%d-%m-%Y à %Hh%i\') AS dateTimeAdd FROM tickets ORDER BY dateTimeAdd DESC') or die(print_r($request->errorInfo(), TRUE)); // or die permet d'afficher les erreurs de MySql
 
         // On assemble les données reçu en récupérant le nombre de commentaires de chaque chapitres
-        while($data = $request->fetchAll())
-        {
-            for($i = 0; $i < count($data); $i++)
-            {
-                $ticket[$i]['id'] = $data[$i]['id'];
-                $ticket[$i]['title'] = $data[$i]['title'];
-                $ticket[$i]['content'] = $data[$i]['content'];
-                $ticket[$i]['dateTimeAddTicket'] = $data[$i]['dateTimeAddTicket'];
+        $data = $request->fetchAll();
 
-                // Récupére et stocke le nombre de commentaires de chaque chapitres
-                $nbComments = $commentManager->getNbComments($data[$i]['id']);
-                $ticket[$i]['nbComments'] = $nbComments['nbComments'];
-            }
+        for($i = 0; $i < count($data); $i++)
+        {
+            $ticket[$i] = new Ticket($data[$i]);
         }
 
-        return $ticket; // Retourne les chapitres ainsi que leur nombres de commentaires contenu dans la BDD
+        return $ticket; // Retourne les chapitres contenu dans la BDD
     }
 
     // Méthode de récupération du dernier chapitre modifier
@@ -106,6 +103,8 @@ class TicketsManager extends Manager
 
         $data = $request->fetch(); // On assemble les données reçu
 
-        return $data; // Retourne le dernier chapitre modifier
+        $ticket = new Ticket($data);
+
+        return $ticket; // Retourne le dernier chapitre modifier
     }
 }

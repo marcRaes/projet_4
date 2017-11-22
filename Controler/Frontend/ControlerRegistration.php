@@ -55,7 +55,7 @@ class ControlerRegistration
                                 $connectionMember = $this->memberManager()->connectionMember($member);
 
                                 // Enregistre l'id du membre dans une session afin de le connecter automatiquement
-                                $_SESSION['idMember'] = $connectionMember['id'];
+                                $_SESSION['id'] = $connectionMember['id'];
                                 // Garde l'adresse email du membre dans une session
                                 $_SESSION['emailAdress'] = $connectionMember['emailAdress'];
                                 // On sauvegarde son statut dans une session afin de s'assurer qu'il n'accede pas à l'administration du blog
@@ -66,32 +66,32 @@ class ControlerRegistration
                             }
                             else
                             {
-                                $_SESSION['erreurBlog'] = 'Un membre est déja inscrit avec cette adresse email'; // Retourne le message d'erreur
+                                $_SESSION['errorRegistration'] = 'Un membre est déja inscrit avec cette adresse email'; // Retourne le message d'erreur
                             }
                         }
                         else
                         {
-                            $_SESSION['erreurBlog'] = 'Le mot de passe doit faire au moins 6 caractères'; // Retourne le message d'erreur
+                            $_SESSION['errorRegistration'] = 'Le mot de passe doit faire au moins 6 caractères'; // Retourne le message d'erreur
                         }
                     }
                     else
                     {
-                        $_SESSION['erreurBlog'] = 'Merci de confirmer votre mot de passe'; // Retourne le message d'erreur
+                        $_SESSION['errorRegistration'] = 'Merci de confirmer votre mot de passe'; // Retourne le message d'erreur
                     }
                 }
                 else
                 {
-                    $_SESSION['erreurBlog'] = 'Merci de confirmer votre adresse email'; // Retourne le message d'erreur
+                    $_SESSION['errorRegistration'] = 'Merci de confirmer votre adresse email'; // Retourne le message d'erreur
                 }
             }
             else
             {
-                $_SESSION['erreurBlog'] = 'L\'adresse email saisi n\'est pas valide'; // Retourne le message d'erreur
+                $_SESSION['errorRegistration'] = 'L\'adresse email saisi n\'est pas valide'; // Retourne le message d'erreur
             }
         }
         else
         {
-            $_SESSION['erreurBlog'] = 'Les champs ne peuvent pas être vides !'; // Retourne le message d'erreur
+            $_SESSION['errorRegistration'] = 'Les champs ne peuvent pas être vides !'; // Retourne le message d'erreur
         }
     }
 

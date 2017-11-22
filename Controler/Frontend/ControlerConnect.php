@@ -38,38 +38,38 @@ class ControlerConnect
                         if(password_verify($dataMember['password'], $stateConnection['password'])) // Vérifie si le mot de passe est correcte
                         {
                             // Enregistre l'id du membre dans une session afin de le connecter automatiquement
-                            $_SESSION['idMember'] = $stateConnection['id'];
+                            $_SESSION['id'] = $stateConnection['id'];
                             // Garde l'adresse email du membre dans une session
                             $_SESSION['emailAdress'] = $stateConnection['emailAdress'];
                             // On sauvegarde son statut dans une session afin de s'assurer qu'il n'accede pas à l'administration du blog
-                            $_SESSION['statusMember'] = $stateConnection['status'];
+                            $_SESSION['status'] = $stateConnection['status'];
 
                             // Redirige le membre vers index.php
                             header('Location:index.php');
                         }
                         else
                         {
-                            $_SESSION['erreurBlog'] = 'Mot de passe incorrecte'; // Retourne le message d'erreur
+                            $_SESSION['errorConnect'] = 'Mot de passe incorrecte'; // Retourne le message d'erreur
                         }
                     }
                     else
                     {
-                        $_SESSION['erreurBlog'] = 'Adresse email non reconnu'; // Retourne le message d'erreur
+                        $_SESSION['errorConnect'] = 'Adresse email non reconnu'; // Retourne le message d'erreur
                     }
                 }
                 else
                 {
-                    $_SESSION['erreurBlog'] = 'Le mot de passe doit faire au moins 6 caractères'; // Retourne le message d'erreur
+                    $_SESSION['errorConnect'] = 'Le mot de passe doit faire au moins 6 caractères'; // Retourne le message d'erreur
                 }
             }
             else
             {
-                $_SESSION['erreurBlog'] = 'L\'adresse email saisi n\'est pas valide'; // Retourne le message d'erreur
+                $_SESSION['errorConnect'] = 'L\'adresse email saisi n\'est pas valide'; // Retourne le message d'erreur
             }
         }
         else
         {
-            $_SESSION['erreurBlog'] = 'Votre adresse email ainsi que votre mot de passe sont obligatoire pour vous connecter';
+            $_SESSION['errorConnect'] = 'Votre adresse email ainsi que votre mot de passe sont obligatoire pour vous connecter';
         }
     }
 

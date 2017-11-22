@@ -12,11 +12,11 @@ class MemberManager extends Manager
 
         // Enregistre le nouveau membre
         $request = $bdd->prepare('INSERT INTO members(emailAdress, password, status) VALUES(:emailAdress, :password, :status)');
-        $request->execute(array(
-            'emailAdress' => $member->emailAdress(),
-            'password' => $member->password(),
-            'status' => 'contributeur'
-        )) or die(print_r($request->errorInfo(), TRUE));
+        $request->bindValue(':emailAdress', $member->emailAdress());
+        $request->bindValue(':password', $member->password());
+        $request->bindValue(':status', 'contributeur');
+
+        $request->execute() or die(print_r($request->errorInfo(), TRUE)); // or die permet d'afficher les erreurs de MySql
     }
 
     // Méthode de connexion du membre
@@ -25,8 +25,11 @@ class MemberManager extends Manager
         // Connexion à la BDD
         $bdd = $this->bddConnect();
 
-        $request = $bdd->prepare('SELECT id, emailAdress, password, status FROM members WHERE emailAdress = ?');
-        $request->execute(array($member->emailAdress())) or die(print_r($request->errorInfo(), TRUE));
+        $request = $bdd->prepare('SELECT id, emailAdress, password, status FROM members WHERE emailAdress = :emailAdress');
+        $request->bindValue(':emailAdress', $member->emailAdress());
+
+        $request->execute() or die(print_r($request->errorInfo(), TRUE)); // or die permet d'afficher les erreurs de MySql
+        
         $dataConnection = $request->fetch();
 
         return $dataConnection;

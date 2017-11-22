@@ -6,7 +6,7 @@ class Ticket
     private $_id;
     private $_title;
     private $_content;
-    private $_DateTimeAdd;
+    private $_dateTimeAdd;
     private $_dateTimeLastModified;
 
     // Le constructeur => Cette méthode permettra de créer un objet Chapitre à chaque instanciation de la classe

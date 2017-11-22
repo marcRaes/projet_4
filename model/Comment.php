@@ -91,38 +91,15 @@ class Comment
     }
 
     // Getter id => Renvoie l'attribut correspondant à l'ID du commentaire
-    public function id()
-    {
-        return $this->_id;
-    }
-
+    public function id() { return $this->_id; }
     // Getter content => Renvoie l'attribut correspondant au contenu du commentaire
-    public function content()
-    {
-        return $this->_content;
-    }
-
+    public function content() { return $this->_content; }
     // Getter dateTimeAdd => Renvoie l'attribut correspondant à la date et l'heure d'ajout du commentaire
-    public function dateTimeAdd()
-    {
-        return $this->_dateTimeAdd;
-    }
-
+    public function dateTimeAdd() { return $this->_dateTimeAdd; }
     // Getter idTicket => Renvoie l'attribut correspondant à l'id du chapitre
-    public function idTicket()
-    {
-        return $this->_idTicket;
-    }
-
+    public function idTicket() { return $this->_idTicket; }
     // Getter idMember => Renvoie l'attribut correspondant à l'id du membre ayant poster le commentaires
-    public function idMember()
-    {
-        return $this->_idMember;
-    }
-
+    public function idMember() { return $this->_idMember; }
     // Getter alert => Renvoie l'attribut permettant de savoir si un commentaire à était signaler ou socket_set_nonblock
-    public function alert()
-    {
-        return $this->_alert;
-    }
+    public function alert() { return $this->_alert; }
 }
