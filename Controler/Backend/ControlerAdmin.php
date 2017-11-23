@@ -28,7 +28,7 @@ class ControlerAdmin
             $nbComments[$i] = $this->commentManager()->getNbComments($tickets[$i]->id());
 
             // Passe le contenu des chapitres dans la méthode "cutText"
-            $tickets[$i]->setContent($this->cutText($tickets[$i]->content(), 180));
+            $tickets[$i]->setContent($this->cutText($tickets[$i]->content(), 140));
 
             // transforme la premiére lettre du titre du chapitre en majuscule
             $tickets[$i]->setTitle(ucfirst($tickets[$i]->title()));

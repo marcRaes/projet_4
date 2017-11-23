@@ -142,7 +142,7 @@ form label {
     border-top: 1px dotted #999; /* Place une bordure pointillé sur le haut des tickets */
 }
 
-/* Pages affichages d'un article et de ses commentaires */
+/* Pages affichages d'un chapitre et de ses commentaires */
 #sectionTicket { /* Section affichage d'un chapitre */
     display: flex;
     justify-content: space-between;
@@ -164,21 +164,22 @@ form label {
 }
 
 #contentTicket {
-    width: 90%;
+    width: 98%;
     margin: 0 auto;
     text-align: justify;
+    font-size: 1.2em;
 }
 
  /* Les commentaires du chapitre */
 #displayComments {
-    width: 27%;
-    padding: 15px;
+    width: 25vw;
+    padding: 5px;
     border-radius: 10px;
 }
 
 #displayComments h1 {
     text-align: center;
-    font-size: 1.5em;
+    font-size: 3vh;
     margin: 20px 0;
 }
 
@@ -207,25 +208,9 @@ form label {
     border-radius: 5px;
 }
 
-.headerComment span {
-    font-size: 0.9em;
-}
-
-.headerComment span:first-child {
-    float: left;
-}
-
-.headerComment span span {
-    margin-left: 5px;
-}
-
-.headerComment span:last-child {
-    float: right;
-}
-
 .contentComment {
-    margin-top: 50px;
-    clear: both;
+    margin-top: 10px;
+
 }
 
 /* Bouton de signalisation d'un commentaire */
@@ -307,7 +292,7 @@ form label {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 62vh;
+    min-height: 60%;
 }
 
 #formConnectionRegistration form {
@@ -315,6 +300,7 @@ form label {
     background-color: #F3F3F3;
     padding: 20px;
     border-radius: 10px;
+    height: 100%;
 }
 
 #formConnectionRegistration form p {
@@ -329,4 +315,93 @@ form label {
     border: none;
     padding: 3px;
     border-radius: 5px;
+}
+
+/* Media queries */
+@media screen and (max-width: 1024px) {
+    /* Page d'accueil du Blog */
+    #indexBlog {
+        flex-direction: column;
+    }
+
+    #indexBlog article:first-child {
+        display: flex;
+        width: 90%; /* Dimension du cadre d'intro */
+    }
+
+    #indexBlog article:first-child p:last-child {
+        width: 80%;
+    }
+
+    /* Listes des chapitres */
+    #listTicket {
+        width: 90%;
+    }
+
+    #listTicket article {
+        height: 400px;
+    }
+
+    /* Pages affichages d'un chapitre et de ses commentaires */
+    #sectionTicket { /* Section affichage d'un chapitre */
+        flex-direction: column;
+    }
+
+    #displayTicket {
+        width: 100%;
+    }
+
+    /* Les commentaires du chapitre */
+   #displayComments {
+       width: 90%;
+       margin: auto;
+   }
+}
+
+@media screen and (max-width: 991px) {
+    #fieldsSeized label {
+        display: block;
+    }
+}
+
+
+@media screen and (max-width: 768px) {
+    #indexBlog article:first-child {
+        display: block;
+        width: 100%;
+    }
+
+    #indexBlog article:first-child p:last-child {
+        width: 99%;
+    }
+}
+
+@media screen and (max-width: 590px) {
+    .ticket span.dateTime {
+        position: relative;
+        display: block;
+        right: 0;
+    }
+
+    .ticket a {
+        text-align: center;
+        padding: 10px;
+    }
+
+    .ticket span.titleTicket {
+        font-size: 5vw;
+    }
+
+    .ticket span:nth-child(2) {
+        font-size: 3.5vw;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    #formConnectionRegistration form label {
+        font-size: 20px;
+    }
+    #formConnectionRegistration form input[type="email"], #formConnectionRegistration form input[type="password"] {
+        width: 90%;
+    }
 }

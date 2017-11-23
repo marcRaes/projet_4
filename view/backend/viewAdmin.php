@@ -19,47 +19,45 @@ $this->setTitle('Administration - Billet simple pour l\'Alaska');
 
         <form method="post" action="admin.php?action=delete">
 
-            <div id="frameTable">
-                <table>
+            <div id="frameDisplayTickets">
 
-                <?php
-                //$idIncrement = 0; // Variable qui sera incrémenter à chaque passage dans la boucle et permettra de créer un array d'id
-                // Boucle d'affichage des chapitres
-                for($i = 0; $i < count($tickets); $i++) :
-                ?>
-                    <tr>
-                        <td>
-                            <input type="checkbox" name="idTicket[<?= $i; ?>]" id="idTicket" value="<?= $tickets[$i]->id(); ?>"> <!-- Case à cocher -->
-                        </td>
+                <div id="tableTickets">
+                    <?php
+                    // Boucle d'affichage des chapitres
+                    for($i = 0; $i < count($tickets); $i++) :
+                    ?>
+                        <div class="tableRowTicket">
 
-                        <td>
-                            <!-- Titre du chapitre -->
-                            <a href="admin.php?action=ticket&change=on&idTicket=<?= $tickets[$i]->id(); ?>" class="titleTicket"><?= $tickets[$i]->title(); ?></a>
+                            <div class="tableCellTicket">
+                                <input type="checkbox" name="idTicket[<?= $i; ?>]" id="idTicket" value="<?= $tickets[$i]->id(); ?>"> <!-- Case à cocher -->
+                            </div>
 
-                            <!-- Contenu du chapitre couper -->
-                            <p><?= $tickets[$i]->content(); ?></p>
-
-                            <!-- Lien d'administration des chapitres -->
-                            <ul>
+                            <div class="tableCellTicket">
+                                <!-- Titre du chapitre -->
+                                <a href="admin.php?action=ticket&change=on&idTicket=<?= $tickets[$i]->id(); ?>" class="titleTicket"><?= $tickets[$i]->title(); ?></a>
+                                <!-- Contenu du chapitre couper -->
+                                <p><?= $tickets[$i]->content(); ?></p>
+                                <!-- Lien d'administration des chapitres -->
                                 <li><a href="admin.php?action=ticket&change=on&idTicket=<?= $tickets[$i]->id(); ?>">Modifier</a></li>
                                 <li><a href="admin.php?action=delete&deleteTicket=on&idTicket=<?= $tickets[$i]->id(); ?>">Supprimer</a></li>
                                 <li><a href="admin.php?action=comment&comment=on&idTicket=<?= $tickets[$i]->id(); ?>&nbComments=<?= $nbComments[$i]; ?>">Afficher commentaire(s)</a></li>
-                            </ul>
+                            </div>
 
-                        </td>
+                            <div class="tableCellTicket">
+                                <?= $tickets[$i]->dateTimeAdd(); ?> <!-- Date et heure d'ajout du chapitres -->
+                            </div>
 
-                        <td>
-                            <p><?= $tickets[$i]->dateTimeAdd(); ?></p> <!-- Date et heure d'ajout du chapitres -->
-                        </td>
+                            <div class="tableCellTicket">
+                                <?= $nbComments[$i]; ?> Commentaire(s) <!-- Nombre de commentaires du chapitres -->
+                            </div>
 
-                        <td>
-                             <?= $nbComments[$i]; ?> Commentaire(s) <!-- Nombre de commentaires du chapitres -->
-                        </td>
-                    </tr>
-                <?php endfor; ?> <!-- Fin de la boucle -->
+                        </div>
 
-                </table>
-            </div>
+                    <?php endfor; ?> <!-- Fin de la boucle -->
+
+                </div> <!-- /tableTickets -->
+
+            </div> <!-- /frameDisplayTickets -->
 
             <input type="hidden" name="deleteTicket" value="on"> <!-- Champ cacher qui permettra de valider la suppression de chapitre(s) -->
             <input type="submit" class="linkPage" value="Supprimer"> <!-- Bouton de suppression de chapitre(s) -->

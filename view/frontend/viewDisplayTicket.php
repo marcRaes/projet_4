@@ -37,8 +37,8 @@
                 ?>
 
                     <p class="headerComment">
-                        <span>Poster par : <span class="strong"><?= $commentsTicket[$i]->mailMember(); ?></span></span>
-                        <span>Le : <span class="strong"><?= $commentsTicket[$i]->dateTimeAddComment(); ?></span></span>
+                        <p>Poster par : <span class="strong"><?= $commentsTicket[$i]->mailMember(); ?></span></p>
+                        <p>Le : <span class="strong"><?= $commentsTicket[$i]->dateTimeAddComment(); ?></span></p>
                     </p>
 
                     <div class="contentComment">

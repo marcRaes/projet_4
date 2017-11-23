@@ -1,3 +1,7 @@
+header h1 {
+    position: relative;
+}
+
 /* Ajoute "administration" dans le titre du header */
 header h1::after {
     content: "administration";
@@ -83,7 +87,7 @@ span.linkPage a:hover, form input[type="submit"].linkPage:hover {
 
 #listTickets {
     width: 80%;
-    margin: 15px 5px 15px 15px;
+    margin: 15px 0;
 }
 
 #listTickets form input[type="submit"].linkPage {
@@ -97,100 +101,101 @@ form input[type="submit"].linkPage {
     cursor: pointer;
 }
 
-#frameTable {
+/* Cadre liste des chapitres */
+#frameDisplayTickets {
     overflow-y: scroll;
     height: 580px;
 }
 
-#frameTable table { /* La liste des chapitres est affiché dans un tableau */
-    width: 100%;
-    border-collapse: collapse; /* fussionne les bordures du tableau */
+#tableTickets {
+    display: table;
+    width: 99.9%;
+    border-collapse: collapse;
 }
 
-article#listTickets table tr { /* Ligne du tableau */
-    height: 100px;
+.tableRowTicket {
+    display: table-row;
 }
 
-article#listTickets table tr:nth-child(odd) {
+#tableTickets .tableRowTicket:hover {
+    background-color: rgba(61, 103, 153, 0.1); /* Couleur de fond lors du passage de la souris */
+}
+
+.tableRowTicket:nth-child(odd) {
     background-color: #f0f0f0; /* Couleur ligne pair du tableau */
 }
 
-article#listTickets table tr:nth-child(even) {
+.tableRowTicket:nth-child(even) {
     background-color: #fff; /* Couleur ligne impair du tableau */
 }
 
-article#listTickets table tr:hover {
-    background-color: #e9e7e7;
-}
-
-article#listTickets table td {
+.tableCellTicket {
+    display: table-cell;
     border: 1px solid #dbdbdb;
-    padding: 0 15px;
-}
-
-article#listTickets table td:first-child { /* Premiéres colonne du tableau (checkbox) */
-    width: 5%;
+    padding: 5px 10px;
+    vertical-align: middle;
     text-align: center;
 }
 
-article#listTickets table td:nth-child(2) { /* Deuxième colonne du tableau (titre du chapitre) */
-    width: 70%;
-}
-
-article#listTickets table td:nth-child(3) { /* Troisième colonne du tableau (date et heure d'ajout) */
-    width: 12%;
-}
-
-article#listTickets table td:nth-child(4) { /* Troisième colonne du tableau (nombre de commentaires sur le chapitre) */
-    width: 12%;
-}
-
-article#listTickets table td a.titleTicket {
+.tableCellTicket a.titleTicket {
+    font-family: 'Pattaya', sans-serif;
+    font-size: 1.8em;
     color: #000;
     text-decoration: none;
-    font-size: 1.5em;
 }
 
-article#listTickets table td a.titleTicket:hover {
+.tableCellTicket a.titleTicket:hover, .tableCellTicket li a:hover {
     text-decoration: underline;
 }
 
-article#listTickets table td:nth-child(2) p {
+.tableCellTicket p {
     font-size: 0.8em;
     color: #1a1a1a;
     margin-left: 10px;
 }
 
-article#listTickets table td:nth-child(2) ul, section#comments article ul {
-    display: flex;
+.tableCellTicket li {
+    display: inline-block;
+    list-style-type: none;
     margin-top: 10px;
 }
 
-article#listTickets table td:nth-child(2) ul li, section#comments article ul li {
-    list-style-type: none;
+.tableCellTicket li + li {
+    border-left: 1px outset #999;
 }
 
-article#listTickets table td:nth-child(2) ul li + li, section#comments article ul li + li {
-    border-left: 1px outset #c4c4c4;
-}
-
-article#listTickets table td:nth-child(2) ul li a, section#comments article.comment ul li a {
+.tableCellTicket li a {
     color: #b81e44;
     text-decoration: none;
     font-size: 0.8em;
     padding: 0 5px;
 }
 
-article#listTickets table td:nth-child(2) ul li a:hover, section#comments article.comment ul li a:hover {
+.tableCellTicket li a:hover {
     color: #7b303e;
-    text-decoration: underline;
+}
+
+.tableCellTicket:nth-child(1) {
+    width: 3%;
+}
+
+.tableCellTicket:nth-child(2) {
+    text-align: left;
+}
+
+.tableCellTicket:nth-child(3) {
+    width: 18%;
+}
+
+.tableCellTicket:nth-child(4) {
+    width: 18%;
 }
 
 /* Cadre des activités du blog */
 #activitiesBlog {
     min-width: 13%;
     text-align: center;
-    margin: 15px 15px 15px 5px;
+    margin: 15px 0 15px 10px;
     box-shadow: 0 0 5px #000;
     background-color: #fff;
     border-radius: 10px;
@@ -278,6 +283,31 @@ article#listTickets table td:nth-child(2) ul li a:hover, section#comments articl
     background-color: #f1f1f1;
 }
 
+section#comments article ul {
+    display: flex;
+    margin-top: 10px;
+}
+
+section#comments article ul li {
+    list-style-type: none;
+}
+
+section#comments article ul li + li {
+    border-left: 1px outset #c4c4c4;
+}
+
+section#comments article.comment ul li a {
+    color: #b81e44;
+    text-decoration: none;
+    font-size: 0.8em;
+    padding: 0 5px;
+}
+
+section#comments article.comment ul li a:hover {
+    color: #7b303e;
+    text-decoration: underline;
+}
+
 .headerCommentaire {
     display: flex;
     justify-content: space-between;
@@ -303,4 +333,74 @@ section#comments article.commentAlert ul li a {
 
 section#comments article.commentAlert ul li a:hover {
     text-decoration: underline;
+}
+
+@media screen and (max-width: 1200px) {
+    .tableCellTicket:nth-child(3) {
+        width: 25%;
+    }
+
+    .tableCellTicket:nth-child(4) {
+        width: 25%;
+    }
+}
+
+@media screen and (max-width: 900px) {
+    #indexAdmin {
+        flex-direction: column-reverse;
+    }
+
+    #listTickets {
+        width: 100%;
+    }
+
+    .headerCommentaire {
+        display: block;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    /* Cadre liste des chapitres */
+    #tableTickets, .tableCellTicket {
+        display: block;
+    }
+
+    .tableRowTicket {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .tableCellTicket:nth-child(1), .tableCellTicket:nth-child(2) p, #listTickets form input[type="submit"].linkPage {
+        display: none;
+    }
+
+    .tableCellTicket:nth-child(2) {
+        width: 100%;
+    }
+
+    .tableCellTicket:nth-child(2) a {
+        display: block;
+    }
+
+    /* Selectionne les deux derniers élements d'un chapitre */
+    .tableCellTicket:nth-last-child(-n+2) {
+        flex: 1;
+    }
+
+    #formTicket p {
+        width: 99%;
+    }
+
+    section#comments article ul {
+        display: block;
+        margin-top: 0;
+    }
+
+    section#comments article li {
+        font-size: 1.2em;
+    }
+
+    section#comments article ul li + li {
+        border-left: none;
+    }
 }
