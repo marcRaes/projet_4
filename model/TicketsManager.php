@@ -9,7 +9,7 @@ class TicketsManager extends Manager
     public function add($ticket)
     {
         // Connexion à la BDD
-        $bdd = $this->bddConnect();
+        $bdd = parent::bddConnect();
 
         // Prépare la requete d'ajout d'un nouveau chapitre
         $request = $bdd->prepare('INSERT INTO tickets(title, content, dateTimeAdd) VALUES(:title, :content, :dateTimeAdd)');
@@ -25,14 +25,14 @@ class TicketsManager extends Manager
     public function update($ticket)
     {
         // Connexion à la BDD
-        $bdd = $this->bddConnect();
+        $bdd = parent::bddConnect();
 
         // Prépare la requete de modification d'un chapitre
-        $request = $bdd->prepare('UPDATE tickets SET title = :newTitle, content = :newContent, dateTimeLastModified = :dateTimeModified WHERE id = :idTicket');
+        $request = $bdd->prepare('UPDATE tickets SET title = :newTitle, content = :newContent, dateTimeLastModified = :newDateTimeModified WHERE id = :idTicket');
         $request->bindValue(':idTicket', $ticket->id(), PDO::PARAM_INT);
-        $request->bindValue(':title', $ticket->title());
-        $request->bindValue(':content', $ticket->content());
-        $request->bindValue(':dateTimeAdd', $ticket->dateTimeAdd());
+        $request->bindValue(':newTitle', $ticket->title());
+        $request->bindValue(':newContent', $ticket->content());
+        $request->bindValue(':newDateTimeModified', $ticket->dateTimeLastModified());
 
         // Lance la requéte avec les données reçu
         $request->execute() or die(print_r($request->errorInfo(), TRUE)); // or die permet d'afficher les erreurs de MySql
@@ -42,7 +42,7 @@ class TicketsManager extends Manager
     public function delete($id)
     {
         // Connexion à la BDD
-        $bdd = $this->bddConnect();
+        $bdd = parent::bddConnect();
 
         // Prépare la requéte pour la suppresion d'un chapitre
         $request = $bdd->prepare('DELETE FROM tickets WHERE id = :idTicket');
@@ -56,7 +56,7 @@ class TicketsManager extends Manager
     public function getTicket($id)
     {
         // Connexion à la BDD
-        $bdd = $this->bddConnect();
+        $bdd = parent::bddConnect();
 
         // Prépare la requéte de récupération du chapitre demander
         $request = $bdd->prepare('SELECT title, content, DATE_FORMAT(dateTimeAdd, \'%d-%m-%Y à %Hh%i\') AS dateTimeAdd, DATE_FORMAT(dateTimeLastModified, \'%d-%m-%Y à %Hh%i\') AS dateTimeModified FROM tickets WHERE id = :id');
@@ -76,7 +76,7 @@ class TicketsManager extends Manager
     public function getListTickets()
     {
         // Connexion à la BDD
-        $bdd = $this->bddConnect();
+        $bdd = parent::bddConnect();
 
         // Retourne la liste de tous les chapitres
         $request = $bdd->query('SELECT id, title, content, DATE_FORMAT(dateTimeAdd, \'%d-%m-%Y à %Hh%i\') AS dateTimeAdd FROM tickets ORDER BY dateTimeAdd DESC') or die(print_r($request->errorInfo(), TRUE)); // or die permet d'afficher les erreurs de MySql
@@ -96,7 +96,7 @@ class TicketsManager extends Manager
     public function getLastTicketModify()
     {
         // Connexion à la BDD
-        $bdd = $this->bddConnect();
+        $bdd = parent::bddConnect();
 
         // retourne le dernier chapitre modifier
         $request = $bdd->query('SELECT title, DATE_FORMAT(dateTimeLastModified, \'%d-%m-%Y à %Hh%i\') AS dateTimeLastModified FROM tickets ORDER BY dateTimeLastModified DESC LIMIT 0, 1') or die(print_r($request->errorInfo(), TRUE)); // or die permet d'afficher les erreurs de MySql

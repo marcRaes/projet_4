@@ -3,7 +3,14 @@
 ****************************************************-->
 <?php
 // Titre de la page
-$this->setTitle('Commentaires : ' . $comments[0]->titleTicket() . ' - Billet simple pour l\'Alaska');
+if(isset($comments[0]))
+{
+    $this->setTitle('Commentaires : ' . $comments[0]->titleTicket() . ' - Billet simple pour l\'Alaska');
+}
+else
+{
+    $this->setTitle('Aucun commentaires pour ce chapitre - Billet simple pour l\'Alaska');
+}
 ?>
 
 <span class="linkPage"><a href="admin.php">Voir la liste des chapitres</a></span> <!-- Lien vers la liste des chapitres -->
@@ -30,13 +37,13 @@ $this->setTitle('Commentaires : ' . $comments[0]->titleTicket() . ' - Billet sim
             </div>
 
             <ul>
-                <li><a href="admin.php?action=delete&deleteComment=on&idComment=<?= $comments[$i]->idComment(); ?>">Supprimer</a></li>
-                <li><a href="index.php?action=ticket&id=<?= $idTicket; ?>" target=_blank>Visualiser le chapitre</a></li>
+                <li><a href="admin.php?action=delete&deleteComment=on&idComment=<?= $comments[$i]->idComment(); ?>" title="Supprimer le commentaire">Supprimer</a></li>
+                <li><a href="index.php?action=ticket&id=<?= $idTicket; ?>" title="Visualiser le chapitre du commentaire" target=_blank>Visualiser le chapitre</a></li>
             <?php
             if($comments[$i]->alertComment())
             {
             ?>
-                <li><a href="admin.php?action=comment&approve=on&id=<?= $comments[$i]->idComment(); ?>">Approuver le commentaire</a></li>
+                <li><a href="admin.php?action=comment&approve=on&id=<?= $comments[$i]->idComment(); ?>" title="Approuver le commentaire signaler">Approuver le commentaire</a></li>
             <?php
             }
             ?>

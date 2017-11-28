@@ -20,7 +20,7 @@ class ControlerComment
         {
             $this->approveComment($get);
         }
-        else if(isset($get['comment']) && ($get['comment'] == "on") && (isset($get['idTicket'])) && (isset($get['nbComments']))) // On souhaite afficher les commentaires d'un chapitre
+        else if(isset($get['comment']) && ($get['comment'] == "on") && (isset($get['idTicket']))) // On souhaite afficher les commentaires d'un chapitre
         {
             $this->displayCommentsTicket($get);
         }
@@ -35,9 +35,8 @@ class ControlerComment
     {
         // intval renvoie la valeur numérique du paramètre ou 0 en cas d'échec
         $get['idTicket'] = intval($get['idTicket']);
-        $get['nbComments'] = intval($get['nbComments']);
 
-        if(($get['idTicket'] != 0) && ($get['nbComments'] != 0))
+        if($get['idTicket'] != 0)
         {
             // Appel la méthode de récupération des commentaires d'un chapitre
             $comments = $this->commentManager()->getListCommentsTicket($get['idTicket']);
@@ -67,7 +66,7 @@ class ControlerComment
         }
         else
         {
-            throw new Exception("Identifiant de commentaire incorrect");
+            throw new Exception("Un identifiant contenu dans l'URL est incorrect");
         }
     }
 
@@ -120,7 +119,7 @@ class ControlerComment
                 if($nbCommentAlert != 0) // Si il y'a toujours des commentaires à approuver
                 {
                     // Redirection vers la page qui affichera la suite des commentaires à afficher
-                    $urlRedirection = 'Location:admin.php?displayComment=comment&alertComments=on&nbComments=' . $nbCommentAlert;
+                    $urlRedirection = 'Location:admin.php?displayComment=comment&alertComments=on';
                     header($urlRedirection);
                 }
             }

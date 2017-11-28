@@ -3,6 +3,7 @@
     <head>
         <meta charset="UTF-8"> <!-- Balise meta -->
         <meta name="viewport" content="initial-scale=1, user-scalable=no">
+        <link rel="icon" type="image/png" href="Contenu/images/favicon.png">
         <link href="https://fonts.googleapis.com/css?family=Pattaya" rel="stylesheet"> <!-- Police d'écriture "Pattaya" -->
         <link href="https://fonts.googleapis.com/css?family=El+Messiri" rel="stylesheet"> <!-- Police d'écriture "El Messiri" -->
         <link rel="stylesheet" href="Contenu/css/style.css"> <!-- Feuille de style Géneral -->
@@ -20,12 +21,12 @@
 
         <nav>
             <ul id="firstLevel">
-                <li><a href="index.php">Visualiser le Blog</a></li>
+                <li><a href="index.php" title="Retourner sur le blog">Visualiser le Blog</a></li>
                 <ul id="secondLevel">
                 <?php if(isset($_SESSION['emailAdress']))
                 {
                 ?>
-                    <li><a href="index.php?action=deconnect">Deconnexion</a></li> <!-- Lien de deconnexion -->
+                    <li><a href="index.php?action=deconnect" title="Me deconnecter du blog">Deconnexion</a></li> <!-- Lien de deconnexion -->
                 </ul>
                 <?php
                 }

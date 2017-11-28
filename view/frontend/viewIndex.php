@@ -22,7 +22,7 @@
             ?>
                 <div class="ticket">
 
-                    <a href="index.php?action=ticket&id=<?= $tickets[$i]->id(); ?>">
+                    <a href="index.php?action=ticket&id=<?= $tickets[$i]->id(); ?>" title="Lire le chapitre">
                         <span class="titleTicket"><?= $tickets[$i]->title(); ?></span> <!-- Titre du chapitre -->
                         <span class="dateTime">Ajouté le : <span class="strong"><?= $tickets[$i]->dateTimeAdd(); ?></span></span> <!-- Date et heure d'ajout du chapitres -->
                     </a>

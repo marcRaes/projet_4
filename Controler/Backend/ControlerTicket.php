@@ -16,7 +16,9 @@ class ControlerTicket
 
     public function ticket($get)
     {
+        // Crée l'objet de la vue
         $view = new View('Ticket');
+
         if((isset($get['idTicket']) && (isset($get['change']) && ($get['change'] == 'on')))) // On souhaite modifier un chapitre
         {
             // Définition du texte de la page pour la modification d'un chapitre

@@ -3,6 +3,7 @@
     <head>
         <meta charset="UTF-8"> <!-- Balise meta -->
         <meta name="viewport" content="initial-scale=1, user-scalable=no">
+        <link rel="icon" type="image/png" href="Contenu/images/favicon.png">
         <link href="https://fonts.googleapis.com/css?family=Pattaya" rel="stylesheet"> <!-- Police d'écriture "Pattaya" -->
         <link href="https://fonts.googleapis.com/css?family=El+Messiri" rel="stylesheet"> <!-- Police d'écriture "El Messiri" -->
         <link rel="stylesheet" href="contenu/font-awesome/css/font-awesome.min.css"> <!-- Font Awesome -->
@@ -21,25 +22,25 @@
 
         <nav>
             <ul id="oneLevel">
-                <li><span class="fa fa-home"></span><a href="index.php">Accueil</a></li>
+                <li><span class="fa fa-home"></span><a href="index.php" title="Retourner à l'accueil du blog">Accueil</a></li>
                 <ul id="secondLevel">
                 <?php if(isset($_SESSION['emailAdress']))
                 {
-                    if($_SESSION['status'] == 'administrateur')
+                    if($_SESSION['statusMember'] == 'administrateur')
                     {
                     ?>
-                        <li><a href="admin.php">Administrer le Blog</a></li> <!-- Lien vers l'administration du site -->
+                        <li><a href="admin.php" title="Accéder à l'espace administration du blog">Administrer le Blog</a></li> <!-- Lien vers l'administration du site -->
                     <?php
                     }
                     ?>
-                        <li><a href="index.php?action=deconnect">Deconnexion</a></li> <!-- Lien de deconnexion -->
+                        <li><a href="index.php?action=deconnect" title="Se déconnecter">Deconnexion</a></li> <!-- Lien de deconnexion -->
                     <?php
                 }
                 else
                 {
                 ?>
-                    <li><a href="index.php?action=connection">Se connecter</a></li> <!-- Lien de connexion -->
-                    <li><a href="index.php?action=registration">Créer un compte</a></li> <!-- Lien vers la création d'un compte -->
+                    <li><a href="index.php?action=connection" title="Connecter vous">Se connecter</a></li> <!-- Lien de connexion -->
+                    <li><a href="index.php?action=registration" title="Créer un compte">Créer un compte</a></li> <!-- Lien vers la création d'un compte -->
                 <?php
                 }
                 ?>

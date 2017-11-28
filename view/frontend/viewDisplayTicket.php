@@ -19,58 +19,69 @@
 
         <h1>Commentaires du chapitre :</h1>
 
-        <div id="listComments">
-            <?php for($i = 0; $i < count($commentsTicket); $i++) : ?>
-                <?php
-                    if($commentsTicket[$i]->alertComment() == 1)
-                    {
-                ?>
-                    <div class="commentSignal">
-                <?php
-                    }
-                    else
-                    {
-                ?>
-                    <div class="comment">
-                <?php
-                    }
-                ?>
+        <?php
+        if(count($commentsTicket) != 0)
+        {
+        ?>
+            <div id="listComments">
+                <?php for($i = 0; $i < count($commentsTicket); $i++) : ?>
+                    <?php
+                        if($commentsTicket[$i]->alertComment() == 1)
+                        {
+                    ?>
+                        <div class="commentSignal">
+                    <?php
+                        }
+                        else
+                        {
+                    ?>
+                        <div class="comment">
+                    <?php
+                        }
+                    ?>
 
-                    <p class="headerComment">
-                        <p>Poster par : <span class="strong"><?= $commentsTicket[$i]->mailMember(); ?></span></p>
-                        <p>Le : <span class="strong"><?= $commentsTicket[$i]->dateTimeAddComment(); ?></span></p>
-                    </p>
+                        <p class="headerComment">
+                            <p>Poster par : <span class="strong"><?= $commentsTicket[$i]->mailMember(); ?></span></p>
+                            <p>Le : <span class="strong"><?= $commentsTicket[$i]->dateTimeAddComment(); ?></span></p>
+                        </p>
 
-                    <div class="contentComment">
-                        <?= $commentsTicket[$i]->contentComment(); ?>
+                        <div class="contentComment">
+                            <?= $commentsTicket[$i]->contentComment(); ?>
+                        </div>
+
+                        <form action="index.php?action=ticket&id=<?= $_GET['id']; ?>" method="post">
+                            <p>
+                                <input type="hidden" name="idComment" value="<?= $commentsTicket[$i]->idComment(); ?>">
+                                <input type="hidden" name="reportComment" value="reportComment">
+                                <?php
+                                if($commentsTicket[$i]->alertComment() == 1)
+                                {
+                                ?>
+                                    <input type="submit" class="buttonBlog" value="Commentaire signaler" disabled>
+                                <?php
+                                }
+                                else
+                                {
+                                ?>
+                                    <input type="submit" class="buttonBlog" value="Signaler le commentaire">
+                                <?php
+                                }
+                                ?>
+
+                            </p>
+                        </form>
+
                     </div>
 
-                    <form action="index.php?action=ticket" method="post">
-                        <p>
-                            <input type="hidden" name="idComment" value="<?= $commentsTicket[$i]->idComment(); ?>">
-                            <input type="hidden" name="reportComment" value="reportComment">
-                            <?php
-                            if($commentsTicket[$i]->alertComment() == 1)
-                            {
-                            ?>
-                                <input type="submit" class="buttonBlog" value="Commentaire signaler" disabled>
-                            <?php
-                            }
-                            else
-                            {
-                            ?>
-                                <input type="submit" class="buttonBlog" value="Signaler le commentaire">
-                            <?php
-                            }
-                            ?>
-
-                        </p>
-                    </form>
-
-                </div>
-
-            <?php endfor; ?>
-        </div>
+                <?php endfor; ?>
+            </div>
+        <?php
+        }
+        else
+        {
+            echo 'Aucun commentaire n\'a était poster sur ce chapitre';
+        }
+        ?>
 
     </article> <!-- /Affichage des commentaires -->
 
@@ -79,7 +90,7 @@
         <h1>Laisser un commentaire :</h1>
         <p id="textPost">*Si vous ne disposez pas de compte, celui-ci sera automatiquement créer après l'ajout de votre commentaire.</p>
 
-        <form action="index.php?action=ticket" method="post">
+        <form action="index.php?action=ticket&id=<?= $_GET['id']; ?>" method="post">
 
             <?php if(isset($_SESSION['errorPostComment'])) { echo '<p class="errorBlog">' . $_SESSION['errorPostComment'] . '</p>'; } ?>
 

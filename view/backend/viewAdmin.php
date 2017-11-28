@@ -34,13 +34,13 @@ $this->setTitle('Administration - Billet simple pour l\'Alaska');
 
                             <div class="tableCellTicket">
                                 <!-- Titre du chapitre -->
-                                <a href="admin.php?action=ticket&change=on&idTicket=<?= $tickets[$i]->id(); ?>" class="titleTicket"><?= $tickets[$i]->title(); ?></a>
+                                <a href="admin.php?action=ticket&change=on&idTicket=<?= $tickets[$i]->id(); ?>" title="Modifier le chapitre" class="titleTicket"><?= $tickets[$i]->title(); ?></a>
                                 <!-- Contenu du chapitre couper -->
                                 <p><?= $tickets[$i]->content(); ?></p>
                                 <!-- Lien d'administration des chapitres -->
-                                <li><a href="admin.php?action=ticket&change=on&idTicket=<?= $tickets[$i]->id(); ?>">Modifier</a></li>
-                                <li><a href="admin.php?action=delete&deleteTicket=on&idTicket=<?= $tickets[$i]->id(); ?>">Supprimer</a></li>
-                                <li><a href="admin.php?action=comment&comment=on&idTicket=<?= $tickets[$i]->id(); ?>&nbComments=<?= $nbComments[$i]; ?>">Afficher commentaire(s)</a></li>
+                                <li><a href="admin.php?action=ticket&change=on&idTicket=<?= $tickets[$i]->id(); ?>" title="Modifier le chapitre">Modifier</a></li>
+                                <li><a href="admin.php?action=delete&deleteTicket=on&idTicket=<?= $tickets[$i]->id(); ?>" title="Supprimer le chapitre">Supprimer</a></li>
+                                <li><a href="admin.php?action=comment&comment=on&idTicket=<?= $tickets[$i]->id(); ?>" title="Afficher les commentaires du chapitre">Afficher commentaire(s)</a></li>
                             </div>
 
                             <div class="tableCellTicket">
@@ -79,7 +79,6 @@ $this->setTitle('Administration - Billet simple pour l\'Alaska');
                 <p><?= $nbCommentAlert; ?> commentaire a était signaler</p>
                 <input type="hidden" name="action" value="comment"> <!-- Permettra de faire apparaitre les commentaires -->
                 <input type="hidden" name="alertComments" value="on">
-                <input type="hidden" name="nbComments" value="<?= $nbCommentAlert; ?>">
                 <input type="submit" class="linkPage" value="Visualiser le commentaire">
             <?php
             }
@@ -89,7 +88,6 @@ $this->setTitle('Administration - Billet simple pour l\'Alaska');
                 <p><?= $nbCommentAlert; ?> commentaires ont était signaler</p>
                 <input type="hidden" name="action" value="comment"> <!-- Permettra de faire apparaitre les commentaires -->
                 <input type="hidden" name="alertComments" value="on">
-                <input type="hidden" name="nbComments" value="<?= $nbCommentAlert; ?>">
                 <input type="submit" class="linkPage" value="Visualiser les commentaires">
             <?php
             }

@@ -14,6 +14,7 @@ class Router
 
     public function __construct()
     {
+        // Crée les different objets Controler
         $this->setCtrlAdminSecure(new ControlerAdminSecure());
         $this->setCtrlAdmin(new ControlerAdmin());
         $this->setCtrlTicket(new ControlerTicket());
@@ -23,7 +24,7 @@ class Router
     public function routeRequest()
     {
         // Vérifie si un membre est connecter et si il a le bon statut pour administrer le blog
-        if(isset($_SESSION['status']) && ($_SESSION['status'] == 'administrateur'))
+        if(isset($_SESSION['statusMember']) && ($_SESSION['statusMember'] == 'administrateur'))
         {
             // Lance une méthode de reconnection du membre avec vérification de la session enregistrer
             if($this->ctrlAdminSecure()->autorizationEnter($_SESSION))
@@ -128,7 +129,7 @@ class Router
                 {
                     if(trim($_POST['emailAdress']) && (trim($_POST['password'])))
                     {
-                        $this->ctrlAdminSecure()->connectAdmin($_POST['emailAdress'], $_POST['password']);
+                        $_SESSION['errorAdmin'] = $this->ctrlAdminSecure()->connectAdmin($_POST['emailAdress'], $_POST['password']);
                     }
                 }
                 $this->ctrlAdminSecure()->adminSecure();

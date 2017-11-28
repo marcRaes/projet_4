@@ -1,4 +1,11 @@
-<?php $this->setTitle('Page d\'inscription - Billet simple pour l\'Alaska'); ?>
+<?php
+if(isset($_SESSION['idMember']))
+{
+    // Redirige le membre vers index.php
+    header('Location:index.php');
+}
+
+$this->setTitle('Page d\'inscription - Billet simple pour l\'Alaska'); ?>
 
 <section id="formConnectionRegistration">
 

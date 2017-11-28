@@ -49,12 +49,12 @@ class Router
                             {
                                 if(isset($_SESSION['emailAdress']) && (isset($_SESSION['idMember'])))
                                 {
-                                    // Verifie que le membre existe et appel la méthode de publication d'un commentaire
-                                    $this->ctrlDisplayTicket()->testMember($_POST['idTicket'], $_SESSION['emailAdress'], $_SESSION['idMember'], $_POST['comment']);
+                                    // Appel la méthode de publication d'un commentaire
+                                    $this->ctrlDisplayTicket()->addComment($_POST['comment'], $_POST['idTicket'], $_SESSION['idMember']);
                                 }
                                 else {
                                     // On connecte ou on enregistre le membre et on appel la méthode de publication d'un commentaire
-                                    $this->ctrlDisplayTicket()->addMemberComment($_POST['idTicket'], $_POST['emailAdress'], $_POST['password'], $_POST['comment']);
+                                    $_SESSION['errorPostComment'] = $this->ctrlDisplayTicket()->addMemberComment($_POST['idTicket'], $_POST['emailAdress'], $_POST['password'], $_POST['comment']);
                                 }
                             }
                         }
@@ -86,7 +86,7 @@ class Router
                     {
                         if($_SERVER["REQUEST_METHOD"] == "POST")
                         {
-                            $this->ctrlConnect()->callConnectMember($_POST);
+                            $_SESSION['errorConnect'] = $this->ctrlConnect()->callConnectMember($_POST);
                         }
                         $this->ctrlConnect()->viewConnectMember();
                     }
@@ -101,7 +101,7 @@ class Router
                     {
                         if($_SERVER["REQUEST_METHOD"] == "POST")
                         {
-                            $this->ctrlRegistration()->registrationMember($_POST);
+                            $_SESSION['errorRegistration'] = $this->ctrlRegistration()->registrationMember($_POST);
                         }
                         $this->ctrlRegistration()->viewRegistrationMember();
                     }
