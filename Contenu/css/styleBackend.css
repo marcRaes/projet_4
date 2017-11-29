@@ -81,8 +81,9 @@ span.linkPage a:hover, form input[type="submit"].linkPage:hover {
 
 /* Section de la page admin */
 #indexAdmin {
-    display: flex; /* Place les éléments à l'horizontal */
-    justify-content: space-around; /* Place les éléments de chaque coté de la page */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 #listTickets {
@@ -191,35 +192,22 @@ form input[type="submit"].linkPage {
     width: 18%;
 }
 
-/* Cadre des activités du blog */
-#activitiesBlog {
+/* Cadre des commentaires signaler */
+#commentsSignal {
     min-width: 13%;
     text-align: center;
-    margin: 15px 0 15px 10px;
-    box-shadow: 0 0 5px #000;
-    background-color: #fff;
-    border-radius: 10px;
-    padding: 5px;
-}
-
-#activitiesBlog p#TicketModifiy {
-    margin-top: 20px;
-}
-
-#activitiesBlog .infoModificationChapitre {
-    font-weight: bold;
-}
-
-/* Commentaires signaler */
-#activitiesBlog form {
-    margin: 15px 0 50px 0;
-    border-radius: 10px;
     background-color: rgba(255, 0, 0, 0.8);
+    box-shadow: 0 0 10px #000;
+    border-radius: 10px;
+    margin: 10px 0;
+}
+
+#commentsSignal form {
     padding: 5px;
     font-weight: bold;
 }
 
-#activitiesBlog form input[type="submit"] {
+#commentsSignal form input[type="submit"] {
     margin-top: 10px;
 }
 

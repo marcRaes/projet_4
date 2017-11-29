@@ -91,20 +91,4 @@ class TicketsManager extends Manager
 
         return $ticket; // Retourne les chapitres contenu dans la BDD
     }
-
-    // Méthode de récupération du dernier chapitre modifier
-    public function getLastTicketModify()
-    {
-        // Connexion à la BDD
-        $bdd = parent::bddConnect();
-
-        // retourne le dernier chapitre modifier
-        $request = $bdd->query('SELECT title, DATE_FORMAT(dateTimeLastModified, \'%d-%m-%Y à %Hh%i\') AS dateTimeLastModified FROM tickets ORDER BY dateTimeLastModified DESC LIMIT 0, 1') or die(print_r($request->errorInfo(), TRUE)); // or die permet d'afficher les erreurs de MySql
-
-        $data = $request->fetch(); // On assemble les données reçu
-
-        $ticket = new Ticket($data);
-
-        return $ticket; // Retourne le dernier chapitre modifier
-    }
 }

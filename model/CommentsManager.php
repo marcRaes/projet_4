@@ -36,6 +36,19 @@ class CommentsManager extends Manager
         $request->execute() or die(print_r($request->errorInfo(), TRUE)); // or die permet d'afficher les erreurs de MySql
     }
 
+    // Méthode de suppression des commentaires d'un chapitre
+    public function deleteCommentTicket($idTicket)
+    {
+        // Connexion à la BDD
+        $bdd = parent::bddConnect();
+
+        // Prépare la requète de suppression d'un commentaire
+        $request = $bdd->prepare('DELETE FROM comments WHERE idTicket = :idTicket');
+        $request->bindValue(':idTicket', $idTicket, PDO::PARAM_INT);
+        // Execute la requète
+        $request->execute() or die(print_r($request->errorInfo(), TRUE)); // or die permet d'afficher les erreurs de MySql
+    }
+
     // Méthode de récupération de tous les commentaires qui ont était signaler => champ alert à TRUE
     public function getListCommentsAlert()
     {

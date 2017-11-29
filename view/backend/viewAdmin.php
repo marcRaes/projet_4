@@ -14,7 +14,38 @@ $this->setTitle('Administration - Billet simple pour l\'Alaska');
     <?php
     if($tickets != null)
     {
-    ?>
+        // Si des commentaires ont était signaler
+        if($nbCommentAlert != 0)
+        {
+        ?>
+        <aside id="commentsSignal">
+            <form action="admin.php" method="get">
+                <?php
+                if($nbCommentAlert == 1) // Un commentaire signaler
+                {
+                ?>
+                    <p><?= $nbCommentAlert; ?> commentaire a était signaler</p>
+                    <input type="hidden" name="action" value="comment"> <!-- Permettra de faire apparaitre les commentaires -->
+                    <input type="hidden" name="alertComments" value="on">
+                    <input type="submit" class="linkPage" value="Visualiser le commentaire">
+                <?php
+                }
+                else // Plus d'un commentaires ont était signaler
+                {
+                ?>
+                    <p><?= $nbCommentAlert; ?> commentaires ont était signaler</p>
+                    <input type="hidden" name="action" value="comment"> <!-- Permettra de faire apparaitre les commentaires -->
+                    <input type="hidden" name="alertComments" value="on">
+                    <input type="submit" class="linkPage" value="Visualiser les commentaires">
+                <?php
+                }
+                ?>
+            </form>
+        </aside> <!-- /Derniers activités du blog -->
+        <?php
+        }
+        ?>
+
     <article id="listTickets"> <!-- Liste des chapitres -->
 
         <form method="post" action="admin.php?action=delete">
@@ -64,50 +95,6 @@ $this->setTitle('Administration - Billet simple pour l\'Alaska');
         </form>
 
     </article> <!-- /Liste des chapitres -->
-
-    <aside id="activitiesBlog"> <!-- Derniers activités du blog -->
-
-        <?php
-        if($nbCommentAlert != 0)
-        {
-        ?>
-        <form action="admin.php" method="get">
-            <?php
-            if($nbCommentAlert == 1)
-            {
-            ?>
-                <p><?= $nbCommentAlert; ?> commentaire a était signaler</p>
-                <input type="hidden" name="action" value="comment"> <!-- Permettra de faire apparaitre les commentaires -->
-                <input type="hidden" name="alertComments" value="on">
-                <input type="submit" class="linkPage" value="Visualiser le commentaire">
-            <?php
-            }
-            else
-            {
-            ?>
-                <p><?= $nbCommentAlert; ?> commentaires ont était signaler</p>
-                <input type="hidden" name="action" value="comment"> <!-- Permettra de faire apparaitre les commentaires -->
-                <input type="hidden" name="alertComments" value="on">
-                <input type="submit" class="linkPage" value="Visualiser les commentaires">
-            <?php
-            }
-            ?>
-        </form>
-        <?php
-        }
-        ?>
-
-        <h1>Dernières modifications :</h1>
-        <!-- Affichage du dernier chapitre modifier -->
-        <p id="TicketModify">
-            Le chapitre :<br>
-            <span class="infoModificationChapitre"><?= $lastTicketModify->title(); ?></span><br>
-            à était modifier le :<br>
-            <span class="infoModificationChapitre"><?= $lastTicketModify->dateTimeLastModified(); ?></span>
-        </p>
-
-    </aside> <!-- /Derniers activités du blog -->
-
     <?php
     }
     else

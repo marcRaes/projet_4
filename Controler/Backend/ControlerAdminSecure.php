@@ -40,22 +40,23 @@ class ControlerAdminSecure extends Controler
             'password' => htmlspecialchars($password)
         ];
 
+        // Appelle la méthode de connexion de la classe Controler
         $memberConnection = parent::connect($dataMember);
 
-        if($memberConnection == null)
+        if($memberConnection == null) // Si aucune erreur n'a était retourner
         {
-            if($_SESSION['statusMember'] == 'administrateur')
+            if($_SESSION['statusMember'] == 'administrateur') // On vérifie que le membre à le droit d'aministrer le blog
             {
                 header('Location:admin.php');
             }
-            else
+            else // Sinon on lui retourne un message d'erreur
             {
                 return 'Vous n\'étes pas autoriser à administrer le Blog';
             }
         }
-        else
+        else // Si la méthode de connexion à retourner une erreur
         {
-            return $memberConnection;
+            return $memberConnection; // On retourne cette erreur
         }
     }
 

@@ -34,9 +34,6 @@ class ControlerAdmin
             $tickets[$i]->setTitle(ucfirst($tickets[$i]->title()));
         }
 
-        // Récupération du dernier chapitre modifier
-        $lastTicketModify = $this->ticketManager()->getLastTicketModify();
-
         // Retourne le nombre de commentaire signaler
         $nbCommentAlert = count($this->commentManager()->getListCommentsAlert());
 
@@ -47,7 +44,6 @@ class ControlerAdmin
         $view->generate(array(
             'tickets' => $tickets,
             'nbComments' => $nbComments,
-            'lastTicketModify' => $lastTicketModify,
             'nbCommentAlert' => $nbCommentAlert
         ));
     }
@@ -74,10 +70,14 @@ class ControlerAdmin
     	return $text;
     }
 
+    // Méthode de suppression d'un chapitre et de ses commentaires
     public function deleteTicket($idTicket)
     {
         // Appel de la méthode de suppression d'un chapitre
         $this->ticketManager()->delete($idTicket);
+
+        // Supprime également les commentaires du chapitre
+        $this->commentManager()->deleteCommentTicket($idTicket);
     }
 
     // Setter ticketManager
