@@ -1,7 +1,4 @@
 <?php
-require_once('Manager.php');
-require_once('Ticket.php');
-
 // Manager de la class Ticket
 class TicketsManager extends Manager
 {
@@ -59,7 +56,7 @@ class TicketsManager extends Manager
         $bdd = parent::bddConnect();
 
         // Prépare la requéte de récupération du chapitre demander
-        $request = $bdd->prepare('SELECT title, content, DATE_FORMAT(dateTimeAdd, \'%d-%m-%Y à %Hh%i\') AS dateTimeAdd, DATE_FORMAT(dateTimeLastModified, \'%d-%m-%Y à %Hh%i\') AS dateTimeModified FROM tickets WHERE id = :id');
+        $request = $bdd->prepare('SELECT title, content, DATE_FORMAT(dateTimeAdd, \'%d-%m-%Y à %Hh%i\') AS dateTimeAdd, DATE_FORMAT(dateTimeLastModified, \'%d-%m-%Y à %Hh%i\') AS dateTimeLastModified FROM tickets WHERE id = :id');
         $request->bindValue(':id', $id, PDO::PARAM_INT);
 
         // Execute la requéte de récupération avec la variable contenu dans l'URL

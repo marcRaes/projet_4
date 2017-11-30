@@ -1,8 +1,4 @@
 <?php
-require_once('Model/TicketsManager.php');
-require_once('Model/CommentsManager.php');
-require_once('View/Frontend/View.php');
-
 class ControlerIndex
 {
     private $_ticketManager;

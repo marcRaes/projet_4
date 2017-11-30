@@ -1,6 +1,4 @@
 <?php
-require_once('Model.php');
-
 // Classe Membre
 class Member extends Model
 {

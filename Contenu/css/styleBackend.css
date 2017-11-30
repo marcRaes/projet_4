@@ -94,7 +94,7 @@ span.linkPage a:hover, form input[type="submit"].linkPage:hover {
 #listTickets form input[type="submit"].linkPage {
     display: block;
     width: 110px;
-    margin: 20px auto 0 auto;
+    margin-top: 20px;
 }
 
 form input[type="submit"].linkPage {
@@ -105,7 +105,7 @@ form input[type="submit"].linkPage {
 /* Cadre liste des chapitres */
 #frameDisplayTickets {
     overflow-y: scroll;
-    height: 580px;
+    height: 60vh;
 }
 
 #tableTickets {
@@ -334,10 +334,6 @@ section#comments article.commentAlert ul li a:hover {
 }
 
 @media screen and (max-width: 900px) {
-    #indexAdmin {
-        flex-direction: column-reverse;
-    }
-
     #listTickets {
         width: 100%;
     }

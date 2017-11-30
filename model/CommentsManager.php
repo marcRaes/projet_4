@@ -1,8 +1,4 @@
 <?php
-require_once('Manager.php');
-require_once('Comment.php');
-require_once('CommentsJoin.php');
-
 // Manager de la classe Comment
 class CommentsManager extends Manager
 {

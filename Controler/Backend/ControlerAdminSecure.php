@@ -1,8 +1,4 @@
 <?php
-require_once('Controler/Controler.php');
-require_once('Model/Member.php');
-require_once('View/Backend/View.php');
-
 class ControlerAdminSecure extends Controler
 {
     // Méthode qui permet de savoir si le membre à l'autorisation d'administrer le blog

@@ -1,7 +1,4 @@
 <?php
-require_once('Controler/Controler.php');
-require_once('View/Frontend/View.php');
-
 class ControlerRegistration extends Controler
 {
     // Méthode d'inscription d'un membre

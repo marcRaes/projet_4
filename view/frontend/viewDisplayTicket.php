@@ -6,6 +6,10 @@
 
         <p>Ajouté le : <span class="strong"><?= $ticket->dateTimeAdd(); ?></span></p> <!-- Date et heure d'ajout du chapitre -->
 
+    <?php if($ticket->dateTimeLastModified() != NULL) { ?> <!-- Si le chapitre à subit une modification -->
+        <p>Modifié le : <span class="strong"><?= $ticket->dateTimeLastModified(); ?></span></p> <!-- Date et heure de modification du chapitre -->
+    <?php } ?>
+
         <h1 class="titleTicket"><?= $ticket->title(); ?></h1> <!-- Titre du chapitre -->
 
         <div id="contentTicket">

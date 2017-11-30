@@ -3,6 +3,7 @@ section { /* Personnalise les sections des pages */
     padding: 10px;
     background-color: #fff;
     border-radius: 10px;
+    min-height: 75%;
 }
 
 .strong {

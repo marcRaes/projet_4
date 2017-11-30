@@ -1,6 +1,4 @@
 <?php
-require_once('Model.php');
-
 // Classe Commentaire
 class Comment extends Model
 {

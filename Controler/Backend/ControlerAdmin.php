@@ -1,8 +1,4 @@
 <?php
-require_once('Model/TicketsManager.php');
-require_once('Model/CommentsManager.php');
-require_once('View/Backend/View.php');
-
 class ControlerAdmin
 {
     private $_ticketManager;

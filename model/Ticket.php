@@ -1,6 +1,4 @@
 <?php
-require_once('Model.php');
-
 // Classe Chapitre
 class Ticket extends Model
 {

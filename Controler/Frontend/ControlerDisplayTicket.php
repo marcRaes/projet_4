@@ -1,9 +1,4 @@
 <?php
-require_once('Controler/Controler.php');
-require_once('Model/TicketsManager.php');
-require_once('Model/CommentsManager.php');
-require_once('Model/Comment.php');
-
 class ControlerDisplayTicket extends Controler
 {
     private $_ticketManager;

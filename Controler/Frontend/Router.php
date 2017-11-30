@@ -1,8 +1,22 @@
 <?php
-require_once('Controler/Frontend/ControlerIndex.php');
-require_once('Controler/Frontend/ControlerConnect.php');
-require_once('Controler/Frontend/ControlerRegistration.php');
-require_once('Controler/Frontend/ControlerDisplayTicket.php');
+// Le Routeur se charge de charger les classes necessaire au fonctionnement du Blog
+spl_autoload_register(function ($class) {
+    if($class === 'Controler')
+    {
+        require_once('Controler/' . $class . '.php');
+    }
+    elseif(strpos($class, "Controler") === 0)
+    {
+        require_once('Controler/Frontend/' . $class . '.php');
+    }
+    elseif (strpos($class, "View") === 0) {
+        require_once('View/Frontend/' . $class . '.php');
+    }
+    else
+    {
+        require_once('Model/' . $class . '.php');
+    }
+});
 
 class Router
 {

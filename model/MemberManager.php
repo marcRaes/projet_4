@@ -1,7 +1,4 @@
 <?php
-require_once('Manager.php');
-require_once('Member.php');
-
 // Manager de la classe Member
 class MemberManager extends Manager
 {

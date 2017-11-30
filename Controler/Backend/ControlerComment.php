@@ -1,7 +1,4 @@
 <?php
-require_once('Model/CommentsManager.php');
-require_once('View/Backend/View.php');
-
 class ControlerComment
 {
     private $_commentManager;

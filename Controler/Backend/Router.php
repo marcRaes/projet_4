@@ -1,9 +1,22 @@
 <?php
-require_once('Controler/Backend/ControlerAdminSecure.php'); // Instancie le controleur qui controle l'accés à l'administration du blog
-require_once('Controler/Backend/ControlerAdmin.php'); // Instancie le controleur de la page d'accueil de l'administration du blog
-require_once('Controler/Backend/ControlerTicket.php'); // Instancie le controleur des chapitres
-require_once('Controler/Backend/ControlerComment.php'); // Instancie le controleur des commentaires
-require_once('View/Backend/View.php'); // Instancie le controleur de la vue
+// Le Routeur se charge de charger les classes necessaire au fonctionnement du Blog
+spl_autoload_register(function ($class) {
+    if($class === 'Controler')
+    {
+        require_once('Controler/' . $class . '.php');
+    }
+    elseif(strpos($class, "Controler") === 0)
+    {
+        require_once('Controler/Backend/' . $class . '.php');
+    }
+    elseif (strpos($class, "View") === 0) {
+        require_once('View/Backend/' . $class . '.php');
+    }
+    else
+    {
+        require_once('Model/' . $class . '.php');
+    }
+});
 
 class Router
 {
@@ -43,7 +56,7 @@ class Router
                                     $this->ctrlTicket()->decisionTicket($_POST);
                                 }
                             }
-                            $this->ctrlTicket()->ticket($_GET);
+                            $this->ctrlTicket()->ticket($_GET); // Affiche la vue du chapitre
                         }
                         else if($_GET['action'] == 'comment') // Affiche les commentaires
                         {
@@ -89,11 +102,11 @@ class Router
                             {
                                 if(isset($_POST['deleteTicket']) && (isset($_POST['idTicket'])) && (is_array($_POST['idTicket'])) && ($_POST['deleteTicket'] == 'on')) // Suppresion de plusieurs chapitres
                                 {
-                                    for($i = 0; $i < count($_POST['idTicket']); $i++)
+                                    for($i = 0; $i < count($_POST['idTicket']); $i++) // La fonction de suppression est appelé autant de fois qu'il y'a de chapitres
                                     {
                                         $_POST['idTicket'][$i] = intval($_POST['idTicket'][$i]); // intval renvoie la valeur numérique du paramètre ou 0 en cas d'échec
 
-                                        if($_POST['idTicket'][$i] != 0) // La fonction de suppression est appelé autant de fois qu'il y'a de chapitres
+                                        if($_POST['idTicket'][$i] != 0)
                                         {
                                             // Méthode de suppression d'un chapitre
                                             $this->ctrlAdmin()->deleteTicket($_POST['idTicket'][$i]);

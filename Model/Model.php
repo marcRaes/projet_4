@@ -1,5 +1,4 @@
 <?php
-
 class Model
 {
     // Le constructeur => Cette méthode permettra de créer l'objet demander

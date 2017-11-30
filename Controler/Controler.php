@@ -1,7 +1,4 @@
 <?php
-require_once('Model/MemberManager.php');
-require_once('Model/Member.php');
-
 class Controler
 {
     private $_memberManager;
